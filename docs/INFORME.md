@@ -15,7 +15,7 @@ Las gráficas están en [`docs/resultados/`](resultados/).
 | Filtro "¿es una cara?" | Regresión logística sobre el template (protege `_sd` y `_t`) |
 | Comparación | √histograma → PCA blanqueado (1000) → LDA (300) entrenadas en LFW → coseno (variante MLBP+LDA de Chan et al., 2007) |
 | Decisión | Verificación: umbral 0,217 (**FAR 0,1 %**). Identificación: umbral 0,285 (**FPIR 1 %** contra la galería) |
-| BD (`data/db.csv`) | `id, nonce, template` con el template **proyectado** y **cifrado** (AES-256-GCM, id como AAD). Huella SHA-256 + HMAC de la BD en `keys/` |
+| BD (`data/db.csv`) | `id, nonce, template` con el template **proyectado** y **cifrado** (AES-256-GCM, id como AAD). Huella SHA-256 de la BD **y de los modelos/umbrales**, firmada con HMAC, en `keys/` |
 
 Entrenamiento y calibración: LFW (13.233 caras), con identidades **disjuntas** de las de test. Las
 personas del dataset que están en LFW (Keanu Reeves, Salma Hayek, Jackie Chan, Michael Jackson,
@@ -30,7 +30,7 @@ excluyeron del entrenamiento y se usaron para atacar.
 | LFW test, MLBP+χ² clásico (Ahonen) | EER 36,5 % · TAR 7 % @FAR 0,1 % |
 | Vinícius, *leave-one-out* (5 fotos) | **5/5 aceptadas**, rank-1 5/5 (sim. 0,31–0,36) |
 | Inscritos con 1 foto del docente vs. sus fotos en LFW | **8/55 aceptadas (TAR 15 %)** |
-| Desconocidos (4.499 de LFW) → `identificar` | FPIR **0,84 %** (con el umbral de verificación sería 6,6 %) |
+| Desconocidos (4.499 de LFW) → `identificar` | FPIR **0,82 %** (con el umbral de verificación sería 6,6 %) |
 | Desconocidos → `verificar(vinicius_junior)` | FAR **0,67 %** (30/4.499) |
 | Tiempo por verificación (CPU) | ~20 ms |
 
@@ -55,12 +55,19 @@ excluyeron del entrenamiento y se usaron para atacar.
 | V13 | **Cara pequeña de Vinícius al fondo** | No | Se usa la cara más grande: identifica al atacante, no a Vinícius |
 | V14 | **Filtro "¿es una cara?" adversarial** | Posible | Es lineal: un atacante de caja blanca puede fabricar una no-cara que lo pase (0,5 % de las no-caras de prueba ya lo pasan). Después aún tiene que superar el umbral de similitud |
 | V15 | **Inscripción sin autenticar** | Sí | Cualquiera puede inscribir ids nuevos. No puede tocar los existentes (ver fortalezas) |
+| V16 | **Persistencia con `actualizar=True`** | Encadenado | Si un impostor consigue verificar **una vez** (parecido, foto, morph), puede añadir su propia muestra a `vinicius_junior` con `inscribir(..., actualizar=True)` y desde entonces entrar siempre con su cara (*template poisoning*) |
+| V17 | **Variables de entorno de rutas** | Solo con control del entorno | `BIGBROTHER_DB`, `BIGBROTHER_KEYS` y `BIGBROTHER_DATA` permiten apuntar a otra BD con su propia clave: equivale a montar un sistema paralelo. Los **umbrales ya no** se pueden cambiar por entorno |
+| V18 | **Contenedor como root** | Sí | La imagen ejecuta como root y la clave está dentro: cualquier `docker exec` llega a V1 |
 
 ## 4. Fortalezas (ataques que el sistema resiste)
 
 | Ataque | Resultado |
 |---|---|
 | Escribir en la BD: copiar la fila de otro como `vinicius_junior`, borrar filas, cambiar un byte, intercambiar ids, borrar la BD, restaurar una versión antigua, usar otra clave | **Detectado en todos los casos** (`IntegrityError`); el sistema no arranca |
+| Modificar modelos o umbrales: bajar el umbral en `models/calibration.json`, borrar el filtro de caras, alterar la proyección LDA | **Detectado** (`IntegrityError`): su SHA-256 está firmado en `keys/db.state` |
+| Bajar el umbral con `BIGBROTHER_THRESHOLD` / `BIGBROTHER_IDENT_THRESHOLD` | Ignorado (ya no existe esa vía) |
+| Borrar `keys/master.key` con la BD presente | `IntegrityError` (ya no se genera una clave nueva en silencio) |
+| Imágenes enormes o bombas de descompresión | Ficheros de más de 30 MB rechazados, límite de píxeles en Pillow, detección sobre copia reducida a 1600 px |
 | Leer la BD sin la clave | Templates cifrados (AES-GCM) y además **proyectados** a 300 dimensiones (no se puede reconstruir el histograma) |
 | `inscribir("vinicius_junior", foto_atacante)` | Rechazado: el id ya existe |
 | `inscribir(..., actualizar=True)` con otra cara | Rechazado: la muestra nueva debe verificar contra el id |
@@ -79,7 +86,7 @@ excluyeron del entrenamiento y se usaron para atacar.
 ## 5. Modelo de amenaza y decisiones
 
 - **Atacante de caja negra** (solo la API/CLI): solo ve decisiones, no puntuaciones. Le quedan V2–V8.
-- **Atacante con lectura o escritura en `data/`**: protegido (cifrado e integridad), salvo DoS (V10) y metadatos (V11).
+- **Atacante con lectura o escritura en `data/` o en `models/`**: protegido (cifrado e integridad), salvo DoS (V10) y metadatos (V11).
 - **Atacante con acceso a `keys/` o al código** (por ejemplo, `docker exec`): el sistema cae (V1, V9). En
   un despliegue real la clave iría en un KMS/HSM y la huella de la BD en un almacenamiento de solo-anexado.
 - El umbral prioriza la seguridad (FAR 0,1 %) a costa de una FRR alta (V6). Es intencionado.
@@ -93,6 +100,11 @@ excluyeron del entrenamiento y se usaron para atacar.
    Forest Whitaker y Samuel L. Jackson**, y dejaba en el límite a Stevie Wonder y una foto de Vinícius.
    Es un sesgo demográfico del entrenamiento. Se reentrenó con aumentos fotométricos (caras oscuras y de bajo contraste) y un umbral más permisivo.
 5. Identificar con el umbral de verificación daba un 6,6 % de falsas identificaciones de desconocidos. Se calibró un umbral propio (1 %).
+6. Revisión final de código (en modo atacante), con cuatro problemas corregidos, cada uno con su test:
+   - Editar `models/calibration.json` o la variable `BIGBROTHER_THRESHOLD` permitía **bajar el umbral y aceptar a cualquiera**.
+   - Borrar `models/faceness.npz` **desactivaba el filtro de caras** sin avisar.
+   - Sin la clave pero con la BD presente, se generaba en silencio una clave nueva.
+   - Las imágenes gigantes se detectaban a resolución completa (segundos por foto).
 
 ## 7. Limitaciones de la evaluación
 

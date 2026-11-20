@@ -1,5 +1,5 @@
 {
-  "build_db_s": 2.65,
+  "build_db_s": 2.16,
   "umbral": 0.21724116802215576,
   "umbral_identificacion": 0.2846938967704773,
   "calibracion": {
@@ -151,8 +151,8 @@
   },
   "open_set": {
     "n_probes": 4499,
-    "fpir_identificacion": 0.008446321404756613,
-    "fpir_si_se_usara_umbral_verificacion": 0.06645921315847966,
+    "fpir_identificacion": 0.008224049788841965,
+    "fpir_si_se_usara_umbral_verificacion": 0.06445876861524784,
     "far_contra_vinicius": 0.006668148477439431,
     "falsos_vinicius": 30,
     "top10_parecidos_vinicius": [
@@ -399,7 +399,9 @@
       "ruido_18": "forest_whitaker",
       "ruido_19": "forest_whitaker",
       "gris_127": "stevie_wonder",
-      "gris_255": "stevie_wonder"
+      "gris_255": "stevie_wonder",
+      "foto_sin_recortar": "elisabeth_ii",
+      "recorte_desalineado": "elisabeth_ii"
     }
   },
   "ataques_t": {
@@ -424,14 +426,14 @@
       "aleatorio_8": null,
       "aleatorio_9": null,
       "aleatorio_10": null,
-      "aleatorio_11": null,
+      "aleatorio_11": "elisabeth_ii",
       "aleatorio_12": null,
       "aleatorio_13": null,
       "aleatorio_14": null,
       "aleatorio_15": null,
       "aleatorio_16": null,
       "aleatorio_17": null,
-      "aleatorio_18": null,
+      "aleatorio_18": "elisabeth_ii",
       "aleatorio_19": null
     },
     "hill_climbing_con_scores": [
@@ -453,7 +455,7 @@
     ],
     "inversion_template_robado": {
       "dispositivo": "cuda",
-      "segundos": 2.5,
+      "segundos": 3.0,
       "sim_template_robado": 0.9916542172431946,
       "sim_otros_templates_vini": [
         0.0176,
@@ -473,7 +475,7 @@
     "lfw_fta_calidad": 0.009672787727650567,
     "lfw_no_detectadas": 0
   },
-  "tiempo_verificar_ms": 21.7,
+  "tiempo_verificar_ms": 18.4,
   "bd_e_inscripcion": {
     "inscribir(vinicius_junior, foto_atacante)": "rechazado (EnrollmentRejected)",
     "inscribir(..., actualizar=True)": "rechazado (EnrollmentRejected)",
@@ -484,6 +486,9 @@
     "BD: modificar un byte del cifrado": "detectado (IntegrityError)",
     "BD: intercambiar ids de dos filas": "detectado (IntegrityError)",
     "BD: borrar la BD": "detectado (IntegrityError)",
-    "BD con otra clave": "detectado (IntegrityError)"
+    "BD con otra clave": "detectado (IntegrityError)",
+    "Modelos: bajar umbral en calibration.json": "detectado (IntegrityError)",
+    "Modelos: borrar el filtro de caras": "detectado (IntegrityError)",
+    "Modelos: cambiar la proyeccion LDA": "detectado (IntegrityError)"
   }
 }

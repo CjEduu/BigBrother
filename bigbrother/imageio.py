@@ -14,11 +14,16 @@ def load_image(path):
     (En el dataset hay un AVIF con extension .jpg: cv2.imread no lo abre.)
     """
     path = Path(path)
+    if not path.is_file():
+        raise InvalidInput(f"No existe la imagen {path}")
+    if path.stat().st_size > config.MAX_FILE_BYTES:
+        raise InvalidInput(f"Imagen demasiado grande ({path.stat().st_size} bytes)")
     data = np.fromfile(str(path), dtype=np.uint8)  # soporta rutas unicode en Windows
     img = cv2.imdecode(data, cv2.IMREAD_COLOR) if data.size else None
     if img is None:
         try:
             from PIL import Image
+            Image.MAX_IMAGE_PIXELS = config.MAX_IMAGE_SIDE ** 2  # anti bomba de descompresion
             with Image.open(path) as im:
                 img = cv2.cvtColor(np.asarray(im.convert("RGB")), cv2.COLOR_RGB2BGR)
         except Exception as e:  # noqa: BLE001

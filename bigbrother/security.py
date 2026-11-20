@@ -5,6 +5,8 @@
 - La huella (SHA-256) del CSV completo + numero de filas se guarda, autenticada con HMAC, en
   la zona protegida (KEYS_DIR). Detecta filas anadidas/borradas, reordenadas, BD restaurada
   a una version anterior (rollback) o BD borrada.
+- La misma huella incluye el SHA-256 de los modelos y de la calibracion (umbrales): bajar el
+  umbral editando models/calibration.json o borrar el filtro de caras invalida la BD.
 - La clave maestra vive en KEYS_DIR/master.key (o en la variable BIGBROTHER_KEY, base64).
 """
 import base64
@@ -33,6 +35,16 @@ def validate_id(id_):
     if not isinstance(id_, str) or not _ID_RE.match(id_):
         raise InvalidInput(f"Id no valido: {id_!r} (debe cumplir {config.ID_REGEX})")
     return id_
+
+
+def models_digest(files=None):
+    """SHA-256 de los modelos y la calibracion (un fichero ausente tambien cambia la huella)."""
+    h = hashlib.sha256()
+    for f in files or config.MODEL_FILES:
+        f = Path(f)
+        h.update(f.name.encode() + b"|")
+        h.update(hashlib.sha256(f.read_bytes()).digest() if f.exists() else b"MISSING")
+    return h.hexdigest()
 
 
 def _hkdf(master, info):
@@ -85,13 +97,15 @@ class KeyStore:
         return np.frombuffer(pt, "<f4").astype(np.float32)
 
     # --- huella de la BD ----------------------------------------------------
-    def _mac(self, digest, rows):
-        msg = f"{digest}|{rows}".encode()
+    def _mac(self, digest, rows, models):
+        msg = f"{digest}|{rows}|{models}".encode()
         return hmac.new(self._mac_key, msg, hashlib.sha256).hexdigest()
 
     def write_state(self, db_bytes, rows):
         digest = hashlib.sha256(db_bytes).hexdigest()
-        state = {"sha256": digest, "rows": rows, "mac": self._mac(digest, rows)}
+        models = models_digest()
+        state = {"sha256": digest, "rows": rows, "models": models,
+                 "mac": self._mac(digest, rows, models)}
         self.keys_dir.mkdir(parents=True, exist_ok=True)
         tmp = self.state_path.with_suffix(".tmp")
         tmp.write_text(json.dumps(state))
@@ -102,7 +116,7 @@ class KeyStore:
             return None
         try:
             s = json.loads(self.state_path.read_text())
-            ok = hmac.compare_digest(s["mac"], self._mac(s["sha256"], int(s["rows"])))
+            ok = hmac.compare_digest(s["mac"], self._mac(s["sha256"], int(s["rows"]), s["models"]))
         except (ValueError, KeyError, TypeError) as e:
             raise IntegrityError("Fichero de estado de la BD corrupto") from e
         if not ok:
@@ -116,6 +130,8 @@ class KeyStore:
             if db_bytes is not None:
                 raise IntegrityError("La BD existe pero no hay huella: creada/copiada fuera del sistema")
             return
+        if not hmac.compare_digest(s["models"], models_digest()):
+            raise IntegrityError("Los modelos o umbrales (models/) han cambiado desde que se creo la BD")
         if db_bytes is None:
             if s["rows"] > 0:
                 raise IntegrityError("La BD ha sido borrada")

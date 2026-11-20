@@ -92,8 +92,9 @@ Excepciones (todas heredan de `BigBrotherError`): `NoFaceDetected`, `AmbiguousFa
 - Fotos con **dos caras de tamaño parecido**, caras de < 40 px o muy giradas → error.
 - Los templates de `_t` deben ser histogramas MLBP válidos (forma, suman 1 por región,
   múltiplos de 1/256): si no, `InvalidInput`.
-- La BD (`data/db.csv`) está cifrada y su huella se guarda en `keys/` (zona protegida). Si
-  alguien la modifica, borra, restaura o copia, el sistema **se niega a arrancar**.
+- La BD (`data/db.csv`) está cifrada y su huella (junto con la de `models/`: modelos y umbrales)
+  se guarda en `keys/` (zona protegida). Si alguien modifica, borra, restaura o copia la BD, o
+  toca los modelos/umbrales, el sistema **se niega a arrancar**.
 
 ## 4. Reproducir entrenamiento y evaluación
 
@@ -105,6 +106,7 @@ python scripts/train_projection.py --baseline --save    # -> models/mlbp_project
 python scripts/train_faceness.py       # -> models/faceness.npz
 python scripts/calibrate_identification.py
 python scripts/evaluate.py             # -> docs/resultados/ (métricas, ataques, gráficas)
+python scripts/build_db.py --force     # obligatorio tras cambiar models/: la BD queda ligada a sus hashes
 ```
 
 ## Estructura

@@ -421,7 +421,13 @@ def eval_sd_attacks(c):
             out[k] = f"rechazado ({type(e).__name__})"
     acc = {k: v for k, v in out.items() if v is not None and not v.startswith("rechazado")}
     # sin el filtro faceness (como estaba antes): cuantas basuras se identificaban
-    saved, c.bb.faceness = c.bb.faceness, None
+    class _NoFilter:  # filtro que lo acepta todo (como estaba el sistema antes)
+        threshold = -np.inf
+
+        @staticmethod
+        def score(t):
+            return 0.0
+    saved, c.bb.faceness = c.bb.faceness, _NoFilter()
     before = {k: c.bb.identificar_sd(im) for k, im in probes.items()}
     c.bb.faceness = saved
     R["ataques_sd"] = {"n": len(out), "resultado": out, "identificados": acc,
@@ -619,6 +625,32 @@ def eval_db_and_enrollment(c):
         out["BD con otra clave"] = "NO DETECTADO"
     except BigBrotherError as e:
         out["BD con otra clave"] = f"detectado ({type(e).__name__})"
+    # modelos / umbrales (copias en tmp para no tocar models/)
+    mdir = c.tmp / "models_copia"
+    mdir.mkdir()
+    orig = config.MODEL_FILES
+    config.MODEL_FILES = tuple(Path(shutil.copy(f, mdir / f.name)) for f in orig)
+    try:
+        for kind in ("bajar umbral en calibration.json", "borrar el filtro de caras", "cambiar la proyeccion LDA"):
+            d2, k2 = c.tmp / f"m_{len(out)}" / "db.csv", c.tmp / f"m_{len(out)}" / "keys"
+            BigBrother(db_path=d2, keys_dir=k2)._inscribir_admin([(VINI, c.bb.extraer(load_image(c.vini_paths[0])))])
+            cal, face, proj = mdir / "calibration.json", mdir / "faceness.npz", mdir / "mlbp_projection.npz"
+            backup = {f: f.read_bytes() for f in (cal, face, proj)}
+            if kind.startswith("bajar"):
+                cal.write_text(cal.read_text().replace('"threshold": 0.', '"threshold": -0.'))
+            elif kind.startswith("borrar"):
+                face.unlink()
+            else:
+                proj.write_bytes(proj.read_bytes()[:-10] + b"0123456789")
+            try:
+                BigBrother(db_path=d2, keys_dir=k2)
+                out[f"Modelos: {kind}"] = "NO DETECTADO"
+            except BigBrotherError as e:
+                out[f"Modelos: {kind}"] = f"detectado ({type(e).__name__})"
+            for f, b in backup.items():
+                f.write_bytes(b)
+    finally:
+        config.MODEL_FILES = orig
     R["bd_e_inscripcion"] = out
     for k, v in out.items():
         log(f"   {k:45s} {v}")

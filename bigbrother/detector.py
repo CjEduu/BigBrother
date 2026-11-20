@@ -34,11 +34,15 @@ class FaceDetector:
 
     def detect_all(self, img_bgr):
         h, w = img_bgr.shape[:2]
-        self._det.setInputSize((w, h))
-        _, faces = self._det.detect(img_bgr)
+        s = min(1.0, config.DETECT_MAX_SIDE / max(h, w))
+        small = img_bgr if s == 1.0 else cv2.resize(img_bgr, (round(w * s), round(h * s)),
+                                                     interpolation=cv2.INTER_AREA)
+        self._det.setInputSize((small.shape[1], small.shape[0]))
+        _, faces = self._det.detect(small)
         if faces is None:
             return []
-        out = [Face(tuple(float(v) for v in f[:4]), f[4:14].reshape(5, 2).astype(np.float32),
+        # coordenadas devueltas en la imagen original (el alineado usa la resolucion completa)
+        out = [Face(tuple(float(v) / s for v in f[:4]), (f[4:14].reshape(5, 2) / s).astype(np.float32),
                     float(f[-1])) for f in faces]
         return sorted(out, key=lambda f: f.area, reverse=True)
 

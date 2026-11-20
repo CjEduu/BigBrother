@@ -19,6 +19,8 @@ Decisiones de seguridad (ver docs/INFORME_SEGURIDAD.md):
     - Templates validados (forma, rango, histogramas que suman 1, reticula 1/256).
     - BD cifrada (AES-GCM, id como AAD) + huella HMAC en la zona protegida: fail-closed.
 """
+from pathlib import Path
+
 import numpy as np
 
 from . import config
@@ -35,14 +37,19 @@ from .security import KeyStore, validate_id
 class BigBrother:
     def __init__(self, db_path=None, keys_dir=None, threshold=None, ident_threshold=None,
                  dedup_threshold=None, detector=None, extractor=None, projection=None):
-        self.keystore = KeyStore(keys_dir or config.KEYS_DIR)
-        self.db = Database(db_path or config.DB_PATH, self.keystore)
+        db_path = Path(db_path or config.DB_PATH)
+        # Solo se genera una clave nueva si aun no existe la BD (si no, seria una clave
+        # que no puede descifrarla).
+        self.keystore = KeyStore(keys_dir or config.KEYS_DIR, create=not db_path.exists())
+        # La BD comprueba tambien que modelos y umbrales (models/) no han cambiado desde que
+        # se creo: editar calibration.json o borrar faceness.npz -> IntegrityError.
+        self.db = Database(db_path, self.keystore)
         self.threshold = config.THRESHOLD if threshold is None else threshold
         self.ident_threshold = config.IDENT_THRESHOLD if ident_threshold is None else ident_threshold
         self.dedup_threshold = config.DEDUP_THRESHOLD if dedup_threshold is None else dedup_threshold
         self._detector = detector
         self.projection = projection or Projection()
-        self.faceness = Faceness() if config.FACENESS_PATH.exists() else None
+        self.faceness = Faceness()  # obligatorio: sin el, *_sd/*_t aceptarian basura
         self.extractor = extractor or MLBPExtractor()
         meta = self.projection.meta
         if meta and (tuple(meta.get("radii", ())) != self.extractor.radii
@@ -100,7 +107,7 @@ class BigBrother:
     # Uso interno/evaluacion. No forman parte de la API publica (no exponer scores).
     def _proj(self, template):
         t = self.validar_template(template)
-        if self.faceness is not None and self.faceness.score(t) < self.faceness.threshold:
+        if self.faceness.score(t) < self.faceness.threshold:
             # Los metodos *_sd / *_t se saltan el detector: sin este filtro, ruido aleatorio
             # llegaba a identificarse como una persona inscrita.
             raise NoFaceDetected("El recorte/template no parece una cara")

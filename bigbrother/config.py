@@ -32,6 +32,8 @@ MAX_YAW_RATIO = 0.45          # |nariz - centro ojos| / dist. ojos (descarta per
 AMBIGUOUS_FACE_RATIO = 0.45   # si la 2a cara tiene >= 45% del area de la 1a -> ambiguo
 MAX_IMAGE_SIDE = 6000         # imagenes mayores se reescalan (anti-DoS)
 MIN_IMAGE_SIDE = 32
+MAX_FILE_BYTES = 30 * 1024 * 1024
+DETECT_MAX_SIDE = 1600        # se detecta sobre una copia reducida (velocidad / anti-DoS)
 
 # --- Extractor MLBP --------------------------------------------------------
 FACE_SIZE = 128               # lado de la cara alineada (px)
@@ -57,9 +59,13 @@ def _load_calibration():
         return {}
 
 
+# Los umbrales NO se pueden cambiar por variables de entorno (seria un bypass trivial) y el
+# fichero de calibracion esta cubierto por la huella de modelos guardada en keys/db.state.
 _CAL = _load_calibration()
-THRESHOLD = float(os.environ.get("BIGBROTHER_THRESHOLD", _CAL.get("threshold", 0.5)))
+THRESHOLD = float(_CAL.get("threshold", 0.5))
 DEDUP_THRESHOLD = float(_CAL.get("dedup_threshold", THRESHOLD))
-# identificacion open-set: umbral mas estricto (FPIR 1% contra la galeria de 51)
-IDENT_THRESHOLD = float(os.environ.get("BIGBROTHER_IDENT_THRESHOLD",
-                                       _CAL.get("ident_threshold", THRESHOLD)))
+# identificacion open-set: umbral mas estricto (FPIR 1% contra la galeria)
+IDENT_THRESHOLD = float(_CAL.get("ident_threshold", THRESHOLD))
+
+# Ficheros cuya integridad se ata a la BD (cambiarlos invalida la BD existente)
+MODEL_FILES = (YUNET_PATH, PROJECTION_PATH, FACENESS_PATH, CALIBRATION_PATH)

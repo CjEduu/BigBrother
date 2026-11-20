@@ -177,3 +177,52 @@ def test_manipulacion_bd_detectada(bb3, tmp_path, ataque):
         b = BigBrother(db_path=db, keys_dir=keys)
         if ataque == "otra_clave":  # clave nueva generada -> no puede leer la BD
             b.identidades()
+
+
+# ---------------------------------------------------------------- integridad de modelos/umbrales
+@pytest.mark.parametrize("ataque", ["bajar_umbral", "borrar_filtro_caras", "cambiar_proyeccion"])
+def test_manipulacion_modelos_detectada(tmp_path, monkeypatch, ataque):
+    from bigbrother import config
+    copies = []
+    for f in config.MODEL_FILES:
+        dst = tmp_path / "models" / f.name
+        dst.parent.mkdir(exist_ok=True)
+        shutil.copy(f, dst)
+        copies.append(dst)
+    monkeypatch.setattr(config, "MODEL_FILES", tuple(copies))
+    db, keys = tmp_path / "db.csv", tmp_path / "keys"
+    BigBrother(db_path=db, keys_dir=keys).inscribir("keanu_reeves", load_image(KEANU))
+    cal, face, proj = (tmp_path / "models" / n for n in
+                       ("calibration.json", "faceness.npz", "mlbp_projection.npz"))
+    if ataque == "bajar_umbral":
+        cal.write_text(cal.read_text().replace('"threshold": 0.', '"threshold": -0.'))
+    elif ataque == "borrar_filtro_caras":
+        face.unlink()
+    else:
+        proj.write_bytes(proj.read_bytes()[:-10] + b"0123456789")
+    with pytest.raises(IntegrityError):
+        BigBrother(db_path=db, keys_dir=keys)
+
+
+def test_umbral_no_se_cambia_por_entorno(monkeypatch):
+    import importlib
+
+    from bigbrother import config
+    monkeypatch.setenv("BIGBROTHER_THRESHOLD", "-1")
+    monkeypatch.setenv("BIGBROTHER_IDENT_THRESHOLD", "-1")
+    assert importlib.reload(config).THRESHOLD > 0.1 and config.IDENT_THRESHOLD > 0.1
+
+
+def test_sin_clave_no_genera_otra_si_hay_bd(bb3, tmp_path):
+    (tmp_path / "keys" / "master.key").unlink()
+    with pytest.raises(IntegrityError):
+        BigBrother(db_path=bb3.db.path, keys_dir=tmp_path / "keys")
+    assert not (tmp_path / "keys" / "master.key").exists()
+
+
+def test_actualizar_con_muestra_que_verifica(bb3):
+    """Anadir otra muestra solo es posible con una foto que ya verifica (no es un bypass,
+    pero si un atacante consigue verificar UNA vez, puede persistir: ver INFORME V-actualizar)."""
+    n = len(bb3.db.get("keanu_reeves"))
+    bb3.inscribir("keanu_reeves", load_image(KEANU)[:, ::-1].copy(), actualizar=True)
+    assert len(bb3.db.get("keanu_reeves")) == n + 1
