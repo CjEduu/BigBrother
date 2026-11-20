@@ -1,0 +1,8 @@
+.git
+**/__pycache__
+.pytest_cache
+data/db.csv
+keys/
+docs/
+*.md
+!data/README.md

@@ -1,0 +1,9 @@
+{
+  "threshold": -3.5946569442749023,
+  "frr_caras_alineadas": 0.0004445432318292954,
+  "frr_caras_desalineadas": 0.002,
+  "frr_caras_oscuras_bajo_contraste": 0.001,
+  "far_no_caras": 0.005,
+  "n_pos_test": 8499,
+  "n_neg_test": 6000
+}

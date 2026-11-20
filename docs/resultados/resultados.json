@@ -1,0 +1,489 @@
+{
+  "build_db_s": 2.65,
+  "umbral": 0.21724116802215576,
+  "umbral_identificacion": 0.2846938967704773,
+  "calibracion": {
+    "threshold": 0.21724116802215576,
+    "target_far": 0.001,
+    "dedup_threshold": 0.27820372581481934,
+    "test_far": 0.0010001539482631884,
+    "test_frr": 0.6523255813953488,
+    "metrics": {
+      "eer": 0.15494206691891294,
+      "tar@far0.01": 0.5411627906976744,
+      "thr@far0.01": 0.15703514218330383,
+      "tar@far0.001": 0.34767441860465115,
+      "thr@far0.001": 0.21724116802215576
+    },
+    "n_genuine": 4300,
+    "n_impostor": 980849,
+    "train_ids": 4017,
+    "train_images": 8677,
+    "test_images": 4499,
+    "baseline_chi2": {
+      "eer": 0.33597999643112064,
+      "tar@far0.01": 0.1153,
+      "thr@far0.01": 255.2188424682617,
+      "tar@far0.001": 0.0421,
+      "thr@far0.001": 233.64417422485351
+    },
+    "ident_threshold": 0.2846938967704773,
+    "ident_target_fpir": 0.01,
+    "ident_fpir_train": 0.010026506857208713,
+    "ident_fpir_test": 0.008446321404756613
+  },
+  "lfw": {
+    "mlbp_lda_coseno": {
+      "eer": 0.15494206691891294,
+      "tar@far0.01": 0.5411627906976744,
+      "thr@far0.01": 0.15703514218330383,
+      "tar@far0.001": 0.34767441860465115,
+      "thr@far0.001": 0.21724116802215576,
+      "far_at_thr": 0.0010001539482631884,
+      "frr_at_thr": 0.6523255813953488,
+      "n_gen": 4300,
+      "n_imp": 980849
+    },
+    "mlbp_chi2_baseline": {
+      "eer": 0.3646995291889038,
+      "tar@far0.01": 0.15465116279069768,
+      "thr@far0.01": -255.19020080566406,
+      "tar@far0.001": 0.07093023255813953,
+      "thr@far0.001": -233.58909606933594
+    }
+  },
+  "vinicius_loo": {
+    "fotos": [
+      "vini_01.jpg",
+      "vini_02.jpg",
+      "vini_04.jpg",
+      "vini_05.jpg",
+      "vini_06.jpg"
+    ],
+    "scores": [
+      0.3296000063419342,
+      0.3580999970436096,
+      0.3050999939441681,
+      0.3580999970436096,
+      0.3296000063419342
+    ],
+    "aceptadas": 5,
+    "total": 5,
+    "rank": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "identificadas": 5
+  },
+  "genuinos_lfw_inscritos": {
+    "christian_bale": {
+      "n": 1,
+      "aceptadas": 0,
+      "rank1": 0,
+      "media": 0.033789560198783875
+    },
+    "jackie_chan": {
+      "n": 13,
+      "aceptadas": 0,
+      "rank1": 0,
+      "media": 0.02417733334004879
+    },
+    "james_phelps": {
+      "n": 1,
+      "aceptadas": 0,
+      "rank1": 0,
+      "media": 0.12496571242809296
+    },
+    "keanu_reeves": {
+      "n": 12,
+      "aceptadas": 2,
+      "rank1": 5,
+      "media": 0.12096903473138809
+    },
+    "mary-kate_olsen": {
+      "n": 3,
+      "aceptadas": 0,
+      "rank1": 0,
+      "media": 0.1473604440689087
+    },
+    "michael_jackson": {
+      "n": 12,
+      "aceptadas": 0,
+      "rank1": 0,
+      "media": 0.0416882298886776
+    },
+    "salma_hayek": {
+      "n": 13,
+      "aceptadas": 6,
+      "rank1": 2,
+      "media": 0.15943114459514618
+    }
+  },
+  "genuinos_lfw_inscritos_total": {
+    "n": 55,
+    "aceptadas": 8,
+    "tar": 0.14545454545454545
+  },
+  "gemelos": {
+    "Ashley_Olsen->mary-kate_olsen": {
+      "n": 1,
+      "scores": [
+        0.14249999821186066
+      ],
+      "aceptado_como_victima": 0,
+      "identificado_como": [
+        null
+      ]
+    },
+    "Oliver_Phelps->james_phelps": {
+      "n": 1,
+      "scores": [
+        0.12950000166893005
+      ],
+      "aceptado_como_victima": 0,
+      "identificado_como": [
+        null
+      ]
+    }
+  },
+  "open_set": {
+    "n_probes": 4499,
+    "fpir_identificacion": 0.008446321404756613,
+    "fpir_si_se_usara_umbral_verificacion": 0.06645921315847966,
+    "far_contra_vinicius": 0.006668148477439431,
+    "falsos_vinicius": 30,
+    "top10_parecidos_vinicius": [
+      [
+        "Ruben_Sierra",
+        0.3484
+      ],
+      [
+        "Shawn_Kemp",
+        0.3428
+      ],
+      [
+        "Felix_Doh",
+        0.333
+      ],
+      [
+        "Ted_Washington",
+        0.3189
+      ],
+      [
+        "George_W_Bush",
+        0.2748
+      ],
+      [
+        "Shane_Mosley",
+        0.2673
+      ],
+      [
+        "Michael_Clarke_Duncan",
+        0.2636
+      ],
+      [
+        "John_Allen_Muhammad",
+        0.2619
+      ],
+      [
+        "Brandon_Robinson",
+        0.2545
+      ],
+      [
+        "Alejandro_Gonzalez_Inarritu",
+        0.2534
+      ]
+    ]
+  },
+  "robustez": {
+    "original": {
+      "vini_aceptadas": 5,
+      "vini_fta": 0,
+      "vini_n": 5,
+      "vini_score_medio": 0.3361005187034607,
+      "lfw_aceptadas": 3,
+      "lfw_fta": 3,
+      "lfw_n": 21
+    },
+    "espejo": {
+      "vini_aceptadas": 5,
+      "vini_fta": 0,
+      "vini_n": 5,
+      "vini_score_medio": 0.3346349596977234,
+      "lfw_aceptadas": 1,
+      "lfw_fta": 2,
+      "lfw_n": 21
+    },
+    "rotacion 15": {
+      "vini_aceptadas": 5,
+      "vini_fta": 0,
+      "vini_n": 5,
+      "vini_score_medio": 0.3266649842262268,
+      "lfw_aceptadas": 0,
+      "lfw_fta": 3,
+      "lfw_n": 21
+    },
+    "desenfoque s=2": {
+      "vini_aceptadas": 4,
+      "vini_fta": 0,
+      "vini_n": 5,
+      "vini_score_medio": 0.2694520354270935,
+      "lfw_aceptadas": 0,
+      "lfw_fta": 3,
+      "lfw_n": 21
+    },
+    "desenfoque s=4": {
+      "vini_aceptadas": 4,
+      "vini_fta": 0,
+      "vini_n": 5,
+      "vini_score_medio": 0.23559732735157013,
+      "lfw_aceptadas": 0,
+      "lfw_fta": 1,
+      "lfw_n": 21
+    },
+    "jpeg q=10": {
+      "vini_aceptadas": 5,
+      "vini_fta": 0,
+      "vini_n": 5,
+      "vini_score_medio": 0.30736130475997925,
+      "lfw_aceptadas": 0,
+      "lfw_fta": 2,
+      "lfw_n": 21
+    },
+    "baja resolucion x0.25": {
+      "vini_aceptadas": 4,
+      "vini_fta": 0,
+      "vini_n": 5,
+      "vini_score_medio": 0.2825203239917755,
+      "lfw_aceptadas": 0,
+      "lfw_fta": 2,
+      "lfw_n": 21
+    },
+    "ruido s=20": {
+      "vini_aceptadas": 5,
+      "vini_fta": 0,
+      "vini_n": 5,
+      "vini_score_medio": 0.4156375527381897,
+      "lfw_aceptadas": 7,
+      "lfw_fta": 2,
+      "lfw_n": 21
+    },
+    "oscura (gamma 2.2)": {
+      "vini_aceptadas": 5,
+      "vini_fta": 0,
+      "vini_n": 5,
+      "vini_score_medio": 0.34159040451049805,
+      "lfw_aceptadas": 1,
+      "lfw_fta": 3,
+      "lfw_n": 21
+    },
+    "sobreexpuesta (gamma 0.4)": {
+      "vini_aceptadas": 5,
+      "vini_fta": 0,
+      "vini_n": 5,
+      "vini_score_medio": 0.3562306761741638,
+      "lfw_aceptadas": 3,
+      "lfw_fta": 2,
+      "lfw_n": 21
+    },
+    "escala de grises": {
+      "vini_aceptadas": 5,
+      "vini_fta": 0,
+      "vini_n": 5,
+      "vini_score_medio": 0.3635581433773041,
+      "lfw_aceptadas": 3,
+      "lfw_fta": 2,
+      "lfw_n": 21
+    },
+    "gafas de sol": {
+      "vini_aceptadas": 0,
+      "vini_fta": 1,
+      "vini_n": 5,
+      "vini_score_medio": 0.12955616414546967,
+      "lfw_aceptadas": 0,
+      "lfw_fta": 2,
+      "lfw_n": 21
+    },
+    "mascarilla": {
+      "vini_aceptadas": 3,
+      "vini_fta": 0,
+      "vini_n": 5,
+      "vini_score_medio": 0.22744953632354736,
+      "lfw_aceptadas": 0,
+      "lfw_fta": 2,
+      "lfw_n": 21
+    },
+    "PAD: foto de pantalla": {
+      "vini_aceptadas": 5,
+      "vini_fta": 0,
+      "vini_n": 5,
+      "vini_score_medio": 0.33272531628608704,
+      "lfw_aceptadas": 2,
+      "lfw_fta": 2,
+      "lfw_n": 21
+    },
+    "PAD: foto impresa": {
+      "vini_aceptadas": 5,
+      "vini_fta": 0,
+      "vini_n": 5,
+      "vini_score_medio": 0.37044602632522583,
+      "lfw_aceptadas": 7,
+      "lfw_fta": 2,
+      "lfw_n": 21
+    }
+  },
+  "morphing": {
+    "complice_parecido": {
+      "aceptados_como_vinicius": 23,
+      "n": 25
+    },
+    "complice_aleatorio": {
+      "aceptados_como_vinicius": 12,
+      "n": 25
+    }
+  },
+  "ataques_sd": {
+    "n": 27,
+    "resultado": {
+      "ruido_0": "rechazado (NoFaceDetected)",
+      "ruido_1": "rechazado (NoFaceDetected)",
+      "ruido_2": "rechazado (NoFaceDetected)",
+      "ruido_3": "rechazado (NoFaceDetected)",
+      "ruido_4": "rechazado (NoFaceDetected)",
+      "ruido_5": "rechazado (NoFaceDetected)",
+      "ruido_6": "rechazado (NoFaceDetected)",
+      "ruido_7": "rechazado (NoFaceDetected)",
+      "ruido_8": "rechazado (NoFaceDetected)",
+      "ruido_9": "rechazado (NoFaceDetected)",
+      "ruido_10": "rechazado (NoFaceDetected)",
+      "ruido_11": "rechazado (NoFaceDetected)",
+      "ruido_12": "rechazado (NoFaceDetected)",
+      "ruido_13": "rechazado (NoFaceDetected)",
+      "ruido_14": "rechazado (NoFaceDetected)",
+      "ruido_15": "rechazado (NoFaceDetected)",
+      "ruido_16": "rechazado (NoFaceDetected)",
+      "ruido_17": "rechazado (NoFaceDetected)",
+      "ruido_18": "rechazado (NoFaceDetected)",
+      "ruido_19": "rechazado (NoFaceDetected)",
+      "gris_0": "rechazado (NoFaceDetected)",
+      "gris_127": "rechazado (NoFaceDetected)",
+      "gris_255": "rechazado (NoFaceDetected)",
+      "degradado": "rechazado (NoFaceDetected)",
+      "ajedrez": "rechazado (NoFaceDetected)",
+      "foto_sin_recortar": "rechazado (NoFaceDetected)",
+      "recorte_desalineado": "rechazado (NoFaceDetected)"
+    },
+    "identificados": {},
+    "identificados_sin_filtro_faceness": {
+      "ruido_0": "forest_whitaker",
+      "ruido_1": "forest_whitaker",
+      "ruido_2": "forest_whitaker",
+      "ruido_3": "forest_whitaker",
+      "ruido_4": "forest_whitaker",
+      "ruido_5": "forest_whitaker",
+      "ruido_6": "forest_whitaker",
+      "ruido_7": "forest_whitaker",
+      "ruido_8": "forest_whitaker",
+      "ruido_9": "forest_whitaker",
+      "ruido_10": "forest_whitaker",
+      "ruido_11": "forest_whitaker",
+      "ruido_12": "forest_whitaker",
+      "ruido_13": "forest_whitaker",
+      "ruido_14": "forest_whitaker",
+      "ruido_15": "forest_whitaker",
+      "ruido_16": "forest_whitaker",
+      "ruido_17": "forest_whitaker",
+      "ruido_18": "forest_whitaker",
+      "ruido_19": "forest_whitaker",
+      "gris_127": "stevie_wonder",
+      "gris_255": "stevie_wonder"
+    }
+  },
+  "ataques_t": {
+    "entradas_invalidas": {
+      "dim_incorrecta": "InvalidInput",
+      "nan": "InvalidInput",
+      "negativo": "InvalidInput",
+      "escalado": "InvalidInput",
+      "uniforme_no_reticula": "InvalidInput",
+      "perturbacion_1e-3": "InvalidInput"
+    },
+    "wolf_templates": {
+      "media_lfw": null,
+      "aleatorio_0": null,
+      "aleatorio_1": null,
+      "aleatorio_2": null,
+      "aleatorio_3": null,
+      "aleatorio_4": null,
+      "aleatorio_5": null,
+      "aleatorio_6": null,
+      "aleatorio_7": null,
+      "aleatorio_8": null,
+      "aleatorio_9": null,
+      "aleatorio_10": null,
+      "aleatorio_11": null,
+      "aleatorio_12": null,
+      "aleatorio_13": null,
+      "aleatorio_14": null,
+      "aleatorio_15": null,
+      "aleatorio_16": null,
+      "aleatorio_17": null,
+      "aleatorio_18": null,
+      "aleatorio_19": null
+    },
+    "hill_climbing_con_scores": [
+      {
+        "consultas": 1579,
+        "score_final": 0.21824128925800323,
+        "aceptado_por_verificar_t": true
+      },
+      {
+        "consultas": 944,
+        "score_final": 0.21725818514823914,
+        "aceptado_por_verificar_t": true
+      },
+      {
+        "consultas": 914,
+        "score_final": 0.217508465051651,
+        "aceptado_por_verificar_t": true
+      }
+    ],
+    "inversion_template_robado": {
+      "dispositivo": "cuda",
+      "segundos": 2.5,
+      "sim_template_robado": 0.9916542172431946,
+      "sim_otros_templates_vini": [
+        0.0176,
+        0.2656,
+        0.2763,
+        0.3261
+      ],
+      "faceness": 29.600597381591797,
+      "faceness_umbral": -3.5946569442749023,
+      "aceptado_verificar_t": true,
+      "identificar_t": "vinicius_junior"
+    }
+  },
+  "detector": {
+    "vinicius + atacante del mismo tamano": "AmbiguousFace",
+    "atacante grande + vinicius pequeno": "idris_elba",
+    "lfw_fta_calidad": 0.009672787727650567,
+    "lfw_no_detectadas": 0
+  },
+  "tiempo_verificar_ms": 21.7,
+  "bd_e_inscripcion": {
+    "inscribir(vinicius_junior, foto_atacante)": "rechazado (EnrollmentRejected)",
+    "inscribir(..., actualizar=True)": "rechazado (EnrollmentRejected)",
+    "inscribir(clon, foto_de_vinicius)": "rechazado (EnrollmentRejected)",
+    "inscribir('=HYPERLINK(...)', foto)": "rechazado (InvalidInput)",
+    "BD: copiar fila de idris como vinicius": "detectado (IntegrityError)",
+    "BD: borrar filas de vinicius": "detectado (IntegrityError)",
+    "BD: modificar un byte del cifrado": "detectado (IntegrityError)",
+    "BD: intercambiar ids de dos filas": "detectado (IntegrityError)",
+    "BD: borrar la BD": "detectado (IntegrityError)",
+    "BD con otra clave": "detectado (IntegrityError)"
+  }
+}

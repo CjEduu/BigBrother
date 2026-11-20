@@ -1,0 +1,7 @@
+# Entrenamiento de la proyeccion y evaluacion (scripts/train_projection.py, scripts/evaluate.py)
+-r requirements.txt
+scikit-learn==1.9.1
+joblib==1.6.0
+matplotlib==3.11.2
+# opcional: inversion de templates en GPU en evaluate.py (si falta, se usa la CPU)
+# torch

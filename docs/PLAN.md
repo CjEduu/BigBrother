@@ -1,20 +1,18 @@
 # Plan de trabajo - BigBrother (MLBP)
 
-Pipeline: foto -> YuNet (detector) -> alineado 5 landmarks -> MLBP -> template -> chi2 -> decision
+Pipeline: foto -> YuNet (detector + calidad) -> alineado 5 landmarks -> ecualizacion -> MLBP (template)
+-> filtro "es una cara" -> sqrt/PCA-blanqueado/LDA (LFW) -> coseno -> umbral
 
-## Decisiones
-- Detector: YuNet (OpenCV, ONNX). Da bbox + 5 landmarks para alinear, solo depende de OpenCV.
-- Extractor: LBP uniforme (P=8), radios 1,2,3, rejilla 8x8, histogramas normalizados -> 1920 dim.
-- Comparador: chi-cuadrado, con pesos por region (a calibrar).
-- Persona 51: vinicius_junior.
+## Estado
+- [x] Dataset loader + inscripcion de las 50 identidades (49 docente + vinicius_junior) -> `scripts/build_db.py`
+- [x] Entrenamiento proyeccion + calibracion de umbrales (FAR 0.1% verif., FPIR 1% ident.) -> `scripts/train_projection.py`, `calibrate_identification.py`
+- [x] Evaluacion propia: ROC, LOO Vinicius, open-set, gemelos LFW, robustez, PAD simulado, morphing -> `scripts/evaluate.py`
+- [x] Seguridad: bypass del detector (_sd/_t), lectura de BD (cifrado), escritura de BD (integridad + fail-closed)
+- [x] Control de inscripcion (no sobrescribir ids, actualizar solo si verifica, deduplicacion)
+- [x] Docker + README + CI (GitHub Actions construye la imagen y pasa los tests)
+- [x] Informe de vulnerabilidades/fortalezas -> `docs/INFORME.md`
+- [ ] Evaluacion del sistema rival (viernes 27)
+- [ ] Presentacion
 
-## Issues
-1. Dataset loader + inscripcion masiva de las 51 personas
-2. Calibrar umbral (FAR/FRR/EER) y pesos por region
-3. Evaluacion propia: ROC/DET, Rank-1
-4. Seguridad: bypass del detector (_sd/_t), lectura de BD, escritura de BD
-5. Mitigaciones: HMAC/cifrado de templates, control de inscripcion
-6. Ataques de presentacion (foto en pantalla/impresa)
-7. Docker + README de uso para el grupo rival
-8. Evaluacion del rival
-9. Presentacion
+## Ideas pendientes (no implementadas, ver INFORME)
+- Deteccion de vida / PAD (V2), limite de intentos (V8), clave en KMS (V1), mas fotos por inscrito (V6).

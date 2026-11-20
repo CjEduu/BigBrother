@@ -1,12 +1,65 @@
+"""Configuracion global de BigBrother.
+
+Las rutas sensibles (clave maestra y estado de la BD) se pueden mover con variables
+de entorno para separarlas fisicamente de la BD (ver docs/INFORME_SEGURIDAD.md).
+"""
+import json
+import os
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-DB_PATH = ROOT / "data" / "db.csv"
-YUNET_PATH = ROOT / "models" / "face_detection_yunet_2023mar.onnx"
 
-FACE_SIZE = 128            # lado de la cara alineada (px)
-LBP_POINTS = 8             # vecinos por patron LBP
-LBP_RADII = (1, 2, 3)      # escalas (multiscale)
-GRID = (8, 8)              # regiones (filas, columnas)
-DETECTOR_SCORE_MIN = 0.7
-THRESHOLD = 0.0            # TODO: calibrar con la evaluacion (distancia chi2)
+# --- Rutas -----------------------------------------------------------------
+DATA_DIR = Path(os.environ.get("BIGBROTHER_DATA", ROOT / "data"))
+DB_PATH = Path(os.environ.get("BIGBROTHER_DB", DATA_DIR / "db.csv"))
+# "Zona protegida": clave maestra + huella de la BD. NO debe estar en el mismo
+# volumen/permisos que la BD (en docker: /app/keys, la BD en /app/data).
+KEYS_DIR = Path(os.environ.get("BIGBROTHER_KEYS", ROOT / "keys"))
+KEY_PATH = KEYS_DIR / "master.key"
+STATE_PATH = KEYS_DIR / "db.state"
+
+MODELS_DIR = ROOT / "models"
+YUNET_PATH = MODELS_DIR / "face_detection_yunet_2023mar.onnx"
+PROJECTION_PATH = MODELS_DIR / "mlbp_projection.npz"
+CALIBRATION_PATH = MODELS_DIR / "calibration.json"
+FACENESS_PATH = MODELS_DIR / "faceness.npz"
+
+# --- Detector / calidad ----------------------------------------------------
+DETECTOR_SCORE_MIN = 0.75     # confianza minima de YuNet
+MIN_FACE_PX = 40              # lado minimo del bbox de la cara (px)
+MIN_EYE_DIST_PX = 16          # distancia interocular minima (px)
+MAX_YAW_RATIO = 0.45          # |nariz - centro ojos| / dist. ojos (descarta perfiles)
+AMBIGUOUS_FACE_RATIO = 0.45   # si la 2a cara tiene >= 45% del area de la 1a -> ambiguo
+MAX_IMAGE_SIDE = 6000         # imagenes mayores se reescalan (anti-DoS)
+MIN_IMAGE_SIDE = 32
+
+# --- Extractor MLBP --------------------------------------------------------
+FACE_SIZE = 128               # lado de la cara alineada (px)
+LBP_POINTS = 8                # vecinos por patron
+LBP_RADII = (1, 2, 3, 4, 5, 6)  # escalas (multiscale)
+LBP_METHOD = "nri_uniform"    # 59 bins para P=8 (uniformes no invariantes a rotacion)
+GRID = (8, 8)                 # regiones (filas, columnas)
+PHOTOMETRIC = "equalize"      # "equalize" | "tantriggs" (TT dio peor EER en LFW: 19.7% vs 15.5%)
+
+# --- Politica de inscripcion ----------------------------------------------
+ID_REGEX = r"^[a-z0-9][a-z0-9_.-]{0,63}$"
+# Al inscribir una identidad nueva se rechaza si la cara ya coincide con otra
+# identidad inscrita con una similitud >= DEDUP_THRESHOLD (deduplicacion).
+DEDUP_ENABLED = True
+
+
+def _load_calibration():
+    """Umbrales calibrados por scripts/train_projection.py (similitud coseno)."""
+    try:
+        with open(CALIBRATION_PATH) as f:
+            return json.load(f)
+    except (OSError, ValueError):
+        return {}
+
+
+_CAL = _load_calibration()
+THRESHOLD = float(os.environ.get("BIGBROTHER_THRESHOLD", _CAL.get("threshold", 0.5)))
+DEDUP_THRESHOLD = float(_CAL.get("dedup_threshold", THRESHOLD))
+# identificacion open-set: umbral mas estricto (FPIR 1% contra la galeria de 51)
+IDENT_THRESHOLD = float(os.environ.get("BIGBROTHER_IDENT_THRESHOLD",
+                                       _CAL.get("ident_threshold", THRESHOLD)))

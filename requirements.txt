@@ -1,4 +1,8 @@
-numpy>=1.26
-opencv-python-headless>=4.9
-scikit-image>=0.22
-pytest>=8.0
+# Ejecucion del sistema (versiones fijadas: los umbrales se calibraron con ellas)
+numpy==2.5.5
+opencv-python-headless==5.1.0.95
+scikit-image==0.26.0
+scipy==1.18.1
+cryptography==50.0.2
+pillow==13.0.0
+pytest==9.2.0

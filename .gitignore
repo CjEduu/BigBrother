@@ -217,6 +217,6 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
-models/*.onnx
+data/*.tmp
 data/db.csv
-data/faces/
+keys/

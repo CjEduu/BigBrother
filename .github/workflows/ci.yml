@@ -1,0 +1,17 @@
+name: ci
+on: [push, pull_request, workflow_dispatch]
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image (construye la BD con todas las identidades)
+        run: docker build -t bigbrother .
+      - name: Tests dentro del contenedor
+        run: docker run --rm --entrypoint pytest bigbrother -q
+      - name: Smoke test de la CLI
+        run: |
+          docker run --rm bigbrother listar
+          docker run --rm bigbrother verificar vinicius_junior data/fotos/vinicius_junior/vini_06.jpg
+          docker run --rm bigbrother identificar data/fotos/dataset/keanu_reeves_2021.png
+          docker run --rm bigbrother recortar data/fotos/dataset/keanu_reeves_2021.png /tmp/c.png
