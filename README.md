@@ -4,7 +4,7 @@ Práctica de Sistemas Biométricos (UMA) — grupo **EVE**: Eduardo Jiliberto Ca
 Ramírez, Jorge Manuel Gutiérrez Melgar, Nacho Ferrer Tellez, Pablo Cervantes Pardo.
 
 - Aproximación asignada: **Multiscale Local Binary Patterns (MLBP)**.
-- Famoso elegido (persona 51): **Vinícius José Paixão de Oliveira Júnior** → id `vinicius_junior`.
+- Famoso elegido (persona 50 del dataset): **Vinícius José Paixão de Oliveira Júnior** → id `vinicius_junior`.
 - Informe de vulnerabilidades y fortalezas: **[docs/INFORME.md](docs/INFORME.md)**.
 
 ```
@@ -115,8 +115,9 @@ python scripts/build_db.py --force     # obligatorio tras cambiar models/: la BD
 bigbrother/   system.py (API), detector.py, preprocess.py, mlbp.py, matcher.py,
               security.py (cifrado + integridad), database.py (CSV), __main__.py (CLI)
 scripts/      build_db.py, prepare_lfw.py, train_projection.py, train_faceness.py,
-              calibrate_identification.py, evaluate.py
+              calibrate_identification.py, evaluate.py, ataque_gemela.py
 models/       YuNet (.onnx), proyección MLBP→LDA, filtro de cara, calibración de umbrales
-data/fotos/   dataset/ (49 fotos del docente) + vinicius_junior/ (5 fotos nuestras)
+data/fotos/   dataset/ (49 fotos del docente) + vinicius_junior/ (5 fotos nuestras, persona 50)
+data/ataques/ gemela_paula/ (2 fotos de la gemela de Aitana, solo para evaluar; no se inscriben)
 docs/         INFORME.md (vulnerabilidades/fortalezas) + resultados/
 ```

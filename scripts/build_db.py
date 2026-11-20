@@ -1,4 +1,4 @@
-"""Construye la BD inicial con las 50 identidades del docente + vinicius_junior.
+"""Construye la BD inicial: las 49 identidades del docente + vinicius_junior (50 en total).
 
     python scripts/build_db.py            # crea data/db.csv y keys/ (clave nueva)
     python scripts/build_db.py --force    # borra la BD y la clave existentes y la regenera

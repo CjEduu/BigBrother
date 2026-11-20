@@ -219,7 +219,7 @@ def eval_twins(c):
 
 # ============================================================================ 5. impostores open-set
 def eval_open_set(c):
-    log("[5] Impostores no inscritos (LFW test) contra la galeria de 51")
+    log("[5] Impostores no inscritos (LFW test) contra la galeria de 50 identidades")
     ids, M = c.gallery()
     Y = c.proj(np.asarray(c.X[c.test_mask]))
     S = Y @ M.T

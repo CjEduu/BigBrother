@@ -1,0 +1,78 @@
+{
+  "victima": "aitana_etxebarria",
+  "umbral_verificacion": 0.21724116802215576,
+  "umbral_identificacion": 0.2846938967704773,
+  "fotos": {
+    "paula_01.jpg": {
+      "verificar_victima": true,
+      "identificar": null,
+      "score_victima": 0.2493,
+      "rank_victima": 1,
+      "top5": [
+        [
+          "aitana_etxebarria",
+          0.2493
+        ],
+        [
+          "kim_jisoo",
+          0.1874
+        ],
+        [
+          "etsy_quesada",
+          0.1531
+        ],
+        [
+          "adele",
+          0.1416
+        ],
+        [
+          "taylor_swift",
+          0.1415
+        ]
+      ],
+      "identidades_que_verifica": [
+        "aitana_etxebarria"
+      ]
+    },
+    "paula_02.jpg": {
+      "verificar_victima": true,
+      "identificar": "aitana_etxebarria",
+      "score_victima": 0.4936,
+      "rank_victima": 1,
+      "top5": [
+        [
+          "aitana_etxebarria",
+          0.4936
+        ],
+        [
+          "zoe_saldana",
+          0.4098
+        ],
+        [
+          "kim_jisoo",
+          0.4087
+        ],
+        [
+          "taylor_swift",
+          0.3774
+        ],
+        [
+          "lara_raj",
+          0.3692
+        ]
+      ],
+      "identidades_que_verifica": [
+        "aitana_etxebarria",
+        "zoe_saldana",
+        "kim_jisoo",
+        "taylor_swift",
+        "lara_raj",
+        "salma_hayek",
+        "hunter_schufer",
+        "mary-kate_olsen",
+        "anya_taylor_joy",
+        "winnie_harlow"
+      ]
+    }
+  }
+}

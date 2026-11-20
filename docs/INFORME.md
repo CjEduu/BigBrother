@@ -1,6 +1,6 @@
 # Informe de vulnerabilidades y fortalezas — BigBrother (MLBP)
 
-Grupo EVE · Sistemas Biométricos · Persona 51: **vinicius_junior**
+Grupo EVE · Sistemas Biométricos · Persona 50 del dataset: **vinicius_junior**
 
 Todas las cifras salen de `python scripts/evaluate.py` → [`docs/resultados/resultados.json`](resultados/resultados.json).
 Las gráficas están en [`docs/resultados/`](resultados/).
@@ -20,7 +20,9 @@ Las gráficas están en [`docs/resultados/`](resultados/).
 Entrenamiento y calibración: LFW (13.233 caras), con identidades **disjuntas** de las de test. Las
 personas del dataset que están en LFW (Keanu Reeves, Salma Hayek, Jackie Chan, Michael Jackson,
 Christian Bale, Mary-Kate Olsen, James Phelps) y los **gemelos** Ashley Olsen y Oliver Phelps se
-excluyeron del entrenamiento y se usaron para atacar.
+excluyeron del entrenamiento y se usaron para atacar. La gemela de Aitana Etxebarria, **Paula
+Etxeberria**, se atacó con 2 fotos públicas suyas (`data/ataques/gemela_paula/`, `python scripts/ataque_gemela.py`
+→ [`resultados/gemela_paula.json`](resultados/gemela_paula.json)).
 
 ## 2. Rendimiento
 
@@ -44,8 +46,9 @@ excluyeron del entrenamiento y se usaron para atacar.
 | V2 | **Foto/pantalla de Vinícius** (presentación) | **Sí** | No hay detección de vida. Simulaciones de foto en pantalla e impresa: 5/5 aceptadas. Cualquier foto pública de Vinícius sirve |
 | V3 | **Morphing** 50/50 Vinícius + cómplice | **Sí** | Aceptado como Vinícius 23/25 con un cómplice parecido y 12/25 con uno aleatorio |
 | V4 | **Parecidos (sesgo demográfico)** | Parcial | FAR contra Vinícius 0,67 %, 6,7 veces el nominal. Los 4 desconocidos de LFW más parecidos (0,32–0,35) son hombres negros, con puntuaciones **del nivel de las genuinas de Vinícius (0,31–0,36)**. LFW está sesgado a hombres blancos, así que las parejas del mismo grupo demográfico son mucho más peligrosas |
-| V5 | **Gemelos** | Hoy no, pero no es una defensa | Ashley Olsen → mary-kate_olsen: 0,142. Oliver Phelps → james_phelps: 0,130. Ambos rechazados, pero **las fotos genuinas de Mary-Kate y James en LFW puntúan lo mismo** (0,147 y 0,125). El sistema no distingue gemelos: los rechaza solo porque con una única foto de inscripción también rechaza al genuino. Con una foto del gemelo parecida a la de inscripción, entraría. No hemos probado la gemela de Aitana Etxebarria (no tenemos fotos) |
-| V6 | **FRR alta en los 50 del docente** | Sí (disponibilidad) | Con una sola foto de inscripción y fotos de otra época o pose, TAR del 15 %: Jackie Chan 0/13, Michael Jackson 0/12 (la foto inscrita es de 1982), Keanu 2/12, Salma 6/13. Vinícius funciona porque tiene 5 fotos |
+| V5 | **Gemelos** | **Sí** | **Paula Etxeberria entra como `aitana_etxebarria`: 2/2 fotos verificadas** (similitud 0,249 y 0,494; umbral 0,217), y con la segunda `identificar` devuelve `aitana_etxebarria`. En las dos, Aitana es la identidad más parecida de la BD. Los gemelos de LFW (Ashley Olsen → mary-kate_olsen 0,142; Oliver Phelps → james_phelps 0,130) se rechazaron, pero **las fotos genuinas de Mary-Kate y James puntúan lo mismo** (0,147 y 0,125). MLBP no distingue gemelos idénticos: el resultado solo depende de lo parecida que sea la foto a la de inscripción. No hay defensa posible con este rasgo |
+| V19 | **Retrato retocado que verifica como muchas personas** | Sí | La segunda foto de Paula (retrato frontal con filtro de belleza) verifica contra **10 de las mujeres inscritas** (Zoe Saldana 0,41, Kim Jisoo 0,41, Taylor Swift 0,38…), no solo contra Aitana. En LFW, el peor desconocido verifica como 8 identidades distintas. Un atacante puede elegir una foto así y probar ids hasta entrar (V8). Probamos exigir que el id reclamado sea además el más parecido de la BD: la FAR por intento baja solo de 0,199 % a 0,129 %, pero los genuinos cruzados aceptados caen de 8/55 a 4/55, así que lo descartamos |
+| V6 | **FRR alta en los 49 del docente** | Sí (disponibilidad) | Con una sola foto de inscripción y fotos de otra época o pose, TAR del 15 %: Jackie Chan 0/13, Michael Jackson 0/12 (la foto inscrita es de 1982), Keanu 2/12, Salma 6/13. Vinícius funciona porque tiene 5 fotos |
 | V7 | **Oclusiones** | Sí (FRR) | Gafas de sol: 0/5 aceptadas. Mascarilla: 3/5. Desenfoque y baja resolución: 4/5. No abren la puerta a nadie, solo rechazan al genuino |
 | V8 | **Intentos ilimitados** | Sí | No hay bloqueo ni límite de intentos. Un atacante puede probar miles de parecidos o fotos |
 | V9 | **Hill-climbing con puntuaciones** | Solo en caja blanca | Si se expusiera la similitud, se llega al umbral en **~900–1.600 consultas**. La API pública solo devuelve `bool`/id, pero el código Python es accesible (`bb._score_id`): un atacante con el código lo usa directamente |
@@ -77,7 +80,7 @@ excluyeron del entrenamiento y se usaron para atacar.
 | Templates manipulados por `_t` (NaN, negativos, escalados, dimensión incorrecta, uniformes, interpolados) | Rechazados: el template debe ser un histograma MLBP exacto (cada región suma 1 y en múltiplos de 1/256) |
 | Templates válidos aleatorios o la "media de caras" (*wolf*) | 21/21 no identificados |
 | Foto con Vinícius y el atacante del mismo tamaño | `AmbiguousFace` |
-| Gemelos de LFW | No aceptados (con las salvedades de V5) |
+| Gemelos de LFW (1 foto cada uno) | No aceptados, pero por suerte: la gemela de Aitana sí entra (V5) |
 | Formatos raros (el dataset trae un **AVIF con extensión .jpg** y un WebP), imágenes gigantes | Soportados; las imágenes de más de 6000 px se reescalan |
 | Espejo, rotación de 15°, JPEG q=10, ruido, gamma, escala de grises | Vinícius 5/5 en todos |
 
@@ -85,7 +88,7 @@ excluyeron del entrenamiento y se usaron para atacar.
 
 ## 5. Modelo de amenaza y decisiones
 
-- **Atacante de caja negra** (solo la API/CLI): solo ve decisiones, no puntuaciones. Le quedan V2–V8.
+- **Atacante de caja negra** (solo la API/CLI): solo ve decisiones, no puntuaciones. Le quedan V2–V8 y V19.
 - **Atacante con lectura o escritura en `data/` o en `models/`**: protegido (cifrado e integridad), salvo DoS (V10) y metadatos (V11).
 - **Atacante con acceso a `keys/` o al código** (por ejemplo, `docker exec`): el sistema cae (V1, V9). En
   un despliegue real la clave iría en un KMS/HSM y la huella de la BD en un almacenamiento de solo-anexado.
@@ -110,5 +113,5 @@ excluyeron del entrenamiento y se usaron para atacar.
 
 - Solo 5 fotos de Vinícius (LOO): con tan pocas muestras, la estimación de su FRR es muy imprecisa.
 - Ataques de presentación y morphing **simulados** digitalmente, no capturados con cámara.
-- Gemelos: solo 1 foto de cada gemelo en LFW.
-- El dataset del docente que recibimos tiene **49** fotos, no 50: el sistema tiene 50 identidades.
+- Gemelos: solo 1 foto de cada gemelo de LFW y 2 de Paula Etxeberria.
+- Identidades: 49 fotos del docente + Vinícius (la persona 50 del dataset) = 50 identidades inscritas.
