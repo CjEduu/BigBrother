@@ -6,6 +6,9 @@ Ramírez, Jorge Manuel Gutiérrez Melgar, Nacho Ferrer Tellez, Pablo Cervantes P
 - Aproximación asignada: **Multiscale Local Binary Patterns (MLBP)**.
 - Famoso elegido (persona 50 del dataset): **Vinícius José Paixão de Oliveira Júnior** → id `vinicius_junior`.
 - Informe de vulnerabilidades y fortalezas: **[docs/INFORME.md](docs/INFORME.md)**.
+- Ataques conocidos de la literatura, mapeados al sistema: **[docs/ATAQUES_LITERATURA.md](docs/ATAQUES_LITERATURA.md)**.
+- Los mismos ataques, ejecutados y medidos: **[docs/ATAQUES_EMPIRICOS.md](docs/ATAQUES_EMPIRICOS.md)**
+  (`python scripts/ataques_literatura.py` → `docs/resultados/ataques_literatura.json`).
 
 ```
 foto ─► YuNet (cara + 5 puntos + control de calidad) ─► alineado 128×128 ─► Tan-Triggs
@@ -115,9 +118,13 @@ python scripts/build_db.py --force     # obligatorio tras cambiar models/: la BD
 bigbrother/   system.py (API), detector.py, preprocess.py, mlbp.py, matcher.py,
               security.py (cifrado + integridad), database.py (CSV), __main__.py (CLI)
 scripts/      build_db.py, prepare_lfw.py, train_projection.py, train_faceness.py,
-              calibrate_identification.py, evaluate.py, ataque_gemela.py
+              calibrate_identification.py, evaluate.py, ataque_gemela.py,
+              ataques_literatura.py (ataques H1-H5 de la literatura, medidos),
+              graficas_ataques.py (figuras ilustrativas de los ataques)
 models/       YuNet (.onnx), proyección MLBP→LDA, filtro de cara, calibración de umbrales
 data/fotos/   dataset/ (49 fotos del docente) + vinicius_junior/ (5 fotos nuestras, persona 50)
 data/ataques/ gemela_paula/ (2 fotos de la gemela de Aitana, solo para evaluar; no se inscriben)
-docs/         INFORME.md (vulnerabilidades/fortalezas) + resultados/
+docs/         INFORME.md (vulnerabilidades/fortalezas) + ATAQUES_LITERATURA.md (mapeo de ataques
+de              la literatura al sistema) + ATAQUES_EMPIRICOS.md (esos ataques, ejecutados y
+medidos) + resultados/
 ```

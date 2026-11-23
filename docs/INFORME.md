@@ -3,7 +3,12 @@
 Grupo EVE · Sistemas Biométricos · Persona 50 del dataset: **vinicius_junior**
 
 Todas las cifras salen de `python scripts/evaluate.py` → [`docs/resultados/resultados.json`](resultados/resultados.json).
-Las gráficas están en [`docs/resultados/`](resultados/).
+Las gráficas están en [`docs/resultados/`](resultados/). El ataque a la luz de la **literatura científica**
+(Ratha, Adler, morphing, menagerie, NIST FRVT…) y su mapeo a este sistema están en
+[`ATAQUES_LITERATURA.md`](ATAQUES_LITERATURA.md); la **ejecución empírica** de esos ataques
+(troyanos de código, hill-climbing binario, morphing por inscripción, revocación, dodging),
+con proceso y cifras, está en [`ATAQUES_EMPIRICOS.md`](ATAQUES_EMPIRICOS.md).
+Este informe recoge lo que **medimos nosotros**.
 
 ## 1. Sistema evaluado
 

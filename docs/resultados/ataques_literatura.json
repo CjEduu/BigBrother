@@ -1,0 +1,474 @@
+{
+  "meta": {
+    "victima": "vinicius_junior",
+    "atacante": "paula_01 (gemela de una inscrita, no inscrita)",
+    "umbral_verificacion": 0.21724116802215576,
+    "umbral_identificacion": 0.2846938967704773,
+    "umbral_dedup": 0.27820372581481934,
+    "dim_template": 22656,
+    "identidades": 50
+  },
+  "a1_troyanos_software": {
+    "0_baseline": {
+      "nota": "arbol copiado, BD intacta: el atacante (paula_01) NO verifica como la victima",
+      "verificar": {
+        "cmd": "verificar vinicius_junior /app/data/ataques/gemela_paula/paula_01.jpg",
+        "rc": 1,
+        "salida": {
+          "id": "vinicius_junior",
+          "verificado": false
+        }
+      },
+      "arranque": {
+        "cmd": "listar",
+        "rc": 0,
+        "salida": {
+          "identidades": [
+            "adam_pearson",
+            "adele",
+            "aitana_etxebarria",
+            "anya_taylor_joy",
+            "arianna_grande",
+            "brays_efe",
+            "christian_bale",
+            "cynthia_erivo",
+            "elisabeth_ii",
+            "ellen_page",
+            "etsy_quesada",
+            "eva_hache",
+            "falete",
+            "forest_whitaker",
+            "hasbulla_magomedov",
+            "hunter_schufer",
+            "hwang_min-hyun",
+            "idris_elba",
+            "jackie_chan",
+            "james_phelps",
+            "joe_batalan",
+            "jordi_hurtado",
+            "jorge_javier_vazquez",
+            "josie_totah",
+            "julie_walters",
+            "keanu_reeves",
+            "kim_jisoo",
+            "lady_gaga",
+            "lara_raj",
+            "leticia_sabater",
+            "mary-kate_olsen",
+            "metrika",
+            "michael_jackson",
+            "mindy_kaling",
+            "nicolas_maduro",
+            "rossy_de_palma",
+            "salma_hayek",
+            "samuel_l_jackson",
+            "santiago_segura",
+            "serenna_williams",
+            "stevie_wonder",
+            "taylor_swift",
+            "temuera_morrison",
+            "tilda_swinton",
+            "tini",
+            "vinicius_junior",
+            "wiliem_dafoe",
+            "winnie_harlow",
+            "zack_efron",
+            "zoe_saldana"
+          ]
+        }
+      }
+    },
+    "1_anular_decision_R8": {
+      "verificar": {
+        "cmd": "verificar vinicius_junior /app/data/ataques/gemela_paula/paula_01.jpg",
+        "rc": 0,
+        "salida": {
+          "id": "vinicius_junior",
+          "verificado": true
+        }
+      },
+      "arranque_sin_deteccion": {
+        "cmd": "listar",
+        "rc": 0,
+        "salida": {
+          "identidades": [
+            "adam_pearson",
+            "adele",
+            "aitana_etxebarria",
+            "anya_taylor_joy",
+            "arianna_grande",
+            "brays_efe",
+            "christian_bale",
+            "cynthia_erivo",
+            "elisabeth_ii",
+            "ellen_page",
+            "etsy_quesada",
+            "eva_hache",
+            "falete",
+            "forest_whitaker",
+            "hasbulla_magomedov",
+            "hunter_schufer",
+            "hwang_min-hyun",
+            "idris_elba",
+            "jackie_chan",
+            "james_phelps",
+            "joe_batalan",
+            "jordi_hurtado",
+            "jorge_javier_vazquez",
+            "josie_totah",
+            "julie_walters",
+            "keanu_reeves",
+            "kim_jisoo",
+            "lady_gaga",
+            "lara_raj",
+            "leticia_sabater",
+            "mary-kate_olsen",
+            "metrika",
+            "michael_jackson",
+            "mindy_kaling",
+            "nicolas_maduro",
+            "rossy_de_palma",
+            "salma_hayek",
+            "samuel_l_jackson",
+            "santiago_segura",
+            "serenna_williams",
+            "stevie_wonder",
+            "taylor_swift",
+            "temuera_morrison",
+            "tilda_swinton",
+            "tini",
+            "vinicius_junior",
+            "wiliem_dafoe",
+            "winnie_harlow",
+            "zack_efron",
+            "zoe_saldana"
+          ]
+        }
+      }
+    },
+    "2_troyano_extractor_R3": {
+      "verificar": {
+        "cmd": "verificar vinicius_junior /app/data/ataques/gemela_paula/paula_01.jpg",
+        "rc": 0,
+        "salida": {
+          "id": "vinicius_junior",
+          "verificado": true
+        }
+      },
+      "arranque_sin_deteccion": {
+        "cmd": "listar",
+        "rc": 0,
+        "salida": {
+          "identidades": [
+            "adam_pearson",
+            "adele",
+            "aitana_etxebarria",
+            "anya_taylor_joy",
+            "arianna_grande",
+            "brays_efe",
+            "christian_bale",
+            "cynthia_erivo",
+            "elisabeth_ii",
+            "ellen_page",
+            "etsy_quesada",
+            "eva_hache",
+            "falete",
+            "forest_whitaker",
+            "hasbulla_magomedov",
+            "hunter_schufer",
+            "hwang_min-hyun",
+            "idris_elba",
+            "jackie_chan",
+            "james_phelps",
+            "joe_batalan",
+            "jordi_hurtado",
+            "jorge_javier_vazquez",
+            "josie_totah",
+            "julie_walters",
+            "keanu_reeves",
+            "kim_jisoo",
+            "lady_gaga",
+            "lara_raj",
+            "leticia_sabater",
+            "mary-kate_olsen",
+            "metrika",
+            "michael_jackson",
+            "mindy_kaling",
+            "nicolas_maduro",
+            "rossy_de_palma",
+            "salma_hayek",
+            "samuel_l_jackson",
+            "santiago_segura",
+            "serenna_williams",
+            "stevie_wonder",
+            "taylor_swift",
+            "temuera_morrison",
+            "tilda_swinton",
+            "tini",
+            "vinicius_junior",
+            "wiliem_dafoe",
+            "winnie_harlow",
+            "zack_efron",
+            "zoe_saldana"
+          ]
+        }
+      }
+    },
+    "3_control_modelos": {
+      "nota": "editar models/calibration.json (bajar el umbral) SI invalida la huella",
+      "arranque": {
+        "cmd": "listar",
+        "rc": 2,
+        "salida": {
+          "error": "IntegrityError",
+          "detalle": "Los modelos o umbrales (models/) han cambiado desde que se creo la BD"
+        }
+      }
+    },
+    "4_mitigacion_digest_codigo": {
+      "rebuild": {
+        "cmd": "construir_bd --force",
+        "rc": 0,
+        "salida": {
+          "ok": true,
+          "templates": 54,
+          "identidades": 50
+        }
+      },
+      "arranque": {
+        "cmd": "listar",
+        "rc": 0,
+        "salida": {
+          "identidades": [
+            "adam_pearson",
+            "adele",
+            "aitana_etxebarria",
+            "anya_taylor_joy",
+            "arianna_grande",
+            "brays_efe",
+            "christian_bale",
+            "cynthia_erivo",
+            "elisabeth_ii",
+            "ellen_page",
+            "etsy_quesada",
+            "eva_hache",
+            "falete",
+            "forest_whitaker",
+            "hasbulla_magomedov",
+            "hunter_schufer",
+            "hwang_min-hyun",
+            "idris_elba",
+            "jackie_chan",
+            "james_phelps",
+            "joe_batalan",
+            "jordi_hurtado",
+            "jorge_javier_vazquez",
+            "josie_totah",
+            "julie_walters",
+            "keanu_reeves",
+            "kim_jisoo",
+            "lady_gaga",
+            "lara_raj",
+            "leticia_sabater",
+            "mary-kate_olsen",
+            "metrika",
+            "michael_jackson",
+            "mindy_kaling",
+            "nicolas_maduro",
+            "rossy_de_palma",
+            "salma_hayek",
+            "samuel_l_jackson",
+            "santiago_segura",
+            "serenna_williams",
+            "stevie_wonder",
+            "taylor_swift",
+            "temuera_morrison",
+            "tilda_swinton",
+            "tini",
+            "vinicius_junior",
+            "wiliem_dafoe",
+            "winnie_harlow",
+            "zack_efron",
+            "zoe_saldana"
+          ]
+        }
+      }
+    },
+    "5_troyano_con_mitigacion": {
+      "arranque": {
+        "cmd": "listar",
+        "rc": 2,
+        "salida": {
+          "error": "IntegrityError",
+          "detalle": "Los modelos o umbrales (models/) han cambiado desde que se creo la BD"
+        }
+      }
+    }
+  },
+  "a2_hillclimb_binario": {
+    "consultas_totales": 4058,
+    "fase0_sanity": 2,
+    "fase1_biseccion": 46,
+    "fase2_hillclimb": 4001,
+    "alpha_frontera_uniforme": 0.9091,
+    "pasos_aceptados_fase2": 303,
+    "alpha_medio_final": 0.9263793945312498,
+    "fraccion_regiones_alpha_max": 0.0546875,
+    "sim_template_atacante": 0.9476804733276367,
+    "sim_template_victima_foto": 0.21725639700889587,
+    "sim_base_victima_atacante": -0.03821665421128273,
+    "score_white_box_final": 0.21725639700889587,
+    "identificar_t": null
+  },
+  "a3_morphing_inscripcion": [
+    {
+      "alpha": 0.0,
+      "score_morph_victima": 1.0,
+      "score_morph_atacante": -0.03821665421128273,
+      "score_probe_victima_vini06": 0.3295867145061493,
+      "score_probe_atacante_paula02": -0.07700292021036148,
+      "morph_foto_verifica_como_victima": true,
+      "inscrito_como_id_nuevo": false,
+      "motivo_rechazo": "EnrollmentRejected: La cara ya coincide con una identidad inscrita (duplicado)",
+      "poisoning_aceptado": true,
+      "atacante_puro_verifica_como_victima": false
+    },
+    {
+      "alpha": 0.1,
+      "score_morph_victima": 0.8964569568634033,
+      "score_morph_atacante": 0.054391197860240936,
+      "score_probe_victima_vini06": 0.3281713128089905,
+      "score_probe_atacante_paula02": -0.06111348420381546,
+      "morph_foto_verifica_como_victima": true,
+      "inscrito_como_id_nuevo": false,
+      "motivo_rechazo": "EnrollmentRejected: La cara ya coincide con una identidad inscrita (duplicado)",
+      "poisoning_aceptado": true,
+      "atacante_puro_verifica_como_victima": false
+    },
+    {
+      "alpha": 0.2,
+      "score_morph_victima": 0.7724312543869019,
+      "score_morph_atacante": 0.13142132759094238,
+      "score_probe_victima_vini06": 0.27545252442359924,
+      "score_probe_atacante_paula02": -0.03625337406992912,
+      "morph_foto_verifica_como_victima": true,
+      "inscrito_como_id_nuevo": false,
+      "motivo_rechazo": "EnrollmentRejected: La cara ya coincide con una identidad inscrita (duplicado)",
+      "poisoning_aceptado": true,
+      "atacante_puro_verifica_como_victima": false
+    },
+    {
+      "alpha": 0.3,
+      "score_morph_victima": 0.6288596391677856,
+      "score_morph_atacante": 0.2558874785900116,
+      "score_probe_victima_vini06": 0.20959950983524323,
+      "score_probe_atacante_paula02": 0.028503596782684326,
+      "morph_foto_verifica_como_victima": true,
+      "inscrito_como_id_nuevo": false,
+      "motivo_rechazo": "EnrollmentRejected: La cara ya coincide con una identidad inscrita (duplicado)",
+      "poisoning_aceptado": true,
+      "atacante_puro_verifica_como_victima": false
+    },
+    {
+      "alpha": 0.4,
+      "score_morph_victima": 0.4764316976070404,
+      "score_morph_atacante": 0.39052242040634155,
+      "score_probe_victima_vini06": 0.15046009421348572,
+      "score_probe_atacante_paula02": 0.07346303015947342,
+      "morph_foto_verifica_como_victima": true,
+      "inscrito_como_id_nuevo": false,
+      "motivo_rechazo": "EnrollmentRejected: La cara ya coincide con una identidad inscrita (duplicado)",
+      "poisoning_aceptado": true,
+      "atacante_puro_verifica_como_victima": false
+    },
+    {
+      "alpha": 0.5,
+      "score_morph_victima": 0.3474125266075134,
+      "score_morph_atacante": 0.5268552899360657,
+      "score_probe_victima_vini06": 0.09500923752784729,
+      "score_probe_atacante_paula02": 0.13363584876060486,
+      "morph_foto_verifica_como_victima": true,
+      "inscrito_como_id_nuevo": false,
+      "motivo_rechazo": "EnrollmentRejected: La cara ya coincide con una identidad inscrita (duplicado)",
+      "poisoning_aceptado": true,
+      "atacante_puro_verifica_como_victima": false
+    },
+    {
+      "alpha": 0.6,
+      "score_morph_victima": 0.22290025651454926,
+      "score_morph_atacante": 0.6530069708824158,
+      "score_probe_victima_vini06": 0.020269352942705154,
+      "score_probe_atacante_paula02": 0.14382807910442352,
+      "morph_foto_verifica_como_victima": false,
+      "inscrito_como_id_nuevo": true,
+      "victima_verifica_como_sospechoso": false,
+      "atacante_verifica_como_sospechoso": false,
+      "poisoning_aceptado": true,
+      "atacante_puro_verifica_como_victima": false
+    },
+    {
+      "alpha": 0.7,
+      "score_morph_victima": 0.11523578315973282,
+      "score_morph_atacante": 0.7764327526092529,
+      "score_probe_victima_vini06": -0.05968092754483223,
+      "score_probe_atacante_paula02": 0.20417219400405884,
+      "morph_foto_verifica_como_victima": false,
+      "inscrito_como_id_nuevo": true,
+      "victima_verifica_como_sospechoso": false,
+      "atacante_verifica_como_sospechoso": false,
+      "poisoning_aceptado": false,
+      "motivo_poisoning": "EnrollmentRejected"
+    },
+    {
+      "alpha": 0.8,
+      "score_morph_victima": 0.09263363480567932,
+      "score_morph_atacante": 0.8758432269096375,
+      "score_probe_victima_vini06": -0.0995679721236229,
+      "score_probe_atacante_paula02": 0.22256672382354736,
+      "morph_foto_verifica_como_victima": false,
+      "inscrito_como_id_nuevo": true,
+      "victima_verifica_como_sospechoso": false,
+      "atacante_verifica_como_sospechoso": true,
+      "poisoning_aceptado": false,
+      "motivo_poisoning": "EnrollmentRejected"
+    },
+    {
+      "alpha": 0.9,
+      "score_morph_victima": 0.07353413105010986,
+      "score_morph_atacante": 0.9525732398033142,
+      "score_probe_victima_vini06": -0.10952942818403244,
+      "score_probe_atacante_paula02": 0.22814802825450897,
+      "morph_foto_verifica_como_victima": false,
+      "inscrito_como_id_nuevo": true,
+      "victima_verifica_como_sospechoso": false,
+      "atacante_verifica_como_sospechoso": true,
+      "poisoning_aceptado": false,
+      "motivo_poisoning": "EnrollmentRejected"
+    },
+    {
+      "alpha": 1.0,
+      "score_morph_victima": 0.032660067081451416,
+      "score_morph_atacante": 1.0,
+      "score_probe_victima_vini06": -0.12201850861310959,
+      "score_probe_atacante_paula02": 0.21556256711483002,
+      "morph_foto_verifica_como_victima": false,
+      "inscrito_como_id_nuevo": true,
+      "victima_verifica_como_sospechoso": false,
+      "atacante_verifica_como_sospechoso": false,
+      "poisoning_aceptado": false,
+      "motivo_poisoning": "EnrollmentRejected"
+    }
+  ],
+  "a4_rotacion_sin_revocacion": {
+    "template_robado_verifica_tras_rotacion": true,
+    "templates_identicos": true,
+    "ciphertexts_distintos": true,
+    "n_templates_victima": 5
+  },
+  "a5_dodging_detector": {
+    "sin_parche": true,
+    "parche_ojos": "NoFaceDetected",
+    "parche_frente_control": "verificado=True"
+  },
+  "segundos": 24.8
+}
