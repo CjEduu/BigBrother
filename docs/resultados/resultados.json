@@ -1,5 +1,5 @@
 {
-  "build_db_s": 2.16,
+  "build_db_s": 2.6,
   "umbral": 0.21724116802215576,
   "umbral_identificacion": 0.2846938967704773,
   "calibracion": {
@@ -34,22 +34,22 @@
   },
   "lfw": {
     "mlbp_lda_coseno": {
-      "eer": 0.15494206691891294,
-      "tar@far0.01": 0.5411627906976744,
-      "thr@far0.01": 0.15703514218330383,
-      "tar@far0.001": 0.34767441860465115,
-      "thr@far0.001": 0.21724116802215576,
-      "far_at_thr": 0.0010001539482631884,
-      "frr_at_thr": 0.6523255813953488,
+      "eer": 0.1555406877340506,
+      "tar@far0.01": 0.5406976744186046,
+      "thr@far0.01": 0.15692020952701569,
+      "tar@far0.001": 0.3481395348837209,
+      "thr@far0.001": 0.21740645170211792,
+      "far_at_thr": 0.001007290622715627,
+      "frr_at_thr": 0.651860465116279,
       "n_gen": 4300,
       "n_imp": 980849
     },
     "mlbp_chi2_baseline": {
-      "eer": 0.3646995291889038,
-      "tar@far0.01": 0.15465116279069768,
-      "thr@far0.01": -255.19020080566406,
-      "tar@far0.001": 0.07093023255813953,
-      "thr@far0.001": -233.58909606933594
+      "eer": 0.36361371739074555,
+      "tar@far0.01": 0.15558139534883722,
+      "thr@far0.01": -255.96212768554688,
+      "tar@far0.001": 0.07348837209302325,
+      "thr@far0.001": -234.9298095703125
     }
   },
   "vinicius_loo": {
@@ -61,11 +61,11 @@
       "vini_06.jpg"
     ],
     "scores": [
-      0.3296000063419342,
-      0.3580999970436096,
-      0.3050999939441681,
-      0.3580999970436096,
-      0.3296000063419342
+      0.3301999866962433,
+      0.3564000129699707,
+      0.2815000116825104,
+      0.3564000129699707,
+      0.3301999866962433
     ],
     "aceptadas": 5,
     "total": 5,
@@ -76,50 +76,50 @@
       1,
       1
     ],
-    "identificadas": 5
+    "identificadas": 4
   },
   "genuinos_lfw_inscritos": {
     "christian_bale": {
       "n": 1,
       "aceptadas": 0,
       "rank1": 0,
-      "media": 0.033789560198783875
+      "media": 0.05225624516606331
     },
     "jackie_chan": {
       "n": 13,
       "aceptadas": 0,
       "rank1": 0,
-      "media": 0.02417733334004879
+      "media": 0.027095459401607513
     },
     "james_phelps": {
       "n": 1,
       "aceptadas": 0,
       "rank1": 0,
-      "media": 0.12496571242809296
+      "media": 0.15846584737300873
     },
     "keanu_reeves": {
       "n": 12,
-      "aceptadas": 2,
-      "rank1": 5,
-      "media": 0.12096903473138809
+      "aceptadas": 3,
+      "rank1": 4,
+      "media": 0.13339634239673615
     },
     "mary-kate_olsen": {
       "n": 3,
-      "aceptadas": 0,
+      "aceptadas": 1,
       "rank1": 0,
-      "media": 0.1473604440689087
+      "media": 0.17402195930480957
     },
     "michael_jackson": {
       "n": 12,
       "aceptadas": 0,
       "rank1": 0,
-      "media": 0.0416882298886776
+      "media": 0.039572764188051224
     },
     "salma_hayek": {
       "n": 13,
-      "aceptadas": 6,
+      "aceptadas": 4,
       "rank1": 2,
-      "media": 0.15943114459514618
+      "media": 0.15435776114463806
     }
   },
   "genuinos_lfw_inscritos_total": {
@@ -131,7 +131,7 @@
     "Ashley_Olsen->mary-kate_olsen": {
       "n": 1,
       "scores": [
-        0.14249999821186066
+        0.18129999935626984
       ],
       "aceptado_como_victima": 0,
       "identificado_como": [
@@ -141,7 +141,7 @@
     "Oliver_Phelps->james_phelps": {
       "n": 1,
       "scores": [
-        0.12950000166893005
+        0.1324000060558319
       ],
       "aceptado_como_victima": 0,
       "identificado_como": [
@@ -151,50 +151,50 @@
   },
   "open_set": {
     "n_probes": 4499,
-    "fpir_identificacion": 0.008224049788841965,
-    "fpir_si_se_usara_umbral_verificacion": 0.06445876861524784,
-    "far_contra_vinicius": 0.006668148477439431,
-    "falsos_vinicius": 30,
+    "fpir_identificacion": 0.013780840186708157,
+    "fpir_si_se_usara_umbral_verificacion": 0.08024005334518781,
+    "far_contra_vinicius": 0.0064458768615247835,
+    "falsos_vinicius": 29,
     "top10_parecidos_vinicius": [
       [
-        "Ruben_Sierra",
-        0.3484
+        "Shawn_Kemp",
+        0.3295
       ],
       [
-        "Shawn_Kemp",
-        0.3428
+        "Ruben_Sierra",
+        0.3218
       ],
       [
         "Felix_Doh",
-        0.333
+        0.3075
       ],
       [
         "Ted_Washington",
-        0.3189
-      ],
-      [
-        "George_W_Bush",
-        0.2748
-      ],
-      [
-        "Shane_Mosley",
-        0.2673
-      ],
-      [
-        "Michael_Clarke_Duncan",
-        0.2636
+        0.284
       ],
       [
         "John_Allen_Muhammad",
-        0.2619
+        0.2717
+      ],
+      [
+        "Michael_Clarke_Duncan",
+        0.2587
+      ],
+      [
+        "George_W_Bush",
+        0.2549
       ],
       [
         "Brandon_Robinson",
-        0.2545
+        0.2543
+      ],
+      [
+        "George_McCloud",
+        0.2509
       ],
       [
         "Alejandro_Gonzalez_Inarritu",
-        0.2534
+        0.2496
       ]
     ]
   },
@@ -203,17 +203,17 @@
       "vini_aceptadas": 5,
       "vini_fta": 0,
       "vini_n": 5,
-      "vini_score_medio": 0.3361005187034607,
-      "lfw_aceptadas": 3,
-      "lfw_fta": 3,
+      "vini_score_medio": 0.33094292879104614,
+      "lfw_aceptadas": 5,
+      "lfw_fta": 2,
       "lfw_n": 21
     },
     "espejo": {
       "vini_aceptadas": 5,
       "vini_fta": 0,
       "vini_n": 5,
-      "vini_score_medio": 0.3346349596977234,
-      "lfw_aceptadas": 1,
+      "vini_score_medio": 0.3263349235057831,
+      "lfw_aceptadas": 2,
       "lfw_fta": 2,
       "lfw_n": 21
     },
@@ -221,53 +221,53 @@
       "vini_aceptadas": 5,
       "vini_fta": 0,
       "vini_n": 5,
-      "vini_score_medio": 0.3266649842262268,
-      "lfw_aceptadas": 0,
-      "lfw_fta": 3,
+      "vini_score_medio": 0.3142373263835907,
+      "lfw_aceptadas": 2,
+      "lfw_fta": 1,
       "lfw_n": 21
     },
     "desenfoque s=2": {
-      "vini_aceptadas": 4,
+      "vini_aceptadas": 5,
       "vini_fta": 0,
       "vini_n": 5,
-      "vini_score_medio": 0.2694520354270935,
-      "lfw_aceptadas": 0,
-      "lfw_fta": 3,
+      "vini_score_medio": 0.28110256791114807,
+      "lfw_aceptadas": 1,
+      "lfw_fta": 1,
       "lfw_n": 21
     },
     "desenfoque s=4": {
       "vini_aceptadas": 4,
       "vini_fta": 0,
       "vini_n": 5,
-      "vini_score_medio": 0.23559732735157013,
+      "vini_score_medio": 0.24667635560035706,
+      "lfw_aceptadas": 0,
+      "lfw_fta": 0,
+      "lfw_n": 21
+    },
+    "jpeg q=10": {
+      "vini_aceptadas": 4,
+      "vini_fta": 0,
+      "vini_n": 5,
+      "vini_score_medio": 0.30146047472953796,
       "lfw_aceptadas": 0,
       "lfw_fta": 1,
       "lfw_n": 21
     },
-    "jpeg q=10": {
+    "baja resolucion x0.25": {
       "vini_aceptadas": 5,
       "vini_fta": 0,
       "vini_n": 5,
-      "vini_score_medio": 0.30736130475997925,
+      "vini_score_medio": 0.29955047369003296,
       "lfw_aceptadas": 0,
-      "lfw_fta": 2,
-      "lfw_n": 21
-    },
-    "baja resolucion x0.25": {
-      "vini_aceptadas": 4,
-      "vini_fta": 0,
-      "vini_n": 5,
-      "vini_score_medio": 0.2825203239917755,
-      "lfw_aceptadas": 0,
-      "lfw_fta": 2,
+      "lfw_fta": 0,
       "lfw_n": 21
     },
     "ruido s=20": {
-      "vini_aceptadas": 5,
+      "vini_aceptadas": 4,
       "vini_fta": 0,
       "vini_n": 5,
-      "vini_score_medio": 0.4156375527381897,
-      "lfw_aceptadas": 7,
+      "vini_score_medio": 0.30540427565574646,
+      "lfw_aceptadas": 0,
       "lfw_fta": 2,
       "lfw_n": 21
     },
@@ -275,16 +275,16 @@
       "vini_aceptadas": 5,
       "vini_fta": 0,
       "vini_n": 5,
-      "vini_score_medio": 0.34159040451049805,
+      "vini_score_medio": 0.32432323694229126,
       "lfw_aceptadas": 1,
-      "lfw_fta": 3,
+      "lfw_fta": 2,
       "lfw_n": 21
     },
     "sobreexpuesta (gamma 0.4)": {
       "vini_aceptadas": 5,
       "vini_fta": 0,
       "vini_n": 5,
-      "vini_score_medio": 0.3562306761741638,
+      "vini_score_medio": 0.3492346405982971,
       "lfw_aceptadas": 3,
       "lfw_fta": 2,
       "lfw_n": 21
@@ -293,8 +293,8 @@
       "vini_aceptadas": 5,
       "vini_fta": 0,
       "vini_n": 5,
-      "vini_score_medio": 0.3635581433773041,
-      "lfw_aceptadas": 3,
+      "vini_score_medio": 0.36116427183151245,
+      "lfw_aceptadas": 5,
       "lfw_fta": 2,
       "lfw_n": 21
     },
@@ -302,26 +302,26 @@
       "vini_aceptadas": 0,
       "vini_fta": 1,
       "vini_n": 5,
-      "vini_score_medio": 0.12955616414546967,
+      "vini_score_medio": 0.10935905575752258,
       "lfw_aceptadas": 0,
       "lfw_fta": 2,
       "lfw_n": 21
     },
     "mascarilla": {
-      "vini_aceptadas": 3,
+      "vini_aceptadas": 2,
       "vini_fta": 0,
       "vini_n": 5,
-      "vini_score_medio": 0.22744953632354736,
+      "vini_score_medio": 0.20812204480171204,
       "lfw_aceptadas": 0,
-      "lfw_fta": 2,
+      "lfw_fta": 4,
       "lfw_n": 21
     },
     "PAD: foto de pantalla": {
       "vini_aceptadas": 5,
       "vini_fta": 0,
       "vini_n": 5,
-      "vini_score_medio": 0.33272531628608704,
-      "lfw_aceptadas": 2,
+      "vini_score_medio": 0.32260456681251526,
+      "lfw_aceptadas": 3,
       "lfw_fta": 2,
       "lfw_n": 21
     },
@@ -329,19 +329,19 @@
       "vini_aceptadas": 5,
       "vini_fta": 0,
       "vini_n": 5,
-      "vini_score_medio": 0.37044602632522583,
-      "lfw_aceptadas": 7,
+      "vini_score_medio": 0.340312659740448,
+      "lfw_aceptadas": 2,
       "lfw_fta": 2,
       "lfw_n": 21
     }
   },
   "morphing": {
     "complice_parecido": {
-      "aceptados_como_vinicius": 23,
+      "aceptados_como_vinicius": 24,
       "n": 25
     },
     "complice_aleatorio": {
-      "aceptados_como_vinicius": 12,
+      "aceptados_como_vinicius": 7,
       "n": 25
     }
   },
@@ -377,32 +377,7 @@
       "recorte_desalineado": "rechazado (NoFaceDetected)"
     },
     "identificados": {},
-    "identificados_sin_filtro_faceness": {
-      "ruido_0": "forest_whitaker",
-      "ruido_1": "forest_whitaker",
-      "ruido_2": "forest_whitaker",
-      "ruido_3": "forest_whitaker",
-      "ruido_4": "forest_whitaker",
-      "ruido_5": "forest_whitaker",
-      "ruido_6": "forest_whitaker",
-      "ruido_7": "forest_whitaker",
-      "ruido_8": "forest_whitaker",
-      "ruido_9": "forest_whitaker",
-      "ruido_10": "forest_whitaker",
-      "ruido_11": "forest_whitaker",
-      "ruido_12": "forest_whitaker",
-      "ruido_13": "forest_whitaker",
-      "ruido_14": "forest_whitaker",
-      "ruido_15": "forest_whitaker",
-      "ruido_16": "forest_whitaker",
-      "ruido_17": "forest_whitaker",
-      "ruido_18": "forest_whitaker",
-      "ruido_19": "forest_whitaker",
-      "gris_127": "stevie_wonder",
-      "gris_255": "stevie_wonder",
-      "foto_sin_recortar": "elisabeth_ii",
-      "recorte_desalineado": "elisabeth_ii"
-    }
+    "identificados_sin_filtro_faceness": {}
   },
   "ataques_t": {
     "entradas_invalidas": {
@@ -426,44 +401,44 @@
       "aleatorio_8": null,
       "aleatorio_9": null,
       "aleatorio_10": null,
-      "aleatorio_11": "elisabeth_ii",
+      "aleatorio_11": null,
       "aleatorio_12": null,
       "aleatorio_13": null,
       "aleatorio_14": null,
       "aleatorio_15": null,
       "aleatorio_16": null,
       "aleatorio_17": null,
-      "aleatorio_18": "elisabeth_ii",
+      "aleatorio_18": null,
       "aleatorio_19": null
     },
     "hill_climbing_con_scores": [
       {
-        "consultas": 1579,
-        "score_final": 0.21824128925800323,
+        "consultas": 1583,
+        "score_final": 0.21745766699314117,
         "aceptado_por_verificar_t": true
       },
       {
-        "consultas": 944,
-        "score_final": 0.21725818514823914,
+        "consultas": 1087,
+        "score_final": 0.21747012436389923,
         "aceptado_por_verificar_t": true
       },
       {
-        "consultas": 914,
-        "score_final": 0.217508465051651,
+        "consultas": 930,
+        "score_final": 0.21735265851020813,
         "aceptado_por_verificar_t": true
       }
     ],
     "inversion_template_robado": {
-      "dispositivo": "cuda",
-      "segundos": 3.0,
-      "sim_template_robado": 0.9916542172431946,
+      "dispositivo": "cpu (numpy)",
+      "segundos": 3.9,
+      "sim_template_robado": 0.9923625588417053,
       "sim_otros_templates_vini": [
-        0.0176,
-        0.2656,
-        0.2763,
-        0.3261
+        0.008,
+        0.2482,
+        0.2595,
+        0.3237
       ],
-      "faceness": 29.600597381591797,
+      "faceness": 29.406421661376953,
       "faceness_umbral": -3.5946569442749023,
       "aceptado_verificar_t": true,
       "identificar_t": "vinicius_junior"
@@ -475,7 +450,7 @@
     "lfw_fta_calidad": 0.009672787727650567,
     "lfw_no_detectadas": 0
   },
-  "tiempo_verificar_ms": 18.4,
+  "tiempo_verificar_ms": 37.9,
   "bd_e_inscripcion": {
     "inscribir(vinicius_junior, foto_atacante)": "rechazado (EnrollmentRejected)",
     "inscribir(..., actualizar=True)": "rechazado (EnrollmentRejected)",

@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BigBrother — Guía visual interactiva de MLBP</title>
+<style>
+  :root {
+    --background: #0d1117;
+    --foreground: #e6edf3;
+    --card: #161b22;
+    --secondary: #1f2630;
+    --muted: #262e3a;
+    --muted-foreground: #8b949e;
+    --border: #30363d;
+    --primary: #3b82f6;
+    --primary-foreground: #ffffff;
+    --accent-surface: rgba(59, 130, 246, 0.14);
+    --warning-surface: rgba(245, 158, 11, 0.14);
+    --code-background: #0b0f14;
+    --success: #22c55e;
+    --warning: #f59e0b;
+    --destructive: #ef4444;
+    --chart-1: #38bdf8;
+    --chart-2: #22c55e;
+    --chart-3: #f59e0b;
+    --chart-5: #ef4444;
+    --radius: 10px;
+    --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+  [data-theme="light"] {
+    --background: #f6f8fa;
+    --foreground: #1f2328;
+    --card: #ffffff;
+    --secondary: #f3f4f6;
+    --muted: #e5e7eb;
+    --muted-foreground: #57606a;
+    --border: #d0d7de;
+    --primary: #2563eb;
+    --primary-foreground: #ffffff;
+    --accent-surface: rgba(37, 99, 235, 0.10);
+    --warning-surface: rgba(217, 119, 6, 0.12);
+    --code-background: #f0f3f6;
+    --success: #16a34a;
+    --warning: #d97706;
+    --destructive: #dc2626;
+    --chart-1: #0284c7;
+    --chart-2: #16a34a;
+    --chart-3: #d97706;
+    --chart-5: #dc2626;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-size: 13.5px;
+    line-height: 1.5;
+    padding: 24px 16px 48px;
+  }
+  .page {
+    max-width: 920px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .topbar {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .topbar h1 {
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .topbar p {
+    color: var(--muted-foreground);
+    font-size: 13px;
+    margin-top: 3px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px;
+  }
+  .sec-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .sec-title {
+    font-size: 15px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    width: 24px;
+    height: 24px;
+    border-radius: 999px;
+    background: var(--primary);
+    color: var(--primary-foreground);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .sub { color: var(--muted-foreground); font-size: 12.5px; }
+  .mono { font-family: var(--font-mono); }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 9px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    background: var(--secondary);
+    border: 1px solid var(--border);
+    color: var(--muted-foreground);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .pill-ok {
+    background: var(--accent-surface);
+    color: var(--success);
+    border-color: var(--success);
+  }
+  .pill-warn {
+    background: var(--warning-surface);
+    color: var(--warning);
+    border-color: var(--warning);
+  }
+  .btn {
+    appearance: none;
+    border: 1px solid var(--border);
+    background: var(--secondary);
+    color: var(--foreground);
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-size: 11.5px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.15s, border-color 0.15s;
+    white-space: nowrap;
+  }
+  .btn:hover { border-color: var(--primary); }
+  .btn.active {
+    background: var(--primary);
+    color: var(--primary-foreground);
+    border-color: var(--primary);
+  }
+  .btn-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+
+  /* Pipeline */
+  .pipe-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+  }
+  @media (max-width: 680px) { .pipe-grid { grid-template-columns: 1fr 1fr; } }
+  .pipe-node {
+    background: var(--secondary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 8px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3px;
+  }
+  .pipe-node.highlight { border-color: var(--primary); background: var(--accent-surface); }
+  .pipe-node.post { border-style: dashed; }
+  .pipe-kicker { font-size: 10px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted-foreground); font-weight: 600; }
+  .pipe-val { font-size: 13px; font-weight: 700; }
+  .pipe-dim { font-family: var(--font-mono); font-size: 11px; color: var(--chart-1); font-weight: 700; }
+
+  /* Idea boxes */
+  .idea-grid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  @media (max-width: 620px) {
+    .idea-grid { grid-template-columns: 1fr; }
+    .idea-arrow { transform: rotate(90deg); justify-self: center; }
+  }
+  .idea-box {
+    background: var(--secondary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+  }
+  .idea-box.bad { border-color: var(--destructive); }
+  .idea-box.good { border-color: var(--success); }
+  .idea-arrow { font-size: 20px; font-weight: 700; color: var(--muted-foreground); }
+
+  /* Two-column layouts */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1.04fr 0.96fr;
+    gap: 16px;
+    align-items: start;
+  }
+  @media (max-width: 720px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* Toy 6x6 grid */
+  .toy-layout {
+    display: grid;
+    grid-template-columns: auto 22px auto 1fr;
+    gap: 12px;
+    align-items: center;
+  }
+  @media (max-width: 780px) {
+    .toy-layout { grid-template-columns: 1fr; justify-items: center; }
+    .toy-arrow { transform: rotate(90deg); }
+  }
+  .mini-title { font-size: 12px; font-weight: 700; margin-bottom: 6px; text-align: center; }
+  .mini-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 32px);
+    grid-template-rows: repeat(6, 32px);
+    gap: 3px;
+    padding: 6px;
+    background: var(--secondary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+  .mcell {
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    border: 1.5px solid transparent;
+    user-select: none;
+  }
+  .mcell.sel { border-color: var(--chart-3) !important; box-shadow: 0 0 0 1.5px var(--chart-3); z-index: 2; }
+  .mcell.nbr { border-color: var(--chart-1) !important; }
+  .mcell.in-quad { background: var(--warning-surface) !important; }
+  .toy-arrow { font-size: 18px; font-weight: 700; color: var(--primary); text-align: center; }
+  .insp {
+    background: var(--secondary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+  .insp-row { display: flex; justify-content: space-between; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 12px; }
+  .mini-bits { display: flex; gap: 4px; flex-wrap: wrap; }
+  .mb {
+    width: 23px; height: 23px; border-radius: 4px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono); font-size: 11.5px; font-weight: 700;
+  }
+  .mb.on { background: var(--chart-2); color: #051b0d; }
+  .mb.off { background: var(--muted); color: var(--muted-foreground); }
+  .legend-dot { display: inline-block; width: 9px; height: 9px; border-radius: 3px; margin-right: 4px; vertical-align: middle; }
+
+  /* Quadrant tally */
+  .count-layout { display: grid; grid-template-columns: 1fr 1.15fr; gap: 14px; align-items: start; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); }
+  @media (max-width: 680px) { .count-layout { grid-template-columns: 1fr; } }
+  .quad-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 8px; }
+  .qbtn {
+    appearance: none; border: 1px solid var(--border); background: var(--secondary); color: var(--foreground);
+    border-radius: 7px; padding: 8px 10px; cursor: pointer; text-align: left; font-family: inherit; font-size: 12px;
+  }
+  .qbtn:hover { border-color: var(--primary); }
+  .qbtn.active { border-color: var(--chart-3); background: var(--warning-surface); }
+  .tally-list {
+    display: flex; flex-direction: column; gap: 6px;
+    background: var(--secondary); border: 1px solid var(--border); border-radius: 8px; padding: 12px;
+  }
+  .tally-row { display: grid; grid-template-columns: 92px 1fr 90px; gap: 8px; align-items: center; font-size: 12px; }
+  .tally-bar-bg { height: 10px; border-radius: 999px; background: var(--card); border: 1px solid var(--border); overflow: hidden; }
+  .tally-bar { height: 100%; border-radius: 999px; transition: width 0.2s; }
+
+  /* 3x3 LBP Lab */
+  .lbp-stage { display: flex; gap: 14px; align-items: center; justify-content: space-around; flex-wrap: wrap; }
+  .px-grid { display: grid; grid-template-columns: repeat(3, 60px); grid-template-rows: repeat(3, 60px); gap: 6px; }
+  .px-cell {
+    border-radius: 7px; border: 2px solid var(--border);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    cursor: pointer; user-select: none; transition: transform 0.1s;
+  }
+  .px-cell:hover { transform: scale(1.04); }
+  .px-cell.center { border-color: var(--chart-3); cursor: default; }
+  .px-cell.bit1 { border-color: var(--chart-2); }
+  .px-val { font-family: var(--font-mono); font-size: 13px; font-weight: 700; line-height: 1.1; }
+  .px-bit { font-family: var(--font-mono); font-size: 10px; font-weight: 700; padding: 1px 5px; border-radius: 4px; margin-top: 2px; }
+  .px-bit.b1 { background: var(--chart-2); color: #051b0d; }
+  .px-bit.b0 { background: var(--muted); color: var(--muted-foreground); }
+  .px-bit.bc { background: var(--chart-3); color: #1c1100; }
+  .slider-row {
+    display: flex; align-items: center; gap: 8px; margin-top: 10px;
+    padding: 8px 10px; background: var(--secondary); border-radius: 7px; border: 1px solid var(--border);
+  }
+  .slider-row input[type=range] { flex: 1; accent-color: var(--primary); }
+  .code-box {
+    margin-top: 10px; padding: 10px 12px; background: var(--code-background);
+    border: 1px solid var(--border); border-radius: 7px; display: flex; flex-direction: column; gap: 6px;
+  }
+  .bit-strip { display: flex; gap: 4px; align-items: center; flex-wrap: wrap; }
+  .bit-chip {
+    width: 24px; height: 24px; border-radius: 5px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono); font-weight: 700; font-size: 12px;
+  }
+  .bit-chip.b1 { background: var(--chart-2); color: #051b0d; }
+  .bit-chip.b0 { background: var(--muted); color: var(--muted-foreground); }
+
+  .bin-groups { display: flex; flex-direction: column; gap: 9px; }
+  .bin-group { background: var(--secondary); border: 1px solid var(--border); border-radius: 7px; padding: 10px 12px; }
+  .bin-group-top { display: flex; justify-content: space-between; align-items: center; gap: 6px; margin-bottom: 4px; }
+  .bar-track { height: 10px; border-radius: 999px; background: var(--muted); overflow: hidden; display: flex; margin: 7px 0 3px; }
+  .orient-strip { display: flex; justify-content: space-between; gap: 4px; margin-top: 6px; }
+  .orient-item { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 10px; color: var(--muted-foreground); }
+
+  /* Multiscale 128x128 face */
+  .face-panel { display: flex; flex-direction: column; gap: 10px; }
+  .face-canvas-wrap { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .canvas-box {
+    position: relative; width: 240px; height: 240px; border-radius: 8px;
+    overflow: hidden; border: 1px solid var(--border); cursor: crosshair; flex-shrink: 0;
+  }
+  .canvas-box canvas { width: 240px; height: 240px; display: block; image-rendering: pixelated; }
+  .zoom-box {
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    background: var(--secondary); border: 1px solid var(--border); border-radius: 8px;
+    padding: 10px; width: 132px;
+  }
+  .zoom-box canvas { width: 96px; height: 96px; border-radius: 6px; border: 1px solid var(--border); }
+  .hist-box { background: var(--secondary); border: 1px solid var(--border); border-radius: 8px; padding: 12px; }
+  .hist-canvas { width: 100%; height: 126px; display: block; }
+  .tape-wrap { background: var(--secondary); border: 1px solid var(--border); border-radius: 8px; padding: 12px; }
+  .tape-bars { display: grid; grid-template-columns: repeat(6, 1fr); gap: 5px; margin: 8px 0; }
+  .tape-seg {
+    height: 26px; border-radius: 5px; border: 1px solid var(--border); background: var(--muted);
+    display: flex; align-items: center; justify-content: center; font-family: var(--font-mono);
+    font-size: 11px; font-weight: 700; color: var(--muted-foreground); cursor: pointer; position: relative; overflow: hidden;
+  }
+  .tape-seg.active { border-color: var(--primary); color: var(--foreground); background: var(--accent-surface); }
+  .tape-cursor { position: absolute; top: 0; bottom: 0; width: 4px; background: var(--chart-3); }
+
+  /* Projection & FAQ */
+  .proj-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 16px; align-items: center; }
+  @media (max-width: 680px) { .proj-grid { grid-template-columns: 1fr; } }
+  .metric-row { display: flex; flex-direction: column; gap: 10px; }
+  .metric-bar-wrap { display: flex; flex-direction: column; gap: 4px; }
+  .metric-label { display: flex; justify-content: space-between; font-size: 12px; gap: 6px; }
+  .m-track { height: 11px; border-radius: 999px; background: var(--muted); overflow: hidden; position: relative; }
+  .m-fill { height: 100%; border-radius: 999px; }
+
+  .faq-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  @media (max-width: 720px) { .faq-grid { grid-template-columns: 1fr; } }
+  .faq-item { background: var(--secondary); border: 1px solid var(--border); border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 5px; }
+  .faq-item h3 { font-size: 12.5px; color: var(--foreground); }
+  .faq-item p { font-size: 12px; color: var(--muted-foreground); }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div>
+      <h1>BigBrother — Cómo funciona MLBP paso a paso</h1>
+      <p>Guía visual interactiva del extractor de templates (<span class="mono">bigbrother/mlbp.py</span> · <span class="mono">bigbrother/matcher.py</span>)</p>
+    </div>
+    <button class="btn" id="themeBtn">Cambiar a tema claro</button>
+  </div>
+
+  <!-- 0. PIPELINE -->
+  <div class="card">
+    <div class="sec-head">
+      <div class="sec-title">Resumen del flujo completo</div>
+      <span class="pill mono">FACE_SIZE=128 · P=8 · R=1..6 · GRID=8×8</span>
+    </div>
+    <div class="idea-grid">
+      <div class="idea-box bad">
+        <strong style="font-size:12.5px;">Foto cruda (128×128 brillos)</strong>
+        <div class="sub">Cambiar un poco la luz o mover la cara 1 mm altera casi todos los valores de brillo.</div>
+      </div>
+      <div class="idea-arrow">→</div>
+      <div class="idea-box good">
+        <strong style="font-size:12.5px;">Template MLBP (22.656 porcentajes)</strong>
+        <div class="sub">Lista plana de porcentajes: <em>«en cada zona de la cara, qué % de bordes, esquinas y zonas lisas aparece a 6 tamaños de lupa»</em>.</div>
+      </div>
+    </div>
+    <div class="pipe-grid">
+      <div class="pipe-node">
+        <div class="pipe-kicker">Entrada</div>
+        <div class="pipe-val">Cara alineada</div>
+        <div class="pipe-dim">128×128 gris</div>
+        <div class="sub" style="font-size:10.5px;">YuNet + equalizeHist</div>
+      </div>
+      <div class="pipe-node">
+        <div class="pipe-kicker">Paso 1</div>
+        <div class="pipe-val">LBP uniforme</div>
+        <div class="pipe-dim">P=8 → 59 bins</div>
+        <div class="sub" style="font-size:10.5px;">nri_uniform</div>
+      </div>
+      <div class="pipe-node">
+        <div class="pipe-kicker">Paso 2</div>
+        <div class="pipe-val">6 escalas</div>
+        <div class="pipe-dim">R = 1,2,3,4,5,6</div>
+        <div class="sub" style="font-size:10.5px;">micro → macro</div>
+      </div>
+      <div class="pipe-node highlight">
+        <div class="pipe-kicker">Paso 3 · Template</div>
+        <div class="pipe-val">Rejilla 8×8</div>
+        <div class="pipe-dim">22.656 floats</div>
+        <div class="sub" style="font-size:10.5px;">6 × 64 × 59</div>
+      </div>
+      <div class="pipe-node post">
+        <div class="pipe-kicker">Post-template</div>
+        <div class="pipe-val">√x + PCA + LDA</div>
+        <div class="pipe-dim">300D + coseno</div>
+        <div class="sub" style="font-size:10.5px;">BD cifrada</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1. MINI-EJEMPLO 6x6 PASO A PASO -->
+  <div class="card">
+    <div class="sec-head">
+      <div class="sec-title"><span class="badge">1</span> Receta en miniatura: de brillos (0–255) a mapa de etiquetas (0–58) y conteo por casilla</div>
+      <button class="btn" id="nextPxBtn">Probar otro píxel →</button>
+    </div>
+    <div class="sub" style="margin-bottom:12px;">
+      Haz clic en cualquier píxel del cuadro izquierdo: comparamos su brillo con sus <strong>8 vecinos</strong> (<span style="color:var(--chart-1);font-weight:600;">borde azul</span>) para sustituir el brillo por <strong>1 etiqueta de forma</strong> en el mapa derecho. Después elige una casilla abajo para ver su histograma exacto.
+    </div>
+
+    <div class="toy-layout">
+      <div>
+        <div class="mini-title">Foto original (brillo 0–255)</div>
+        <div class="mini-grid" id="brightGrid"></div>
+      </div>
+      <div class="toy-arrow">→</div>
+      <div>
+        <div class="mini-title">Mapa LBP (etiqueta 0–58)</div>
+        <div class="mini-grid" id="labelGrid"></div>
+      </div>
+      <div class="insp">
+        <div class="insp-row">
+          <strong>Píxel <span id="selCoord" class="mono" style="color:var(--chart-3);">(1,2)</span></strong>
+          <span id="selBright" class="pill mono">brillo = 120</span>
+        </div>
+        <div class="sub" style="font-size:11.5px;">
+          A cada uno de los 8 vecinos preguntamos:<br>
+          <span class="mono" style="color:var(--foreground);">¿vecino ≥ <span id="cmpVal">120</span>?</span> → <strong>1</strong> (sí) · <strong>0</strong> (no)
+        </div>
+        <div class="mini-bits" id="miniBits"></div>
+        <div class="insp-row" style="border-top:1px solid var(--border);padding-top:6px;">
+          <span class="sub">Forma detectada:</span>
+          <strong id="selType" style="color:var(--chart-2);">Borde / esquina (U=2)</strong>
+        </div>
+        <div class="insp-row">
+          <span class="sub">Etiqueta en mapa:</span>
+          <span id="selBin" class="mono" style="font-weight:700;color:var(--chart-3);">Etiqueta #29</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:10px;font-size:11.5px;color:var(--muted-foreground);">
+      <span><span class="legend-dot" style="background:var(--chart-1);"></span>0 ó 57: zona lisa / punto</span>
+      <span><span class="legend-dot" style="background:var(--chart-2);"></span>1..56: borde o esquina (cada dirección tiene su nº)</span>
+      <span><span class="legend-dot" style="background:var(--chart-5);"></span>58: patrón irregular / ruido</span>
+    </div>
+
+    <div class="count-layout">
+      <div>
+        <div class="quad-btns" id="quadBtns">
+          <button class="qbtn active" data-q="0"><strong>Casilla A</strong> (arriba-izq)<br><span class="sub">zona oscura + borde</span></button>
+          <button class="qbtn" data-q="1"><strong>Casilla B</strong> (arriba-der)<br><span class="sub">zona clara</span></button>
+          <button class="qbtn" data-q="2"><strong>Casilla C</strong> (abajo-izq)<br><span class="sub">textura / ruido</span></button>
+          <button class="qbtn" data-q="3"><strong>Casilla D</strong> (abajo-der)<br><span class="sub">borde horizontal</span></button>
+        </div>
+        <div class="sub" style="font-size:12px;background:var(--secondary);border:1px solid var(--border);border-radius:7px;padding:9px 11px;">
+          <strong>Histograma de casilla:</strong> contar cuántos píxeles tienen cada etiqueta `0..58` y dividir entre el total de píxeles de la casilla (en BigBrother: entre <strong>256</strong>). Cada histograma siempre suma <strong>1,00</strong>.
+        </div>
+      </div>
+      <div class="tally-list" id="tallyList"></div>
+    </div>
+  </div>
+
+  <!-- 2. LABORATORIO 3x3 + 59 BINS -->
+  <div class="card">
+    <div class="sec-head">
+      <div class="sec-title"><span class="badge">2</span> Invarianza a iluminación y por qué hay exactamente 59 etiquetas (<span class="mono">nri_uniform</span>)</div>
+      <span class="sub">Mueve el brillo global y comprueba que los bits y el bin no cambian</span>
+    </div>
+    <div class="two-col">
+      <div>
+        <div class="btn-row" id="presetBtns">
+          <button class="btn active" data-preset="edgeV">Borde vert.</button>
+          <button class="btn" data-preset="edgeH">Borde horiz.</button>
+          <button class="btn" data-preset="corner">Esquina</button>
+          <button class="btn" data-preset="flat">Plana</button>
+          <button class="btn" data-preset="noise">Ruido (U=6)</button>
+        </div>
+        <div class="lbp-stage">
+          <div class="px-grid" id="pxGrid"></div>
+          <svg id="ringSvg" width="144" height="144" viewBox="0 0 136 136"></svg>
+        </div>
+        <div class="slider-row">
+          <span style="font-size:12px;font-weight:600;white-space:nowrap;">Brillo global:</span>
+          <input type="range" id="brightSlider" min="-60" max="60" value="0">
+          <span id="brightVal" class="mono" style="font-size:12px;min-width:36px;text-align:right;">+0</span>
+        </div>
+        <div class="code-box">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;">
+            <span class="sub">Bits (sentido horario desde derecha):</span>
+            <span id="uniformPill" class="pill pill-ok">Uniforme (U = 2)</span>
+          </div>
+          <div class="bit-strip" id="bitStrip"></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;">
+            <span>Regla: <span class="mono">vecino ≥ centro → 1</span></span>
+            <span id="binResult" class="mono" style="font-weight:700;color:var(--chart-2);">Bin #37 / 58</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="bin-groups">
+        <div class="sub">
+          Los números <span class="mono">0..58</span> <strong>no son brillos</strong>: son 59 «iconos de forma» en los que comprimimos las <span class="mono">2⁸ = 256</span> combinaciones de 8 bits.
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:11.5px;font-weight:600;">
+            <span>Compresión <span class="mono">nri_uniform</span></span>
+            <span class="mono" style="color:var(--chart-2);">256 → 59 bins (−77%)</span>
+          </div>
+          <div class="bar-track">
+            <div style="width:3.4%;background:var(--chart-1);"></div>
+            <div style="width:94.9%;background:var(--chart-2);"></div>
+            <div style="width:1.7%;background:var(--chart-5);"></div>
+          </div>
+        </div>
+        <div class="bin-group">
+          <div class="bin-group-top">
+            <strong style="font-size:12.5px;">0 transiciones (U = 0)</strong>
+            <span class="pill mono">2 bins</span>
+          </div>
+          <div class="sub">Todo <span class="mono">00000000</span> (pico brillante) o todo <span class="mono">11111111</span> (zona lisa / valle).</div>
+        </div>
+        <div class="bin-group">
+          <div class="bin-group-top">
+            <strong style="font-size:12.5px;">2 transiciones (U = 2) · Con orientación</strong>
+            <span class="pill mono" style="color:var(--chart-2);">56 bins (7×8)</span>
+          </div>
+          <div class="sub">7 longitudes de arco × 8 direcciones. Como la cara está alineada, ceja horizontal y nariz vertical van a bins distintos.</div>
+          <div class="orient-strip" id="orientStrip"></div>
+        </div>
+        <div class="bin-group">
+          <div class="bin-group-top">
+            <strong style="font-size:12.5px;">Más de 2 transiciones (U &gt; 2)</strong>
+            <span class="pill mono" style="color:var(--chart-5);">1 bin (el #58)</span>
+          </div>
+          <div class="sub">Los 198 patrones irregulares restantes (ruido de sensor, texturas caóticas) van todos al mismo cajón.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. MULTIESCALA SOBRE CARA 128x128 -->
+  <div class="card">
+    <div class="sec-head">
+      <div class="sec-title"><span class="badge">3</span> Multiescala (<span class="mono">R = 1..6</span>) + Rejilla (<span class="mono">8×8</span>) sobre una cara <span class="mono">128×128</span></div>
+      <div style="display:flex;gap:6px;">
+        <button class="btn active" id="viewFaceBtn">Cara + Rejilla</button>
+        <button class="btn" id="viewLbpBtn">Mapa LBP (R)</button>
+      </div>
+    </div>
+    <div class="two-col">
+      <div class="face-panel">
+        <div class="btn-row" id="radiiBtns" style="margin-bottom:0;">
+          <button class="btn" data-r="1">R = 1</button>
+          <button class="btn" data-r="2">R = 2</button>
+          <button class="btn active" data-r="3">R = 3</button>
+          <button class="btn" data-r="4">R = 4</button>
+          <button class="btn" data-r="5">R = 5</button>
+          <button class="btn" data-r="6">R = 6</button>
+        </div>
+        <div class="face-canvas-wrap">
+          <div class="canvas-box" id="faceBox" title="Haz clic en cualquier celda 8×8">
+            <canvas id="faceCanvas" width="128" height="128"></canvas>
+            <svg id="gridOverlay" viewBox="0 0 128 128" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;"></svg>
+          </div>
+          <div class="zoom-box">
+            <span class="sub" style="font-weight:700;font-size:11.5px;">Círculo R = <span id="zoomR">3</span></span>
+            <canvas id="zoomCanvas" width="96" height="96"></canvas>
+            <div id="scaleCaption" class="sub" style="font-size:11px;text-align:center;line-height:1.3;">Diámetro 7 px<br>Pliegues y contorno</div>
+          </div>
+        </div>
+        <div class="sub">
+          Haz clic en cualquier celda de la rejilla <span class="mono">8×8</span> (<span class="mono">16×16 = 256 px</span>). El círculo de <strong>P = 8 puntos</strong> se aplica a cada píxel de la imagen, abriendo la lupa según <span class="mono">R</span>.
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div class="hist-box">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;gap:6px;flex-wrap:wrap;">
+            <strong style="font-size:12.5px;">Histograma: <span id="cellLabel" class="mono" style="color:var(--chart-3);">(3,2) · Ojo izq.</span></strong>
+            <span class="pill mono">59 bins · Σ = 1,000</span>
+          </div>
+          <canvas id="histCanvas" class="hist-canvas" width="380" height="126"></canvas>
+          <div style="display:flex;justify-content:space-between;font-size:10.5px;color:var(--muted-foreground);margin-top:4px;">
+            <span>0 (U=0)</span>
+            <span>1–57 (bordes/esquinas orientados)</span>
+            <span>58 (U&gt;2)</span>
+          </div>
+        </div>
+
+        <div class="tape-wrap">
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
+            <strong style="font-size:12.5px;">Vector Template concatenado (<span class="mono">.ravel()</span>)</strong>
+            <span class="mono" style="font-size:11.5px;color:var(--chart-1);font-weight:700;">6 × 64 × 59 = 22.656</span>
+          </div>
+          <div class="tape-bars" id="tapeBars"></div>
+          <div id="offsetInfo" class="mono" style="font-size:11px;color:var(--muted-foreground);"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. POST-TEMPLATE: PROYECCION + PREGUNTAS CLAVE -->
+  <div class="card">
+    <div class="sec-head">
+      <div class="sec-title"><span class="badge">4</span> Después del template: proyección <span class="mono">√x → PCA(1000) → LDA(300)</span> y dudas clave</div>
+      <span class="pill mono">models/calibration.json</span>
+    </div>
+    <div class="proj-grid" style="margin-bottom:16px;">
+      <div>
+        <svg viewBox="0 0 380 82" width="100%" height="84" style="display:block;">
+          <defs>
+            <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+              <path d="M0,1 L9,5 L0,9 z" fill="var(--muted-foreground)"/>
+            </marker>
+          </defs>
+          <rect x="2" y="12" width="84" height="54" rx="7" fill="var(--secondary)" stroke="var(--border)"/>
+          <text x="44" y="32" text-anchor="middle" fill="var(--foreground)" font-size="11" font-weight="700">Template x</text>
+          <text x="44" y="47" text-anchor="middle" fill="var(--chart-1)" font-size="10.5" font-family="monospace">22.656 D</text>
+          <text x="44" y="59" text-anchor="middle" fill="var(--muted-foreground)" font-size="9">hist. MLBP</text>
+          <line x1="86" y1="39" x2="108" y2="39" stroke="var(--muted-foreground)" stroke-width="1.5" marker-end="url(#arr)"/>
+          <rect x="110" y="12" width="70" height="54" rx="7" fill="var(--secondary)" stroke="var(--border)"/>
+          <text x="145" y="34" text-anchor="middle" fill="var(--foreground)" font-size="11" font-weight="700">√x − μ</text>
+          <text x="145" y="49" text-anchor="middle" fill="var(--muted-foreground)" font-size="9.5">Hellinger</text>
+          <text x="145" y="60" text-anchor="middle" fill="var(--muted-foreground)" font-size="9">(suaviza picos)</text>
+          <line x1="180" y1="39" x2="202" y2="39" stroke="var(--muted-foreground)" stroke-width="1.5" marker-end="url(#arr)"/>
+          <rect x="204" y="12" width="76" height="54" rx="7" fill="var(--secondary)" stroke="var(--border)"/>
+          <text x="242" y="32" text-anchor="middle" fill="var(--foreground)" font-size="11" font-weight="700">× W</text>
+          <text x="242" y="47" text-anchor="middle" fill="var(--chart-2)" font-size="9.5" font-family="monospace">PCA(1000)</text>
+          <text x="242" y="59" text-anchor="middle" fill="var(--chart-2)" font-size="9.5" font-family="monospace">→ LDA(300)</text>
+          <line x1="280" y1="39" x2="302" y2="39" stroke="var(--muted-foreground)" stroke-width="1.5" marker-end="url(#arr)"/>
+          <rect x="304" y="12" width="74" height="54" rx="7" fill="var(--accent-surface)" stroke="var(--primary)"/>
+          <text x="341" y="32" text-anchor="middle" fill="var(--foreground)" font-size="11" font-weight="700">Vector y</text>
+          <text x="341" y="47" text-anchor="middle" fill="var(--chart-1)" font-size="10.5" font-family="monospace">300 D</text>
+          <text x="341" y="59" text-anchor="middle" fill="var(--muted-foreground)" font-size="9">‖y‖₂ = 1 (cos)</text>
+        </svg>
+        <div class="sub" style="font-size:11.5px;margin-top:4px;">
+          Entrenada en LFW (4.017 identidades): pondera los bins y celdas que mejor distinguen personas e ignora pose/iluminación.
+        </div>
+      </div>
+
+      <div class="metric-row">
+        <div class="metric-bar-wrap">
+          <div class="metric-label"><span><strong>EER</strong> (menor es mejor) · χ² directo</span><span class="mono" style="color:var(--chart-5);font-weight:700;">33,6%</span></div>
+          <div class="m-track"><div class="m-fill" style="width:67.2%;background:var(--chart-5);"></div></div>
+        </div>
+        <div class="metric-bar-wrap">
+          <div class="metric-label"><span><strong>EER</strong> · MLBP + √x + PCA/LDA</span><span class="mono" style="color:var(--chart-2);font-weight:700;">15,5%</span></div>
+          <div class="m-track"><div class="m-fill" style="width:31%;background:var(--chart-2);"></div></div>
+        </div>
+        <div class="metric-bar-wrap">
+          <div class="metric-label"><span><strong>TAR @ FAR 0,1%</strong> · χ² → PCA/LDA</span><span class="mono"><span style="color:var(--chart-5);">4,2%</span> → <strong style="color:var(--chart-1);">34,8%</strong></span></div>
+          <div class="m-track">
+            <div class="m-fill" style="width:34.8%;background:var(--chart-1);"></div>
+            <div style="position:absolute;left:0;top:0;bottom:0;width:4.2%;background:var(--chart-5);border-right:1.5px solid var(--card);"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-grid">
+      <div class="faq-item">
+        <h3>¿Por qué 59 valores y no 256 brillos?</h3>
+        <p>Los códigos <span class="mono">0..58</span> no son brillos: son <strong>59 categorías de textura</strong> (2 zonas lisas + 56 bordes/esquinas orientados + 1 cajón para los 198 patrones ruidosos).</p>
+      </div>
+      <div class="faq-item">
+        <h3>¿Al subir R no aumentan las combinaciones?</h3>
+        <p>No, porque fijamos <span class="mono">P = 8</span> puntos cada 45° (con interpolación bilineal). Subir a <span class="mono">P=16</span> daría 243 bins y dejaría casi vacíos los histogramas de casillas de 256 px.</p>
+      </div>
+      <div class="faq-item">
+        <h3>¿Y si la imagen fuera más grande?</h3>
+        <p>Las fotos siempre se reescalan a <span class="mono">128×128</span>. Si diseñaras a <span class="mono">256×256</span>, el tamaño del template solo cambia si cambias <span class="mono">GRID</span>, pero habría que duplicar los radios <span class="mono">R</span> para seguir viendo rasgos del mismo tamaño.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function() {
+  // Theme toggle
+  const themeBtn = document.getElementById('themeBtn');
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+    document.documentElement.setAttribute('data-theme', 'light');
+    themeBtn.textContent = 'Cambiar a tema oscuro';
+  }
+  themeBtn.addEventListener('click', () => {
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    document.documentElement.setAttribute('data-theme', isLight ? 'dark' : 'light');
+    themeBtn.textContent = isLight ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro';
+    renderFaceAndHist();
+  });
+
+  // nri_uniform table (P=8 -> 59 bins)
+  const nriMap = new Uint8Array(256);
+  function transitions(c) {
+    let t = 0;
+    for (let i = 0; i < 8; i++) if (((c >> i) & 1) !== ((c >> ((i + 1) & 7)) & 1)) t++;
+    return t;
+  }
+  function popcount(x) { let s = 0; while (x) { s += x & 1; x >>= 1; } return s; }
+  const u2 = [];
+  for (let c = 1; c < 255; c++) if (transitions(c) === 2) u2.push(c);
+  u2.sort((a, b) => popcount(a) - popcount(b) || a - b);
+  nriMap.fill(58);
+  nriMap[0] = 0;
+  u2.forEach((c, i) => { nriMap[c] = i + 1; });
+  nriMap[255] = 57;
+
+  function clamp255(v) { return Math.max(0, Math.min(255, Math.round(v))); }
+  function binCategory(bin) {
+    if (bin === 0) return { name: 'Pico brillante (U=0)', color: 'var(--chart-1)' };
+    if (bin === 57) return { name: 'Zona lisa / valle (U=0)', color: 'var(--chart-1)' };
+    if (bin === 58) return { name: 'Irregular / ruido (U>2)', color: 'var(--chart-5)' };
+    return { name: 'Borde / esquina (U=2)', color: 'var(--chart-2)' };
+  }
+
+  // === SECTION 1: Toy 6x6 ===
+  const IMG = [
+    [ 52,  55, 118, 192, 198, 200],
+    [ 50,  58, 120, 188, 195, 197],
+    [ 48,  54, 122, 190, 196, 199],
+    [ 55, 165,  60, 185, 190, 192],
+    [175,  65, 178, 115, 118, 120],
+    [ 58, 172,  62,  52,  50,  48]
+  ];
+  const DIRS = [[0,1],[1,1],[1,0],[1,-1],[0,-1],[-1,-1],[-1,0],[-1,1]];
+  function getPx(r, c) { return IMG[Math.max(0, Math.min(5, r))][Math.max(0, Math.min(5, c))]; }
+  const LABELS = Array.from({ length: 6 }, () => new Array(6).fill(0));
+  const BITS = Array.from({ length: 6 }, () => new Array(6).fill(null));
+  for (let r = 0; r < 6; r++) {
+    for (let c = 0; c < 6; c++) {
+      const center = IMG[r][c];
+      let code = 0;
+      const bArr = [];
+      for (let p = 0; p < 8; p++) {
+        const b = getPx(r + DIRS[p][0], c + DIRS[p][1]) >= center ? 1 : 0;
+        bArr.push(b); code |= (b << p);
+      }
+      LABELS[r][c] = nriMap[code];
+      BITS[r][c] = { bArr, code, U: transitions(code) };
+    }
+  }
+  let selR = 1, selC = 2, activeQuad = 0, tourIdx = 0;
+  const tour = [[1,2],[1,4],[4,1],[4,4],[2,1]];
+  const brightGrid = document.getElementById('brightGrid');
+  const labelGrid = document.getElementById('labelGrid');
+
+  function inActiveQuad(r, c) {
+    const r0 = activeQuad >= 2 ? 3 : 0, c0 = (activeQuad % 2) === 1 ? 3 : 0;
+    return r >= r0 && r < r0 + 3 && c >= c0 && c < c0 + 3;
+  }
+  function renderToy() {
+    brightGrid.innerHTML = '';
+    labelGrid.innerHTML = '';
+    for (let r = 0; r < 6; r++) {
+      for (let c = 0; c < 6; c++) {
+        const val = IMG[r][c], bin = LABELS[r][c];
+        const isSel = r === selR && c === selC;
+        const isNbr = Math.abs(r - selR) <= 1 && Math.abs(c - selC) <= 1 && !isSel;
+        const bDiv = document.createElement('div');
+        bDiv.className = 'mcell' + (isSel ? ' sel' : (isNbr ? ' nbr' : ''));
+        bDiv.style.background = `rgb(${val},${val},${val})`;
+        bDiv.style.color = val > 130 ? '#111' : '#f4f4f5';
+        bDiv.textContent = val;
+        bDiv.addEventListener('click', () => { selR = r; selC = c; renderToy(); });
+        brightGrid.appendChild(bDiv);
+
+        const lDiv = document.createElement('div');
+        const inQ = inActiveQuad(r, c);
+        const cat = binCategory(bin);
+        lDiv.className = 'mcell' + (isSel ? ' sel' : '') + (inQ ? ' in-quad' : '');
+        lDiv.style.background = 'var(--card)';
+        lDiv.style.color = cat.color;
+        lDiv.style.borderColor = isSel ? 'var(--chart-3)' : (inQ ? 'rgba(245,158,11,0.5)' : 'var(--border)');
+        lDiv.textContent = bin;
+        lDiv.addEventListener('click', () => { selR = r; selC = c; renderToy(); });
+        labelGrid.appendChild(lDiv);
+      }
+    }
+    const val = IMG[selR][selC], info = BITS[selR][selC], bin = LABELS[selR][selC], cat = binCategory(bin);
+    document.getElementById('selCoord').textContent = `(${selR},${selC})`;
+    document.getElementById('selBright').textContent = `brillo = ${val}`;
+    document.getElementById('cmpVal').textContent = val;
+    document.getElementById('miniBits').innerHTML = info.bArr.map(b => `<span class="mb ${b ? 'on' : 'off'}">${b}</span>`).join('');
+    const selType = document.getElementById('selType');
+    selType.textContent = cat.name; selType.style.color = cat.color;
+    document.getElementById('selBin').textContent = `Etiqueta #${bin}`;
+  }
+  function renderTally() {
+    const r0 = activeQuad >= 2 ? 3 : 0, c0 = (activeQuad % 2) === 1 ? 3 : 0;
+    const counts = {};
+    for (let r = r0; r < r0 + 3; r++) for (let c = c0; c < c0 + 3; c++) counts[LABELS[r][c]] = (counts[LABELS[r][c]] || 0) + 1;
+    const entries = Object.entries(counts).map(([b, cnt]) => ({ bin: parseInt(b, 10), cnt })).sort((a, b) => b.cnt - a.cnt || a.bin - b.bin);
+    const names = ['Casilla A', 'Casilla B', 'Casilla C', 'Casilla D'];
+    let html = `<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:2px;">
+      <strong style="font-size:12.5px;">Conteo completo en ${names[activeQuad]}</strong>
+      <span class="mono sub" style="font-size:11px;">9/9 píxeles = 1,00</span>
+    </div>`;
+    entries.forEach(e => {
+      const pct = (e.cnt / 9) * 100, cat = binCategory(e.bin);
+      html += `<div class="tally-row">
+        <span class="mono" style="font-weight:700;color:${cat.color};">Etiqueta #${e.bin}</span>
+        <div class="tally-bar-bg"><div class="tally-bar" style="width:${pct.toFixed(0)}%;background:${cat.color};"></div></div>
+        <span class="mono" style="text-align:right;">${e.cnt}/9 = <strong>${(e.cnt/9).toFixed(2)}</strong></span>
+      </div>`;
+    });
+    html += `<div class="sub" style="font-size:11px;border-top:1px solid var(--border);padding-top:6px;margin-top:2px;">
+      + las otras <strong>${59 - entries.length} etiquetas</strong> ausentes llevan <span class="mono">0,00</span> → lista total de <strong>59 números</strong>.
+    </div>`;
+    document.getElementById('tallyList').innerHTML = html;
+  }
+  document.getElementById('nextPxBtn').addEventListener('click', () => {
+    tourIdx = (tourIdx + 1) % tour.length;
+    selR = tour[tourIdx][0]; selC = tour[tourIdx][1]; renderToy();
+  });
+  document.querySelectorAll('#quadBtns .qbtn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#quadBtns .qbtn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active'); activeQuad = parseInt(btn.dataset.q, 10);
+      renderToy(); renderTally();
+    });
+  });
+
+  // === SECTION 2: 3x3 LBP Lab ===
+  const cellToP = [5,6,7,4,-1,0,3,2,1];
+  const PRESETS = {
+    edgeV:  { c: 120, n: [185, 178, 130, 62, 55, 60, 128, 180] },
+    edgeH:  { c: 120, n: [130, 182, 190, 176, 125, 58, 52, 64] },
+    corner: { c: 120, n: [180, 188, 175, 65, 60, 58, 62, 70] },
+    flat:   { c: 120, n: [122, 125, 121, 124, 120, 123, 121, 126] },
+    noise:  { c: 120, n: [175, 65, 180, 70, 165, 60, 170, 75] }
+  };
+  let baseCenter = 120, baseN = [...PRESETS.edgeV.n], brightness = 0;
+  const pxGrid = document.getElementById('pxGrid');
+  const ringSvg = document.getElementById('ringSvg');
+  const bitStrip = document.getElementById('bitStrip');
+  const uniformPill = document.getElementById('uniformPill');
+  const binResult = document.getElementById('binResult');
+  const brightSlider = document.getElementById('brightSlider');
+  const brightVal = document.getElementById('brightVal');
+
+  function renderLbpSim() {
+    const cVal = clamp255(baseCenter + brightness);
+    const nVals = baseN.map(v => clamp255(v + brightness));
+    const bits = nVals.map(v => (v >= cVal ? 1 : 0));
+    let code = 0; for (let p = 0; p < 8; p++) code |= (bits[p] << p);
+    const U = transitions(code), bin = nriMap[code];
+
+    pxGrid.innerHTML = '';
+    for (let idx = 0; idx < 9; idx++) {
+      const p = cellToP[idx], isCenter = p === -1;
+      const val = isCenter ? cVal : nVals[p], bit = isCenter ? -1 : bits[p];
+      const div = document.createElement('div');
+      div.className = 'px-cell ' + (isCenter ? 'center' : (bit ? 'bit1' : 'bit0'));
+      div.style.background = `rgb(${val},${val},${val})`;
+      div.innerHTML = `<span class="px-val" style="color:${val > 135 ? '#111' : '#f4f4f5'}">${val}</span>
+        <span class="px-bit ${isCenter ? 'bc' : (bit ? 'b1' : 'b0')}">${isCenter ? 'centro' : 'b' + p + '=' + bit}</span>`;
+      if (!isCenter) {
+        div.addEventListener('click', () => {
+          baseN[p] = (nVals[p] >= cVal) ? Math.max(20, baseCenter - 55) : Math.min(235, baseCenter + 55);
+          renderLbpSim();
+        });
+      }
+      pxGrid.appendChild(div);
+    }
+
+    const cx = 68, cy = 68, rad = 46;
+    let svg = `<circle cx="${cx}" cy="${cy}" r="${rad}" fill="none" stroke="var(--border)" stroke-width="2" stroke-dasharray="3 3"/>`;
+    for (let p = 0; p < 8; p++) {
+      const a1 = (p * Math.PI) / 4, a2 = ((p + 1) * Math.PI) / 4;
+      if (bits[p] !== bits[(p + 1) % 8]) {
+        const am = (a1 + a2) / 2;
+        svg += `<line x1="${cx + (rad - 8) * Math.cos(am)}" y1="${cy + (rad - 8) * Math.sin(am)}" x2="${cx + (rad + 8) * Math.cos(am)}" y2="${cy + (rad + 8) * Math.sin(am)}" stroke="var(--chart-5)" stroke-width="2.2" stroke-linecap="round"/>`;
+      }
+    }
+    svg += `<circle cx="${cx}" cy="${cy}" r="14" fill="var(--secondary)" stroke="var(--chart-3)" stroke-width="2"/>`;
+    svg += `<text x="${cx}" y="${cy + 3.5}" text-anchor="middle" font-size="10" font-weight="700" font-family="monospace" fill="var(--foreground)">U=${U}</text>`;
+    for (let p = 0; p < 8; p++) {
+      const ang = (p * Math.PI) / 4, nx = cx + rad * Math.cos(ang), ny = cy + rad * Math.sin(ang);
+      svg += `<circle cx="${nx}" cy="${ny}" r="11" fill="${bits[p] ? 'var(--chart-2)' : 'var(--muted)'}" stroke="var(--card)" stroke-width="1.5"/>`;
+      svg += `<text x="${nx}" y="${ny + 3.5}" text-anchor="middle" font-size="10.5" font-weight="700" font-family="monospace" fill="${bits[p] ? '#051b0d' : 'var(--muted-foreground)'}">${bits[p]}</text>`;
+    }
+    ringSvg.innerHTML = svg;
+
+    bitStrip.innerHTML = bits.map(b => `<span class="bit-chip ${b ? 'b1' : 'b0'}">${b}</span>`).join('') + `<span class="mono sub" style="margin-left:6px;">dec ${code}</span>`;
+    if (U <= 2) {
+      uniformPill.className = 'pill pill-ok'; uniformPill.textContent = `Uniforme (U = ${U})`;
+      binResult.textContent = `Bin #${bin} / 58`; binResult.style.color = 'var(--chart-2)';
+    } else {
+      uniformPill.className = 'pill pill-warn'; uniformPill.textContent = `No uniforme (U = ${U})`;
+      binResult.textContent = `Bin #58 (cajón ruido)`; binResult.style.color = 'var(--chart-5)';
+    }
+  }
+  document.querySelectorAll('#presetBtns .btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#presetBtns .btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const p = PRESETS[btn.dataset.preset];
+      baseCenter = p.c; baseN = [...p.n]; renderLbpSim();
+    });
+  });
+  brightSlider.addEventListener('input', () => {
+    brightness = parseInt(brightSlider.value, 10);
+    brightVal.textContent = (brightness >= 0 ? '+' : '') + brightness;
+    renderLbpSim();
+  });
+  const dirs = ['E','SE','S','SO','O','NO','N','NE'];
+  document.getElementById('orientStrip').innerHTML = dirs.map((d, k) => {
+    let dots = '';
+    for (let p = 0; p < 8; p++) {
+      const ang = (p * Math.PI) / 4, x = 14 + 9 * Math.cos(ang), y = 14 + 9 * Math.sin(ang);
+      const on = ((p - k + 8) % 8) < 4;
+      dots += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="2.2" fill="${on ? 'var(--chart-2)' : 'var(--muted-foreground)'}" opacity="${on ? 1 : 0.35}"/>`;
+    }
+    return `<div class="orient-item"><svg width="28" height="28" viewBox="0 0 28 28">${dots}</svg><span>${d}</span></div>`;
+  }).join('');
+
+  // === SECTION 3: 128x128 Face + Multiscale MLBP ===
+  const S = 128, faceGray = new Uint8Array(S * S);
+  let seed = 42;
+  function rand() { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; }
+  (function buildFace() {
+    const raw = new Float32Array(S * S);
+    for (let y = 0; y < S; y++) {
+      const ny = y / S;
+      for (let x = 0; x < S; x++) {
+        const nx = x / S;
+        let v = 42 + 12 * Math.sin(nx * 5 + ny * 3);
+        const hx = (nx - 0.5) / 0.38, hy = (ny - 0.50) / 0.46, hd = hx * hx + hy * hy;
+        if (hd < 1.0) {
+          const z = Math.sqrt(Math.max(0, 1 - hd));
+          v = 115 + 95 * z + 18 * (0.5 - nx) - 12 * (ny - 0.42);
+          v += 20 * (Math.exp(-(((nx - 0.30) ** 2) / 0.008 + ((ny - 0.55) ** 2) / 0.008))
+                   + Math.exp(-(((nx - 0.70) ** 2) / 0.008 + ((ny - 0.55) ** 2) / 0.008)));
+        }
+        if (ny < 0.28 && hd < 1.08) {
+          const hm = Math.exp(-(((ny - 0.06) ** 2) / 0.018));
+          v = v * (1 - 0.78 * hm) + 26 * (0.78 * hm);
+        }
+        for (const ex of [0.31, 0.69]) {
+          const dx = (nx - ex) / 0.11, arch = 0.295 - 0.018 * (1 - dx * dx), dy = (ny - arch) / 0.022;
+          v -= 88 * Math.exp(-(dx * dx * 1.4 + dy * dy * 2.2));
+        }
+        for (const ex of [0.31, 0.69]) {
+          const dx = (nx - ex) / 0.095, dy = (ny - 0.38) / 0.042, d2 = dx * dx + dy * dy;
+          v -= 28 * Math.exp(-d2 * 0.45);
+          if (d2 < 1.0) {
+            v = 215 - 35 * d2;
+            const ir = ((nx - ex) ** 2 + (ny - 0.38) ** 2) / (0.036 ** 2);
+            if (ir < 1.0) v = 58 + 25 * Math.sqrt(ir);
+            if (ir < 0.25) v = 16;
+            if (((nx - (ex - 0.012)) ** 2 + (ny - 0.368) ** 2) / (0.012 ** 2) < 1.0) v = 245;
+          }
+          v -= 65 * Math.exp(-(((nx - ex) / 0.09) ** 2 + ((ny - 0.345) / 0.012) ** 2));
+        }
+        v += 34 * Math.exp(-(((nx - 0.50) / 0.025) ** 2 + ((ny - 0.49) / 0.11) ** 2));
+        v -= 28 * (Math.exp(-(((nx - 0.44) / 0.026) ** 2 + ((ny - 0.52) / 0.09) ** 2))
+                 + Math.exp(-(((nx - 0.56) / 0.026) ** 2 + ((ny - 0.52) / 0.09) ** 2)));
+        for (const nxn of [0.46, 0.54]) v -= 82 * Math.exp(-(((nx - nxn) / 0.022) ** 2 + ((ny - 0.585) / 0.014) ** 2));
+        const mx = (nx - 0.50) / 0.155, smile = 0.78 - 0.016 * (mx * mx);
+        v -= 56 * Math.exp(-(mx * mx * 1.2 + ((ny - smile) / 0.036) ** 2 * 2.0));
+        v -= 75 * Math.exp(-(mx * mx * 1.1 + ((ny - smile) / 0.009) ** 2));
+        raw[y * S + x] = v + (rand() - 0.5) * 14;
+      }
+    }
+    const hist = new Uint32Array(256), tmp = new Uint8Array(S * S);
+    for (let i = 0; i < S * S; i++) { const q = clamp255(raw[i]); tmp[i] = q; hist[q]++; }
+    const cdf = new Uint32Array(256); let acc = 0, cdfMin = 0;
+    for (let i = 0; i < 256; i++) { acc += hist[i]; cdf[i] = acc; if (!cdfMin && acc) cdfMin = acc; }
+    for (let i = 0; i < S * S; i++) faceGray[i] = Math.round(((cdf[tmp[i]] - cdfMin) / (S * S - cdfMin)) * 255);
+  })();
+
+  function sampleGray(x, y) {
+    const cx = Math.max(0, Math.min(S - 1.001, x)), cy = Math.max(0, Math.min(S - 1.001, y));
+    const x0 = Math.floor(cx), y0 = Math.floor(cy), dx = cx - x0, dy = cy - y0;
+    return (faceGray[y0*S+x0]*(1-dx) + faceGray[y0*S+x0+1]*dx)*(1-dy)
+         + (faceGray[(y0+1)*S+x0]*(1-dx) + faceGray[(y0+1)*S+x0+1]*dx)*dy;
+  }
+
+  const lbpMaps = {}, lbpHists = {};
+  for (let R = 1; R <= 6; R++) {
+    const map = new Uint8Array(S * S);
+    const hists = Array.from({ length: 64 }, () => new Float32Array(59));
+    const dxA = [], dyA = [];
+    for (let p = 0; p < 8; p++) { const a = (2*Math.PI*p)/8; dxA.push(R*Math.cos(a)); dyA.push(-R*Math.sin(a)); }
+    for (let y = 0; y < S; y++) {
+      const gr = y >> 4;
+      for (let x = 0; x < S; x++) {
+        const gc = x >> 4, center = faceGray[y * S + x];
+        let code = 0;
+        for (let p = 0; p < 8; p++) if (sampleGray(x + dxA[p], y + dyA[p]) >= center) code |= (1 << p);
+        const bin = nriMap[code];
+        map[y * S + x] = bin;
+        hists[gr * 8 + gc][bin] += 1 / 256;
+      }
+    }
+    lbpMaps[R] = map; lbpHists[R] = hists;
+  }
+
+  let curR = 3, curRow = 3, curCol = 2, viewMode = 'face';
+  const SCALE_NOTES = {
+    1: 'Diámetro 3 px<br>Microtextura y piel',
+    2: 'Diámetro 5 px<br>Pestañas y bordes',
+    3: 'Diámetro 7 px<br>Pliegues y contorno',
+    4: 'Diámetro 9 px<br>Forma ojo/labio',
+    5: 'Diámetro 11 px<br>Arco ceja y nariz',
+    6: 'Diámetro 13 px<br>Estructura gruesa'
+  };
+  function regionName(r, c) {
+    if (r <= 1) return 'Frente / pelo';
+    if (r === 2 && (c === 1 || c === 2)) return 'Ceja izq.';
+    if (r === 2 && (c === 5 || c === 6)) return 'Ceja der.';
+    if (r === 3 && (c >= 1 && c <= 3)) return 'Ojo izq.';
+    if (r === 3 && (c >= 4 && c <= 6)) return 'Ojo der.';
+    if ((r === 3 || r === 4) && (c === 3 || c === 4)) return 'Puente / nariz';
+    if (r === 4) return 'Mejilla';
+    if (r === 5 && (c >= 2 && c <= 5)) return 'Nariz / labio sup.';
+    if (r === 6 && (c >= 2 && c <= 5)) return 'Labios / boca';
+    if (r === 7) return 'Mentón / contorno';
+    return 'Contorno facial';
+  }
+
+  const faceCanvas = document.getElementById('faceCanvas'), fCtx = faceCanvas.getContext('2d');
+  const gridOverlay = document.getElementById('gridOverlay');
+  const zoomCanvas = document.getElementById('zoomCanvas'), zCtx = zoomCanvas.getContext('2d');
+  const histCanvas = document.getElementById('histCanvas'), hCtx = histCanvas.getContext('2d');
+  const tapeBars = document.getElementById('tapeBars');
+
+  function renderFaceAndHist() {
+    const imgData = fCtx.createImageData(S, S), d = imgData.data;
+    if (viewMode === 'face') {
+      for (let i = 0; i < S*S; i++) { const v = faceGray[i]; d[i*4]=v; d[i*4+1]=v; d[i*4+2]=v; d[i*4+3]=255; }
+    } else {
+      const map = lbpMaps[curR];
+      for (let i = 0; i < S*S; i++) {
+        const b = map[i];
+        if (b === 58) { d[i*4]=220; d[i*4+1]=75; d[i*4+2]=95; d[i*4+3]=255; }
+        else { const v = Math.round((b/57)*240); d[i*4]=Math.round(v*0.45); d[i*4+1]=Math.round(60+v*0.78); d[i*4+2]=Math.round(110+v*0.55); d[i*4+3]=255; }
+      }
+    }
+    fCtx.putImageData(imgData, 0, 0);
+
+    let svg = '';
+    for (let i = 1; i < 8; i++) {
+      const p = i * 16;
+      svg += `<line x1="${p}" y1="0" x2="${p}" y2="128" stroke="rgba(255,255,255,0.28)" stroke-width="0.6"/>`;
+      svg += `<line x1="0" y1="${p}" x2="128" y2="${p}" stroke="rgba(255,255,255,0.28)" stroke-width="0.6"/>`;
+    }
+    const sx = curCol * 16, sy = curRow * 16;
+    svg += `<rect x="${sx}" y="${sy}" width="16" height="16" fill="rgba(245,158,11,0.22)" stroke="#f59e0b" stroke-width="1.6"/>`;
+    svg += `<circle cx="${sx+8}" cy="${sy+8}" r="${curR}" fill="none" stroke="#38bdf8" stroke-width="1.2"/>`;
+    gridOverlay.innerHTML = svg;
+
+    const zW = 96, scale = 6;
+    zCtx.clearRect(0, 0, zW, zW);
+    for (let dy = 0; dy < 16; dy++) for (let dx = 0; dx < 16; dx++) {
+      const v = faceGray[(sy + dy) * S + (sx + dx)];
+      zCtx.fillStyle = `rgb(${v},${v},${v})`;
+      zCtx.fillRect(dx * scale, dy * scale, scale, scale);
+    }
+    const zc = zW / 2, zRad = curR * scale;
+    zCtx.strokeStyle = '#38bdf8'; zCtx.lineWidth = 1.6;
+    zCtx.beginPath(); zCtx.arc(zc, zc, zRad, 0, Math.PI * 2); zCtx.stroke();
+    zCtx.fillStyle = '#f59e0b'; zCtx.beginPath(); zCtx.arc(zc, zc, 3.2, 0, Math.PI * 2); zCtx.fill();
+    zCtx.fillStyle = '#22c55e';
+    for (let p = 0; p < 8; p++) {
+      const a = (2 * Math.PI * p) / 8;
+      zCtx.beginPath(); zCtx.arc(zc + zRad * Math.cos(a), zc - zRad * Math.sin(a), 3, 0, Math.PI * 2); zCtx.fill();
+    }
+
+    document.getElementById('zoomR').textContent = curR;
+    document.getElementById('scaleCaption').innerHTML = SCALE_NOTES[curR];
+
+    const cellIdx = curRow * 8 + curCol, hist = lbpHists[curR][cellIdx];
+    const W = histCanvas.width, H = histCanvas.height;
+    hCtx.clearRect(0, 0, W, H);
+    const maxV = Math.max(0.18, ...hist);
+    const padL = 28, padB = 12, padT = 8, padR = 6, plotW = W - padL - padR, plotH = H - padT - padB;
+    const cs = getComputedStyle(document.documentElement);
+    const fgMuted = cs.getPropertyValue('--muted-foreground').trim();
+    const c1 = cs.getPropertyValue('--chart-1').trim();
+    const c2 = cs.getPropertyValue('--chart-2').trim();
+    const c5 = cs.getPropertyValue('--chart-5').trim();
+    hCtx.strokeStyle = 'rgba(148,163,184,0.22)'; hCtx.lineWidth = 1; hCtx.fillStyle = fgMuted; hCtx.font = '10px monospace';
+    for (const f of [0, 0.5, 1]) {
+      const y = padT + plotH * (1 - f);
+      hCtx.beginPath(); hCtx.moveTo(padL, y); hCtx.lineTo(W - padR, y); hCtx.stroke();
+      hCtx.fillText((maxV * f * 100).toFixed(0) + '%', 2, y + 3);
+    }
+    const bw = plotW / 59;
+    for (let b = 0; b < 59; b++) {
+      const bh = (hist[b] / maxV) * plotH;
+      hCtx.fillStyle = b === 58 ? c5 : (b === 0 || b === 57 ? c1 : c2);
+      hCtx.fillRect(padL + b * bw + 0.5, padT + plotH - bh, Math.max(2, bw - 1.2), bh);
+    }
+    document.getElementById('cellLabel').textContent = `(${curRow},${curCol}) · ${regionName(curRow, curCol)}`;
+
+    tapeBars.innerHTML = '';
+    for (let r = 1; r <= 6; r++) {
+      const seg = document.createElement('div');
+      seg.className = 'tape-seg' + (r === curR ? ' active' : '');
+      seg.textContent = `R=${r}`;
+      if (r === curR) {
+        const cur = document.createElement('div');
+        cur.className = 'tape-cursor';
+        cur.style.left = `calc(${((cellIdx / 64) * 100).toFixed(1)}% - 2px)`;
+        seg.appendChild(cur);
+      }
+      seg.addEventListener('click', () => setRadius(r));
+      tapeBars.appendChild(seg);
+    }
+    const startIdx = ((curR - 1) * 64 + cellIdx) * 59;
+    document.getElementById('offsetInfo').textContent =
+      `Bloque R=${curR}, celda #${cellIdx} → template[${startIdx}..${startIdx + 58}] (múltiplos de 1/256)`;
+  }
+
+  function setRadius(r) {
+    curR = r;
+    document.querySelectorAll('#radiiBtns .btn').forEach(b => b.classList.toggle('active', parseInt(b.dataset.r, 10) === r));
+    renderFaceAndHist();
+  }
+  document.querySelectorAll('#radiiBtns .btn').forEach(b => b.addEventListener('click', () => setRadius(parseInt(b.dataset.r, 10))));
+  document.getElementById('faceBox').addEventListener('click', (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    curCol = Math.max(0, Math.min(7, Math.floor(((e.clientX - rect.left) / rect.width) * 8)));
+    curRow = Math.max(0, Math.min(7, Math.floor(((e.clientY - rect.top) / rect.height) * 8)));
+    renderFaceAndHist();
+  });
+  document.getElementById('viewFaceBtn').addEventListener('click', () => {
+    viewMode = 'face';
+    document.getElementById('viewFaceBtn').classList.add('active');
+    document.getElementById('viewLbpBtn').classList.remove('active');
+    renderFaceAndHist();
+  });
+  document.getElementById('viewLbpBtn').addEventListener('click', () => {
+    viewMode = 'lbp';
+    document.getElementById('viewLbpBtn').classList.add('active');
+    document.getElementById('viewFaceBtn').classList.remove('active');
+    renderFaceAndHist();
+  });
+
+  renderToy();
+  renderTally();
+  renderLbpSim();
+  renderFaceAndHist();
+})();
+</script>
+</body>
+</html>

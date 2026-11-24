@@ -10,10 +10,39 @@ _TEMPLATE = np.array([[0.31, 0.38], [0.69, 0.38], [0.50, 0.56],
 
 
 def align(img_bgr, landmarks, size=config.FACE_SIZE):
-    """Recorte alineado (BGR, size x size) por similitud a partir de 5 landmarks."""
+    """Recorte alineado (BGR, size x size) por similitud a partir de 5 landmarks.
+
+    Si la cara de entrada supera la resolucion del recorte (escala < 1), se pre-reduce
+    la region de interes con INTER_AREA antes de warpAffine para evitar aliasing de alta
+    frecuencia en el extractor MLBP.
+    """
     M, _ = cv2.estimateAffinePartial2D(landmarks, _TEMPLATE * size, method=cv2.LMEDS)
     if M is None:
         raise ValueError("No se pudo estimar la transformacion de alineado")
+    scale = float(np.hypot(M[0, 0], M[0, 1]))
+    if scale < 1.0:
+        M_inv = cv2.invertAffineTransform(M)
+        corners = np.array([[0, 0, 1], [size, 0, 1], [0, size, 1], [size, size, 1]],
+                           dtype=np.float64)
+        src_pts = corners @ M_inv.T
+        pad = int(np.ceil(4.0 / scale))
+        h, w = img_bgr.shape[:2]
+        x0 = max(0, int(np.floor(src_pts[:, 0].min())) - pad)
+        y0 = max(0, int(np.floor(src_pts[:, 1].min())) - pad)
+        x1 = min(w, int(np.ceil(src_pts[:, 0].max())) + pad)
+        y1 = min(h, int(np.ceil(src_pts[:, 1].max())) + pad)
+        if x1 > x0 and y1 > y0:
+            roi = img_bgr[y0:y1, x0:x1]
+            M = M.copy()
+            M[:, 2] += M[:, 0] * x0 + M[:, 1] * y0
+            rh, rw = roi.shape[:2]
+            nw, nh = max(1, round(rw * scale)), max(1, round(rh * scale))
+            sx, sy = nw / rw, nh / rh
+            roi = cv2.resize(roi, (nw, nh), interpolation=cv2.INTER_AREA)
+            M[:, 2] += M[:, 0] * (0.5 / sx - 0.5) + M[:, 1] * (0.5 / sy - 0.5)
+            M[:, 0] /= sx
+            M[:, 1] /= sy
+            img_bgr = roi
     return cv2.warpAffine(img_bgr, M, (size, size), flags=cv2.INTER_LINEAR,
                           borderMode=cv2.BORDER_REPLICATE)
 

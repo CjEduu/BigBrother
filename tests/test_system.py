@@ -226,3 +226,38 @@ def test_actualizar_con_muestra_que_verifica(bb3):
     n = len(bb3.db.get("keanu_reeves"))
     bb3.inscribir("keanu_reeves", load_image(KEANU)[:, ::-1].copy(), actualizar=True)
     assert len(bb3.db.get("keanu_reeves")) == n + 1
+
+
+def test_elisabeth_filtra_falso_positivo_detector(bb):
+    """Regresion: en elisabeth_II_1945.jpg YuNet detecta un neumatico con mayor area que la
+    cara real. El filtro faceness debe descartarlo y seleccionar el rostro real."""
+    from bigbrother.preprocess import align
+
+    img = load_image(DS / "elisabeth_II_1945.jpg")
+    faces = bb.detector.detect_all(img)
+    assert len(faces) >= 2
+    # El candidato mayor (neumatico) debe quedar por debajo del umbral de faceness
+    t_tire = bb.extraer_sd(align(img, faces[0].landmarks))
+    assert bb.faceness.score(t_tire) < bb.faceness.threshold
+    # recortar() debe devolver la cara real (faces[1]) con alta puntuacion de faceness
+    crop = bb.recortar(img)
+    t_chosen = bb.extraer_sd(crop)
+    t_face = bb.extraer_sd(align(img, faces[1].landmarks))
+    assert np.array_equal(t_chosen, t_face)
+    assert bb.faceness.score(t_chosen) > 15.0
+
+
+def test_align_antialiasing_alta_resolucion(bb):
+    """Regresion: alinear caras en alta resolucion con INTER_AREA evita el aliasing que
+    elevaba los falsos positivos entre impostores por encima de 48,6 px de IOD."""
+    import cv2
+
+    img_hi = load_image(KEANU)
+    h, w = img_hi.shape[:2]
+    # Reducir a ~50% con INTER_AREA y comprobar que los templates proyectados coinciden
+    # fuertemente (sin desplazamiento por aliasing)
+    img_lo = cv2.resize(img_hi, (w // 2, h // 2), interpolation=cv2.INTER_AREA)
+    y_hi = bb._proj(bb.extraer(img_hi))
+    y_lo = bb._proj(bb.extraer(img_lo))
+    assert float(np.dot(y_hi, y_lo)) > 0.85
+

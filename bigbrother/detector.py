@@ -46,14 +46,17 @@ class FaceDetector:
                     float(f[-1])) for f in faces]
         return sorted(out, key=lambda f: f.area, reverse=True)
 
-    def detect(self, img_bgr, strict=True):
-        """Devuelve la cara principal (la mayor).
+    def select(self, faces, strict=True, is_face=None):
+        """Selecciona la cara principal (la mayor) de una lista ya ordenada por area.
 
         strict=True aplica la politica de seguridad: rechaza imagenes con varias caras de
         tamano parecido (ataque "pon una foto de la victima junto a tu cara") y caras de
         baja calidad (muy pequenas o de perfil).
+        Si se facilita is_face(face) -> bool, descarta falsos positivos del detector antes
+        de elegir la cara principal y comprobar ambiguedad.
         """
-        faces = self.detect_all(img_bgr)
+        if is_face is not None and faces:
+            faces = [f for f in faces if is_face(f)]
         if not faces:
             raise NoFaceDetected("No se detecto ninguna cara")
         face = faces[0]
@@ -62,6 +65,10 @@ class FaceDetector:
                 raise AmbiguousFace(f"{len(faces)} caras de tamano similar en la imagen")
             check_quality(face)
         return face
+
+    def detect(self, img_bgr, strict=True, is_face=None):
+        """Devuelve la cara principal (la mayor)."""
+        return self.select(self.detect_all(img_bgr), strict=strict, is_face=is_face)
 
 
 def check_quality(face):

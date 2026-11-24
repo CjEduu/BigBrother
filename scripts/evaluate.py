@@ -527,28 +527,63 @@ def eval_template_attacks(c):
 def invert_template(c):
     """Atacante con la BD descifrada (tiene la CLAVE): busca un histograma MLBP valido cuya
     proyeccion coincida con el template robado de Vinicius, y lo presenta por verificar_t."""
-    import torch
-    dev = "cuda" if torch.cuda.is_available() else "cpu"
-    W = torch.tensor(c.bb.projection.W, device=dev)
-    mu = torch.tensor(c.bb.projection.mean, device=dev)
-    target = torch.tensor(c.vini_refs[0], device=dev)
-    fw = torch.tensor(c.bb.faceness.w, device=dev)
-    fthr = c.bb.faceness.threshold + 2.0
     # el atacante (caja blanca) parte de la media de caras y penaliza no parecer una cara
     H0 = np.asarray(c.X[~c.test_mask][:2000]).mean(0).reshape(c.ex.n_hist, c.ex.bins)
-    logits = torch.tensor(np.log(H0 + 1e-4), device=dev, dtype=torch.float32, requires_grad=True)
-    opt = torch.optim.Adam([logits], lr=0.05)
+    fthr = c.bb.faceness.threshold + 2.0
     t = time.time()
-    for _ in range(1500):
-        h = torch.softmax(logits, 1).reshape(-1)
-        sq = torch.sqrt(h + 1e-12)
-        z = (sq - mu) @ W
-        face = sq @ fw + c.bb.faceness.b
-        loss = -torch.dot(z / z.norm(), target) + 0.05 * torch.relu(fthr - face)
-        opt.zero_grad()
-        loss.backward()
-        opt.step()
-    H = torch.softmax(logits, 1).detach().cpu().numpy().astype(np.float64)
+    try:
+        import torch
+        dev = "cuda" if torch.cuda.is_available() else "cpu"
+        W = torch.tensor(c.bb.projection.W, device=dev)
+        mu = torch.tensor(c.bb.projection.mean, device=dev)
+        target = torch.tensor(c.vini_refs[0], device=dev)
+        fw = torch.tensor(c.bb.faceness.w, device=dev)
+        logits = torch.tensor(np.log(H0 + 1e-4), device=dev, dtype=torch.float32, requires_grad=True)
+        opt = torch.optim.Adam([logits], lr=0.05)
+        for _ in range(1500):
+            h = torch.softmax(logits, 1).reshape(-1)
+            sq = torch.sqrt(h + 1e-12)
+            z = (sq - mu) @ W
+            face = sq @ fw + c.bb.faceness.b
+            loss = -torch.dot(z / z.norm(), target) + 0.05 * torch.relu(fthr - face)
+            opt.zero_grad()
+            loss.backward()
+            opt.step()
+        H = torch.softmax(logits, 1).detach().cpu().numpy().astype(np.float64)
+    except ImportError:
+        dev = "cpu (numpy)"
+        W = c.bb.projection.W.astype(np.float32)
+        mu = c.bb.projection.mean.astype(np.float32)
+        target = c.vini_refs[0].astype(np.float32)
+        fw = c.bb.faceness.w.astype(np.float32)
+        fb = float(c.bb.faceness.b)
+        logits = np.log(H0 + 1e-4).astype(np.float32)
+        m = np.zeros_like(logits)
+        v = np.zeros_like(logits)
+        lr, b1, b2, eps = 0.05, 0.9, 0.999, 1e-8
+        for step in range(1, 1501):
+            x = logits - logits.max(axis=1, keepdims=True)
+            ex = np.exp(x)
+            H_cur = ex / ex.sum(axis=1, keepdims=True)
+            h_flat = H_cur.reshape(-1)
+            sq = np.sqrt(h_flat + 1e-12)
+            z = (sq - mu) @ W
+            zn = float(np.linalg.norm(z)) + 1e-12
+            u = z / zn
+            dz = -(target - float(np.dot(u, target)) * u) / zn
+            dsq = W @ dz
+            if float(np.dot(sq, fw)) + fb < fthr:
+                dsq = dsq - 0.05 * fw
+            dh = (dsq * (0.5 / sq)).reshape(H_cur.shape)
+            g = H_cur * (dh - np.sum(H_cur * dh, axis=1, keepdims=True))
+            m = b1 * m + (1.0 - b1) * g
+            v = b2 * v + (1.0 - b2) * (g * g)
+            m_hat = m / (1.0 - b1 ** step)
+            v_hat = v / (1.0 - b2 ** step)
+            logits -= lr * m_hat / (np.sqrt(v_hat) + eps)
+        x = logits - logits.max(axis=1, keepdims=True)
+        ex = np.exp(x)
+        H = (ex / ex.sum(axis=1, keepdims=True)).astype(np.float64)
     tq = _counts_to_template(_quantize(H))
     others = list(range(1, len(c.vini_refs)))
     y = c.proj(tq)

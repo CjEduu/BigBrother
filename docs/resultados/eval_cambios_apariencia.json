@@ -1,0 +1,3172 @@
+{
+  "thresholds": {
+    "verificacion_far_0_1pct": 0.21724116802215576,
+    "identificacion_fpir_1pct": 0.2846938967704773,
+    "far_1pct_lfw": 0.15703514218330383,
+    "far_5pct_lfw": 0.108374,
+    "far_10pct_lfw": 0.083431,
+    "faceness_threshold": -3.5946569442749023
+  },
+  "n_enrolled_ids": 50,
+  "resumen_global": {
+    "n_total": 45,
+    "n_detectadas_ok": 42,
+    "n_fta": 3,
+    "fta_rate": 0.0667,
+    "verif_ok_total": 11,
+    "tar_sobre_total": 0.2444,
+    "tar_sobre_detectadas": 0.2619,
+    "ident_ok": 4,
+    "rank1_count": 11,
+    "rank1_rate_detectadas": 0.2619,
+    "pasa_far_1pct": 18,
+    "pasa_far_5pct": 24,
+    "pasa_far_10pct": 28,
+    "nivel_impostor_count": 16,
+    "cross_fp_probes": 15,
+    "cross_fp_total_matches": 36,
+    "sim_media": 0.1437,
+    "sim_mediana": 0.131,
+    "sim_min": -0.0425,
+    "sim_max": 0.5087,
+    "rank_medio": 11.9
+  },
+  "resumen_sin_elisabeth_ii": {
+    "n_total": 41,
+    "n_detectadas_ok": 38,
+    "n_fta": 3,
+    "fta_rate": 0.0732,
+    "verif_ok_total": 11,
+    "tar_sobre_total": 0.2683,
+    "tar_sobre_detectadas": 0.2895,
+    "ident_ok": 4,
+    "rank1_count": 10,
+    "rank1_rate_detectadas": 0.2632,
+    "pasa_far_1pct": 17,
+    "pasa_far_5pct": 23,
+    "pasa_far_10pct": 26,
+    "nivel_impostor_count": 14,
+    "cross_fp_probes": 15,
+    "cross_fp_total_matches": 36,
+    "sim_media": 0.152,
+    "sim_mediana": 0.1411,
+    "sim_min": -0.0425,
+    "sim_max": 0.5087,
+    "rank_medio": 11.13
+  },
+  "resumen_por_categoria": {
+    "pigmentacion_cirugia": {
+      "n_total": 6,
+      "n_detectadas_ok": 6,
+      "n_fta": 0,
+      "fta_rate": 0.0,
+      "verif_ok_total": 2,
+      "tar_sobre_total": 0.3333,
+      "tar_sobre_detectadas": 0.3333,
+      "ident_ok": 0,
+      "rank1_count": 1,
+      "rank1_rate_detectadas": 0.1667,
+      "pasa_far_1pct": 3,
+      "pasa_far_5pct": 4,
+      "pasa_far_10pct": 4,
+      "nivel_impostor_count": 2,
+      "cross_fp_probes": 3,
+      "cross_fp_total_matches": 4,
+      "sim_media": 0.1422,
+      "sim_mediana": 0.1403,
+      "sim_min": 0.0344,
+      "sim_max": 0.2385,
+      "rank_medio": 6.0
+    },
+    "transicion_genero": {
+      "n_total": 8,
+      "n_detectadas_ok": 8,
+      "n_fta": 0,
+      "fta_rate": 0.0,
+      "verif_ok_total": 3,
+      "tar_sobre_total": 0.375,
+      "tar_sobre_detectadas": 0.375,
+      "ident_ok": 1,
+      "rank1_count": 3,
+      "rank1_rate_detectadas": 0.375,
+      "pasa_far_1pct": 4,
+      "pasa_far_5pct": 7,
+      "pasa_far_10pct": 8,
+      "nivel_impostor_count": 1,
+      "cross_fp_probes": 3,
+      "cross_fp_total_matches": 20,
+      "sim_media": 0.2205,
+      "sim_mediana": 0.1827,
+      "sim_min": 0.0964,
+      "sim_max": 0.5087,
+      "rank_medio": 6.12
+    },
+    "envejecimiento": {
+      "n_total": 8,
+      "n_detectadas_ok": 8,
+      "n_fta": 0,
+      "fta_rate": 0.0,
+      "verif_ok_total": 1,
+      "tar_sobre_total": 0.125,
+      "tar_sobre_detectadas": 0.125,
+      "ident_ok": 0,
+      "rank1_count": 1,
+      "rank1_rate_detectadas": 0.125,
+      "pasa_far_1pct": 3,
+      "pasa_far_5pct": 3,
+      "pasa_far_10pct": 4,
+      "nivel_impostor_count": 4,
+      "cross_fp_probes": 1,
+      "cross_fp_total_matches": 1,
+      "sim_media": 0.0888,
+      "sim_mediana": 0.0703,
+      "sim_min": -0.0425,
+      "sim_max": 0.2842,
+      "rank_medio": 19.0
+    },
+    "apariencia_estilismo": {
+      "n_total": 23,
+      "n_detectadas_ok": 20,
+      "n_fta": 3,
+      "fta_rate": 0.1304,
+      "verif_ok_total": 5,
+      "tar_sobre_total": 0.2174,
+      "tar_sobre_detectadas": 0.25,
+      "ident_ok": 3,
+      "rank1_count": 6,
+      "rank1_rate_detectadas": 0.3,
+      "pasa_far_1pct": 8,
+      "pasa_far_5pct": 10,
+      "pasa_far_10pct": 12,
+      "nivel_impostor_count": 9,
+      "cross_fp_probes": 8,
+      "cross_fp_total_matches": 11,
+      "sim_media": 0.1355,
+      "sim_mediana": 0.1051,
+      "sim_min": 0.0027,
+      "sim_max": 0.4142,
+      "rank_medio": 13.15
+    }
+  },
+  "resumen_por_identidad": {
+    "adele": {
+      "n_total": 2,
+      "n_detectadas_ok": 2,
+      "n_fta": 0,
+      "fta_rate": 0.0,
+      "verif_ok_total": 1,
+      "tar_sobre_total": 0.5,
+      "tar_sobre_detectadas": 0.5,
+      "ident_ok": 1,
+      "rank1_count": 1,
+      "rank1_rate_detectadas": 0.5,
+      "pasa_far_1pct": 1,
+      "pasa_far_5pct": 1,
+      "pasa_far_10pct": 1,
+      "nivel_impostor_count": 1,
+      "cross_fp_probes": 0,
+      "cross_fp_total_matches": 0,
+      "sim_media": 0.1599,
+      "sim_mediana": 0.1599,
+      "sim_min": 0.0192,
+      "sim_max": 0.3006,
+      "rank_medio": 16.5
+    },
+    "arianna_grande": {
+      "n_total": 3,
+      "n_detectadas_ok": 2,
+      "n_fta": 1,
+      "fta_rate": 0.3333,
+      "verif_ok_total": 0,
+      "tar_sobre_total": 0.0,
+      "tar_sobre_detectadas": 0.0,
+      "ident_ok": 0,
+      "rank1_count": 0,
+      "rank1_rate_detectadas": 0.0,
+      "pasa_far_1pct": 1,
+      "pasa_far_5pct": 1,
+      "pasa_far_10pct": 1,
+      "nivel_impostor_count": 1,
+      "cross_fp_probes": 0,
+      "cross_fp_total_matches": 0,
+      "sim_media": 0.1022,
+      "sim_mediana": 0.1022,
+      "sim_min": 0.0388,
+      "sim_max": 0.1655,
+      "rank_medio": 9.0
+    },
+    "christian_bale": {
+      "n_total": 3,
+      "n_detectadas_ok": 2,
+      "n_fta": 1,
+      "fta_rate": 0.3333,
+      "verif_ok_total": 0,
+      "tar_sobre_total": 0.0,
+      "tar_sobre_detectadas": 0.0,
+      "ident_ok": 0,
+      "rank1_count": 0,
+      "rank1_rate_detectadas": 0.0,
+      "pasa_far_1pct": 0,
+      "pasa_far_5pct": 1,
+      "pasa_far_10pct": 1,
+      "nivel_impostor_count": 1,
+      "cross_fp_probes": 1,
+      "cross_fp_total_matches": 1,
+      "sim_media": 0.0733,
+      "sim_mediana": 0.0733,
+      "sim_min": 0.0374,
+      "sim_max": 0.1093,
+      "rank_medio": 9.0
+    },
+    "cynthia_erivo": {
+      "n_total": 3,
+      "n_detectadas_ok": 2,
+      "n_fta": 1,
+      "fta_rate": 0.3333,
+      "verif_ok_total": 0,
+      "tar_sobre_total": 0.0,
+      "tar_sobre_detectadas": 0.0,
+      "ident_ok": 0,
+      "rank1_count": 0,
+      "rank1_rate_detectadas": 0.0,
+      "pasa_far_1pct": 0,
+      "pasa_far_5pct": 1,
+      "pasa_far_10pct": 1,
+      "nivel_impostor_count": 1,
+      "cross_fp_probes": 2,
+      "cross_fp_total_matches": 2,
+      "sim_media": 0.0978,
+      "sim_mediana": 0.0978,
+      "sim_min": 0.0409,
+      "sim_max": 0.1548,
+      "rank_medio": 18.0
+    },
+    "elisabeth_ii": {
+      "n_total": 4,
+      "n_detectadas_ok": 4,
+      "n_fta": 0,
+      "fta_rate": 0.0,
+      "verif_ok_total": 0,
+      "tar_sobre_total": 0.0,
+      "tar_sobre_detectadas": 0.0,
+      "ident_ok": 0,
+      "rank1_count": 1,
+      "rank1_rate_detectadas": 0.25,
+      "pasa_far_1pct": 1,
+      "pasa_far_5pct": 1,
+      "pasa_far_10pct": 2,
+      "nivel_impostor_count": 2,
+      "cross_fp_probes": 0,
+      "cross_fp_total_matches": 0,
+      "sim_media": 0.0651,
+      "sim_mediana": 0.0624,
+      "sim_min": -0.0374,
+      "sim_max": 0.1731,
+      "rank_medio": 19.25
+    },
+    "ellen_page": {
+      "n_total": 3,
+      "n_detectadas_ok": 3,
+      "n_fta": 0,
+      "fta_rate": 0.0,
+      "verif_ok_total": 0,
+      "tar_sobre_total": 0.0,
+      "tar_sobre_detectadas": 0.0,
+      "ident_ok": 0,
+      "rank1_count": 1,
+      "rank1_rate_detectadas": 0.3333,
+      "pasa_far_1pct": 1,
+      "pasa_far_5pct": 2,
+      "pasa_far_10pct": 3,
+      "nivel_impostor_count": 1,
+      "cross_fp_probes": 0,
+      "cross_fp_total_matches": 0,
+      "sim_media": 0.1539,
+      "sim_mediana": 0.151,
+      "sim_min": 0.0964,
+      "sim_max": 0.2144,
+      "rank_medio": 5.33
+    },
+    "hunter_schufer": {
+      "n_total": 3,
+      "n_detectadas_ok": 3,
+      "n_fta": 0,
+      "fta_rate": 0.0,
+      "verif_ok_total": 2,
+      "tar_sobre_total": 0.6667,
+      "tar_sobre_detectadas": 0.6667,
+      "ident_ok": 1,
+      "rank1_count": 2,
+      "rank1_rate_detectadas": 0.6667,
+      "pasa_far_1pct": 2,
+      "pasa_far_5pct": 3,
+      "pasa_far_10pct": 3,
+      "nivel_impostor_count": 0,
+      "cross_fp_probes": 1,
+      "cross_fp_total_matches": 4,
+      "sim_media": 0.2887,
+      "sim_mediana": 0.2265,
+      "sim_min": 0.1309,
+      "sim_max": 0.5087,
+      "rank_medio": 3.33
+    },
+    "jordi_hurtado": {
+      "n_total": 2,
+      "n_detectadas_ok": 2,
+      "n_fta": 0,
+      "fta_rate": 0.0,
+      "verif_ok_total": 1,
+      "tar_sobre_total": 0.5,
+      "tar_sobre_detectadas": 0.5,
+      "ident_ok": 0,
+      "rank1_count": 0,
+      "rank1_rate_detectadas": 0.0,
+      "pasa_far_1pct": 2,
+      "pasa_far_5pct": 2,
+      "pasa_far_10pct": 2,
+      "nivel_impostor_count": 0,
+      "cross_fp_probes": 1,
+      "cross_fp_total_matches": 1,
+      "sim_media": 0.2278,
+      "sim_mediana": 0.2278,
+      "sim_min": 0.1715,
+      "sim_max": 0.2842,
+      "rank_medio": 2.0
+    },
+    "josie_totah": {
+      "n_total": 2,
+      "n_detectadas_ok": 2,
+      "n_fta": 0,
+      "fta_rate": 0.0,
+      "verif_ok_total": 1,
+      "tar_sobre_total": 0.5,
+      "tar_sobre_detectadas": 0.5,
+      "ident_ok": 0,
+      "rank1_count": 0,
+      "rank1_rate_detectadas": 0.0,
+      "pasa_far_1pct": 1,
+      "pasa_far_5pct": 2,
+      "pasa_far_10pct": 2,
+      "nivel_impostor_count": 0,
+      "cross_fp_probes": 2,
+      "cross_fp_total_matches": 16,
+      "sim_media": 0.2178,
+      "sim_mediana": 0.2178,
+      "sim_min": 0.1311,
+      "sim_max": 0.3046,
+      "rank_medio": 11.5
+    },
+    "keanu_reeves": {
+      "n_total": 3,
+      "n_detectadas_ok": 3,
+      "n_fta": 0,
+      "fta_rate": 0.0,
+      "verif_ok_total": 1,
+      "tar_sobre_total": 0.3333,
+      "tar_sobre_detectadas": 0.3333,
+      "ident_ok": 1,
+      "rank1_count": 2,
+      "rank1_rate_detectadas": 0.6667,
+      "pasa_far_1pct": 2,
+      "pasa_far_5pct": 2,
+      "pasa_far_10pct": 2,
+      "nivel_impostor_count": 1,
+      "cross_fp_probes": 0,
+      "cross_fp_total_matches": 0,
+      "sim_media": 0.1734,
+      "sim_mediana": 0.18,
+      "sim_min": 0.0148,
+      "sim_max": 0.3254,
+      "rank_medio": 9.67
+    },
+    "lady_gaga": {
+      "n_total": 4,
+      "n_detectadas_ok": 4,
+      "n_fta": 0,
+      "fta_rate": 0.0,
+      "verif_ok_total": 0,
+      "tar_sobre_total": 0.0,
+      "tar_sobre_detectadas": 0.0,
+      "ident_ok": 0,
+      "rank1_count": 0,
+      "rank1_rate_detectadas": 0.0,
+      "pasa_far_1pct": 0,
+      "pasa_far_5pct": 0,
+      "pasa_far_10pct": 1,
+      "nivel_impostor_count": 3,
+      "cross_fp_probes": 4,
+      "cross_fp_total_matches": 7,
+      "sim_media": 0.0476,
+      "sim_mediana": 0.0435,
+      "sim_min": 0.0027,
+      "sim_max": 0.1009,
+      "rank_medio": 25.5
+    },
+    "leticia_sabater": {
+      "n_total": 2,
+      "n_detectadas_ok": 2,
+      "n_fta": 0,
+      "fta_rate": 0.0,
+      "verif_ok_total": 0,
+      "tar_sobre_total": 0.0,
+      "tar_sobre_detectadas": 0.0,
+      "ident_ok": 0,
+      "rank1_count": 0,
+      "rank1_rate_detectadas": 0.0,
+      "pasa_far_1pct": 0,
+      "pasa_far_5pct": 0,
+      "pasa_far_10pct": 0,
+      "nivel_impostor_count": 2,
+      "cross_fp_probes": 0,
+      "cross_fp_total_matches": 0,
+      "sim_media": -0.0027,
+      "sim_mediana": -0.0027,
+      "sim_min": -0.0425,
+      "sim_max": 0.0371,
+      "rank_medio": 35.5
+    },
+    "michael_jackson": {
+      "n_total": 6,
+      "n_detectadas_ok": 6,
+      "n_fta": 0,
+      "fta_rate": 0.0,
+      "verif_ok_total": 2,
+      "tar_sobre_total": 0.3333,
+      "tar_sobre_detectadas": 0.3333,
+      "ident_ok": 0,
+      "rank1_count": 1,
+      "rank1_rate_detectadas": 0.1667,
+      "pasa_far_1pct": 3,
+      "pasa_far_5pct": 4,
+      "pasa_far_10pct": 4,
+      "nivel_impostor_count": 2,
+      "cross_fp_probes": 3,
+      "cross_fp_total_matches": 4,
+      "sim_media": 0.1422,
+      "sim_mediana": 0.1403,
+      "sim_min": 0.0344,
+      "sim_max": 0.2385,
+      "rank_medio": 6.0
+    },
+    "vinicius_junior": {
+      "n_total": 3,
+      "n_detectadas_ok": 3,
+      "n_fta": 0,
+      "fta_rate": 0.0,
+      "verif_ok_total": 3,
+      "tar_sobre_total": 1.0,
+      "tar_sobre_detectadas": 1.0,
+      "ident_ok": 1,
+      "rank1_count": 3,
+      "rank1_rate_detectadas": 1.0,
+      "pasa_far_1pct": 3,
+      "pasa_far_5pct": 3,
+      "pasa_far_10pct": 3,
+      "nivel_impostor_count": 0,
+      "cross_fp_probes": 1,
+      "cross_fp_total_matches": 1,
+      "sim_media": 0.2911,
+      "sim_mediana": 0.2382,
+      "sim_min": 0.2208,
+      "sim_max": 0.4142,
+      "rank_medio": 1.0
+    },
+    "winnie_harlow": {
+      "n_total": 2,
+      "n_detectadas_ok": 2,
+      "n_fta": 0,
+      "fta_rate": 0.0,
+      "verif_ok_total": 0,
+      "tar_sobre_total": 0.0,
+      "tar_sobre_detectadas": 0.0,
+      "ident_ok": 0,
+      "rank1_count": 0,
+      "rank1_rate_detectadas": 0.0,
+      "pasa_far_1pct": 1,
+      "pasa_far_5pct": 1,
+      "pasa_far_10pct": 2,
+      "nivel_impostor_count": 1,
+      "cross_fp_probes": 0,
+      "cross_fp_total_matches": 0,
+      "sim_media": 0.1293,
+      "sim_mediana": 0.1293,
+      "sim_min": 0.0849,
+      "sim_max": 0.1736,
+      "rank_medio": 12.0
+    }
+  },
+  "elisabeth_ii_diagnostico_inscripcion": {
+    "foto_inscripcion": "data/fotos/dataset/elisabeth_II_1945.jpg",
+    "imagen_px": [
+      4879,
+      3581
+    ],
+    "detecciones_yunet": [
+      {
+        "idx": 0,
+        "bbox": [
+          2011.2,
+          2328.3,
+          371.1,
+          479.1
+        ],
+        "area": 177772.3,
+        "score": 0.7717
+      },
+      {
+        "idx": 1,
+        "bbox": [
+          2586.6,
+          1220.0,
+          211.0,
+          256.1
+        ],
+        "area": 54037.7,
+        "score": 0.9279
+      }
+    ],
+    "ratio_area_f1_f0": 0.304,
+    "faceness_f0_neumatico": -4.9347,
+    "faceness_f1_cara_real": 24.4814,
+    "sim_db_con_f0_neumatico": 0.0172,
+    "sim_db_con_f1_cara_real": 1.0,
+    "comparativa_pruebas": [
+      {
+        "label": "1959_joven",
+        "probe_year": 1959,
+        "sim_contra_bd_real_neumatico": 0.0212,
+        "sim_contra_cara_real_1945": 0.0212,
+        "verificaria_con_cara_real_far01": false,
+        "verificaria_con_cara_real_far1": false,
+        "verificaria_con_cara_real_far5": false
+      },
+      {
+        "label": "1986_madura",
+        "probe_year": 1986,
+        "sim_contra_bd_real_neumatico": -0.0374,
+        "sim_contra_cara_real_1945": -0.0374,
+        "verificaria_con_cara_real_far01": false,
+        "verificaria_con_cara_real_far1": false,
+        "verificaria_con_cara_real_far5": false
+      },
+      {
+        "label": "1992_madura",
+        "probe_year": 1992,
+        "sim_contra_bd_real_neumatico": 0.1036,
+        "sim_contra_cara_real_1945": 0.1036,
+        "verificaria_con_cara_real_far01": false,
+        "verificaria_con_cara_real_far1": false,
+        "verificaria_con_cara_real_far5": false
+      },
+      {
+        "label": "2015_anciana",
+        "probe_year": 2015,
+        "sim_contra_bd_real_neumatico": 0.1731,
+        "sim_contra_cara_real_1945": 0.1731,
+        "verificaria_con_cara_real_far01": false,
+        "verificaria_con_cara_real_far1": true,
+        "verificaria_con_cara_real_far5": true
+      }
+    ]
+  },
+  "resultados": [
+    {
+      "id": "michael_jackson",
+      "label": "1974_joven",
+      "path": "data/pruebas_cambios/michael_jackson/1974_joven.jpg",
+      "enrolled_year": 1982,
+      "probe_year": 1974,
+      "delta_years": -8,
+      "category": "pigmentacion_cirugia",
+      "description": "Michael Jackson en 1974 (era Jackson 5, ~16 años, piel oscura, nariz natural pre-cirugía)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Jackson_5_1974_(Michael).jpg",
+      "width": 251,
+      "height": 352,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 1,
+      "detector_score": 0.9381,
+      "bbox_px": [
+        114.4,
+        147.8
+      ],
+      "eye_dist_px": 56.09,
+      "yaw_ratio": 0.0351,
+      "verificar_publico": true,
+      "identificar_publico": null,
+      "identificacion_correcta": false,
+      "faceness_score": 21.2601,
+      "sim_id_real": 0.228,
+      "margen_verif": 0.0108,
+      "margen_ident": -0.0567,
+      "rank_id_real": 2,
+      "top3": [
+        [
+          "salma_hayek",
+          0.2499
+        ],
+        [
+          "michael_jackson",
+          0.228
+        ],
+        [
+          "aitana_etxebarria",
+          0.2242
+        ]
+      ],
+      "top1_id": "salma_hayek",
+      "top1_sim": 0.2499,
+      "cross_fp": [
+        [
+          "salma_hayek",
+          0.2499
+        ],
+        [
+          "aitana_etxebarria",
+          0.2242
+        ]
+      ],
+      "n_cross_fp": 2,
+      "pasa_far_01pct": true,
+      "pasa_far_1pct": true,
+      "pasa_far_5pct": true,
+      "pasa_far_10pct": true,
+      "nivel_impostor": false,
+      "sim_sin_filtro_calidad": 0.228
+    },
+    {
+      "id": "michael_jackson",
+      "label": "1977_joven",
+      "path": "data/pruebas_cambios/michael_jackson/1977_joven.jpg",
+      "enrolled_year": 1982,
+      "probe_year": 1977,
+      "delta_years": -5,
+      "category": "pigmentacion_cirugia",
+      "description": "Michael Jackson en 1977 (~18 años, pre-cirugía, piel oscura, afro)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Michael_Jackson_1977.JPG",
+      "width": 189,
+      "height": 293,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 1,
+      "detector_score": 0.928,
+      "bbox_px": [
+        66.8,
+        83.5
+      ],
+      "eye_dist_px": 30.85,
+      "yaw_ratio": 0.0465,
+      "verificar_publico": true,
+      "identificar_publico": null,
+      "identificacion_correcta": false,
+      "faceness_score": 20.5744,
+      "sim_id_real": 0.2385,
+      "margen_verif": 0.0213,
+      "margen_ident": -0.0462,
+      "rank_id_real": 1,
+      "top3": [
+        [
+          "michael_jackson",
+          0.2385
+        ],
+        [
+          "mindy_kaling",
+          0.2254
+        ],
+        [
+          "serenna_williams",
+          0.2103
+        ]
+      ],
+      "top1_id": "michael_jackson",
+      "top1_sim": 0.2385,
+      "cross_fp": [
+        [
+          "mindy_kaling",
+          0.2254
+        ]
+      ],
+      "n_cross_fp": 1,
+      "pasa_far_01pct": true,
+      "pasa_far_1pct": true,
+      "pasa_far_5pct": true,
+      "pasa_far_10pct": true,
+      "nivel_impostor": false,
+      "sim_sin_filtro_calidad": 0.2385
+    },
+    {
+      "id": "michael_jackson",
+      "label": "1988_bad",
+      "path": "data/pruebas_cambios/michael_jackson/1988_bad.jpg",
+      "enrolled_year": 1982,
+      "probe_year": 1988,
+      "delta_years": 6,
+      "category": "pigmentacion_cirugia",
+      "description": "Michael Jackson en 1988 (era Bad, piel más clara, rinoplastia y hoyuelo en barbilla)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Michael_Jackson_1988_(3x4_close_cropped).jpg",
+      "width": 718,
+      "height": 960,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 1,
+      "detector_score": 0.91,
+      "bbox_px": [
+        342.4,
+        436.7
+      ],
+      "eye_dist_px": 141.52,
+      "yaw_ratio": 0.2398,
+      "verificar_publico": false,
+      "identificar_publico": null,
+      "identificacion_correcta": false,
+      "faceness_score": 19.4576,
+      "sim_id_real": 0.158,
+      "margen_verif": -0.0592,
+      "margen_ident": -0.1266,
+      "rank_id_real": 6,
+      "top3": [
+        [
+          "serenna_williams",
+          0.2239
+        ],
+        [
+          "salma_hayek",
+          0.2162
+        ],
+        [
+          "lara_raj",
+          0.1989
+        ]
+      ],
+      "top1_id": "serenna_williams",
+      "top1_sim": 0.2239,
+      "cross_fp": [
+        [
+          "serenna_williams",
+          0.2239
+        ]
+      ],
+      "n_cross_fp": 1,
+      "pasa_far_01pct": false,
+      "pasa_far_1pct": true,
+      "pasa_far_5pct": true,
+      "pasa_far_10pct": true,
+      "nivel_impostor": false,
+      "sim_sin_filtro_calidad": 0.158
+    },
+    {
+      "id": "michael_jackson",
+      "label": "1992_dangerous",
+      "path": "data/pruebas_cambios/michael_jackson/1992_dangerous.jpg",
+      "enrolled_year": 1982,
+      "probe_year": 1992,
+      "delta_years": 10,
+      "category": "pigmentacion_cirugia",
+      "description": "Michael Jackson en concierto Dangerous Tour (Monza, 1992, despigmentación avanzada)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Michael_Jackson_(20589951783)_(cropped).jpg",
+      "width": 842,
+      "height": 1014,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 1,
+      "detector_score": 0.8877,
+      "bbox_px": [
+        97.0,
+        124.5
+      ],
+      "eye_dist_px": 48.41,
+      "yaw_ratio": 0.1513,
+      "verificar_publico": false,
+      "identificar_publico": null,
+      "identificacion_correcta": false,
+      "faceness_score": 11.6224,
+      "sim_id_real": 0.1226,
+      "margen_verif": -0.0946,
+      "margen_ident": -0.162,
+      "rank_id_real": 4,
+      "top3": [
+        [
+          "aitana_etxebarria",
+          0.1911
+        ],
+        [
+          "brays_efe",
+          0.1646
+        ],
+        [
+          "eva_hache",
+          0.1551
+        ]
+      ],
+      "top1_id": "aitana_etxebarria",
+      "top1_sim": 0.1911,
+      "cross_fp": [],
+      "n_cross_fp": 0,
+      "pasa_far_01pct": false,
+      "pasa_far_1pct": false,
+      "pasa_far_5pct": true,
+      "pasa_far_10pct": true,
+      "nivel_impostor": false,
+      "sim_sin_filtro_calidad": 0.1226
+    },
+    {
+      "id": "michael_jackson",
+      "label": "1997_cannes",
+      "path": "data/pruebas_cambios/michael_jackson/1997_cannes.jpg",
+      "enrolled_year": 1982,
+      "probe_year": 1997,
+      "delta_years": 15,
+      "category": "pigmentacion_cirugia",
+      "description": "Michael Jackson en el Festival de Cannes 1997 (era HIStory, piel despigmentada, cirugías)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Michael_Jackson_Cannes.jpg",
+      "width": 426,
+      "height": 604,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 1,
+      "detector_score": 0.9313,
+      "bbox_px": [
+        123.8,
+        169.6
+      ],
+      "eye_dist_px": 53.8,
+      "yaw_ratio": 0.2192,
+      "verificar_publico": false,
+      "identificar_publico": null,
+      "identificacion_correcta": false,
+      "faceness_score": 18.5845,
+      "sim_id_real": 0.0344,
+      "margen_verif": -0.1828,
+      "margen_ident": -0.2502,
+      "rank_id_real": 15,
+      "top3": [
+        [
+          "eva_hache",
+          0.1535
+        ],
+        [
+          "stevie_wonder",
+          0.1199
+        ],
+        [
+          "zack_efron",
+          0.1126
+        ]
+      ],
+      "top1_id": "eva_hache",
+      "top1_sim": 0.1535,
+      "cross_fp": [],
+      "n_cross_fp": 0,
+      "pasa_far_01pct": false,
+      "pasa_far_1pct": false,
+      "pasa_far_5pct": false,
+      "pasa_far_10pct": false,
+      "nivel_impostor": true,
+      "sim_sin_filtro_calidad": 0.0344
+    },
+    {
+      "id": "michael_jackson",
+      "label": "2005_licencia",
+      "path": "data/pruebas_cambios/michael_jackson/2005_licencia.jpg",
+      "enrolled_year": 1982,
+      "probe_year": 2005,
+      "delta_years": 23,
+      "category": "pigmentacion_cirugia",
+      "description": "Michael Jackson en foto oficial de licencia de conducir de California 2005 (despigmentación total, múltiples cirugías)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Michael_Jackson_2005_California_Driver%27s_License_photo.jpg",
+      "width": 234,
+      "height": 310,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 1,
+      "detector_score": 0.9089,
+      "bbox_px": [
+        89.7,
+        142.9
+      ],
+      "eye_dist_px": 40.78,
+      "yaw_ratio": 0.0459,
+      "verificar_publico": false,
+      "identificar_publico": null,
+      "identificacion_correcta": false,
+      "faceness_score": 14.8863,
+      "sim_id_real": 0.0719,
+      "margen_verif": -0.1454,
+      "margen_ident": -0.2128,
+      "rank_id_real": 8,
+      "top3": [
+        [
+          "anya_taylor_joy",
+          0.2091
+        ],
+        [
+          "leticia_sabater",
+          0.1105
+        ],
+        [
+          "tini",
+          0.1068
+        ]
+      ],
+      "top1_id": "anya_taylor_joy",
+      "top1_sim": 0.2091,
+      "cross_fp": [],
+      "n_cross_fp": 0,
+      "pasa_far_01pct": false,
+      "pasa_far_1pct": false,
+      "pasa_far_5pct": false,
+      "pasa_far_10pct": false,
+      "nivel_impostor": true,
+      "sim_sin_filtro_calidad": 0.0719
+    },
+    {
+      "id": "ellen_page",
+      "label": "2015_control_pre",
+      "path": "data/pruebas_cambios/ellen_page/2015_control_pre.jpg",
+      "enrolled_year": 2006,
+      "probe_year": 2015,
+      "delta_years": 9,
+      "category": "transicion_genero",
+      "description": "Elliot Page (entonces Ellen Page) en 2015: control longitudinal (+9 años, pre-transición médica)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Elliot_Page_2015.jpg",
+      "width": 960,
+      "height": 1367,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 1,
+      "detector_score": 0.8744,
+      "bbox_px": [
+        469.1,
+        563.4
+      ],
+      "eye_dist_px": 215.26,
+      "yaw_ratio": 0.0695,
+      "verificar_publico": false,
+      "identificar_publico": null,
+      "identificacion_correcta": false,
+      "faceness_score": 23.3146,
+      "sim_id_real": 0.2144,
+      "margen_verif": -0.0028,
+      "margen_ident": -0.0703,
+      "rank_id_real": 1,
+      "top3": [
+        [
+          "ellen_page",
+          0.2144
+        ],
+        [
+          "adele",
+          0.2144
+        ],
+        [
+          "mary-kate_olsen",
+          0.192
+        ]
+      ],
+      "top1_id": "ellen_page",
+      "top1_sim": 0.2144,
+      "cross_fp": [],
+      "n_cross_fp": 0,
+      "pasa_far_01pct": false,
+      "pasa_far_1pct": true,
+      "pasa_far_5pct": true,
+      "pasa_far_10pct": true,
+      "nivel_impostor": false,
+      "sim_sin_filtro_calidad": 0.2144
+    },
+    {
+      "id": "ellen_page",
+      "label": "2021_elliot_post",
+      "path": "data/pruebas_cambios/ellen_page/2021_elliot_post.jpg",
+      "enrolled_year": 2006,
+      "probe_year": 2021,
+      "delta_years": 15,
+      "category": "transicion_genero",
+      "description": "Elliot Page en julio de 2021: post-transición masculina, pelo corto (+15 años)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Elliot_Page_2021.png",
+      "width": 862,
+      "height": 1152,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 1,
+      "detector_score": 0.9259,
+      "bbox_px": [
+        315.7,
+        476.5
+      ],
+      "eye_dist_px": 155.58,
+      "yaw_ratio": 0.0299,
+      "verificar_publico": false,
+      "identificar_publico": null,
+      "identificacion_correcta": false,
+      "faceness_score": 33.1081,
+      "sim_id_real": 0.0964,
+      "margen_verif": -0.1208,
+      "margen_ident": -0.1883,
+      "rank_id_real": 11,
+      "top3": [
+        [
+          "hwang_min-hyun",
+          0.1613
+        ],
+        [
+          "arianna_grande",
+          0.1486
+        ],
+        [
+          "taylor_swift",
+          0.1439
+        ]
+      ],
+      "top1_id": "hwang_min-hyun",
+      "top1_sim": 0.1613,
+      "cross_fp": [],
+      "n_cross_fp": 0,
+      "pasa_far_01pct": false,
+      "pasa_far_1pct": false,
+      "pasa_far_5pct": false,
+      "pasa_far_10pct": true,
+      "nivel_impostor": true,
+      "sim_sin_filtro_calidad": 0.0964
+    },
+    {
+      "id": "ellen_page",
+      "label": "2023_elliot_post",
+      "path": "data/pruebas_cambios/ellen_page/2023_elliot_post.jpg",
+      "enrolled_year": 2006,
+      "probe_year": 2023,
+      "delta_years": 17,
+      "category": "transicion_genero",
+      "description": "Elliot Page en agosto de 2023: post-transición masculina con terapia hormonal (+17 años)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Elliot_Page_8126099_(cropped).jpg",
+      "width": 960,
+      "height": 1279,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 1,
+      "detector_score": 0.8975,
+      "bbox_px": [
+        363.9,
+        506.1
+      ],
+      "eye_dist_px": 151.06,
+      "yaw_ratio": 0.2776,
+      "verificar_publico": false,
+      "identificar_publico": null,
+      "identificacion_correcta": false,
+      "faceness_score": 20.2236,
+      "sim_id_real": 0.151,
+      "margen_verif": -0.0663,
+      "margen_ident": -0.1337,
+      "rank_id_real": 4,
+      "top3": [
+        [
+          "hwang_min-hyun",
+          0.1993
+        ],
+        [
+          "rossy_de_palma",
+          0.1993
+        ],
+        [
+          "wiliem_dafoe",
+          0.1865
+        ]
+      ],
+      "top1_id": "hwang_min-hyun",
+      "top1_sim": 0.1993,
+      "cross_fp": [],
+      "n_cross_fp": 0,
+      "pasa_far_01pct": false,
+      "pasa_far_1pct": false,
+      "pasa_far_5pct": true,
+      "pasa_far_10pct": true,
+      "nivel_impostor": false,
+      "sim_sin_filtro_calidad": 0.151
+    },
+    {
+      "id": "josie_totah",
+      "label": "2023_tmdb_post",
+      "path": "data/pruebas_cambios/josie_totah/2023_tmdb_post.jpg",
+      "enrolled_year": 2017,
+      "probe_year": 2023,
+      "delta_years": 6,
+      "category": "transicion_genero",
+      "description": "Josie Totah post-transición como mujer (retrato perfil TMDB, sin gafas, maquillaje y pelo largo)",
+      "source_url": "https://image.tmdb.org/t/p/w300/125iM9BTPVDfRjKGVSqmvgeGsai.jpg",
+      "width": 300,
+      "height": 450,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 1,
+      "detector_score": 0.9452,
+      "bbox_px": [
+        146.6,
+        187.9
+      ],
+      "eye_dist_px": 66.33,
+      "yaw_ratio": 0.0618,
+      "verificar_publico": true,
+      "identificar_publico": "arianna_grande",
+      "identificacion_correcta": false,
+      "faceness_score": 29.8741,
+      "sim_id_real": 0.3046,
+      "margen_verif": 0.0874,
+      "margen_ident": 0.0199,
+      "rank_id_real": 4,
+      "top3": [
+        [
+          "arianna_grande",
+          0.3757
+        ],
+        [
+          "tini",
+          0.3285
+        ],
+        [
+          "lara_raj",
+          0.3252
+        ]
+      ],
+      "top1_id": "arianna_grande",
+      "top1_sim": 0.3757,
+      "cross_fp": [
+        [
+          "arianna_grande",
+          0.3757
+        ],
+        [
+          "tini",
+          0.3285
+        ],
+        [
+          "lara_raj",
+          0.3252
+        ],
+        [
+          "mary-kate_olsen",
+          0.2469
+        ],
+        [
+          "hwang_min-hyun",
+          0.2459
+        ],
+        [
+          "kim_jisoo",
+          0.2459
+        ],
+        [
+          "hunter_schufer",
+          0.2173
+        ]
+      ],
+      "n_cross_fp": 7,
+      "pasa_far_01pct": true,
+      "pasa_far_1pct": true,
+      "pasa_far_5pct": true,
+      "pasa_far_10pct": true,
+      "nivel_impostor": false,
+      "sim_sin_filtro_calidad": 0.3046
+    },
+    {
+      "id": "josie_totah",
+      "label": "2025_post_transicion",
+      "path": "data/pruebas_cambios/josie_totah/2025_post_transicion.jpg",
+      "enrolled_year": 2017,
+      "probe_year": 2025,
+      "delta_years": 8,
+      "category": "transicion_genero",
+      "description": "Josie Totah post-transición como mujer (~2024-2025, frente a foto 2017 pre-transición con gafas)",
+      "source_url": "https://static.wikia.nocookie.net/disneyjessieseries/images/7/7d/JosieTotah.jpg/revision/latest/thumbnail/width/360/height/450?cb=20251021153723",
+      "width": 300,
+      "height": 450,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 1,
+      "detector_score": 0.9268,
+      "bbox_px": [
+        58.4,
+        77.3
+      ],
+      "eye_dist_px": 27.05,
+      "yaw_ratio": 0.0014,
+      "verificar_publico": false,
+      "identificar_publico": "kim_jisoo",
+      "identificacion_correcta": false,
+      "faceness_score": 23.4084,
+      "sim_id_real": 0.1311,
+      "margen_verif": -0.0861,
+      "margen_ident": -0.1536,
+      "rank_id_real": 19,
+      "top3": [
+        [
+          "kim_jisoo",
+          0.3491
+        ],
+        [
+          "anya_taylor_joy",
+          0.299
+        ],
+        [
+          "arianna_grande",
+          0.2784
+        ]
+      ],
+      "top1_id": "kim_jisoo",
+      "top1_sim": 0.3491,
+      "cross_fp": [
+        [
+          "kim_jisoo",
+          0.3491
+        ],
+        [
+          "anya_taylor_joy",
+          0.299
+        ],
+        [
+          "arianna_grande",
+          0.2784
+        ],
+        [
+          "lara_raj",
+          0.2708
+        ],
+        [
+          "tini",
+          0.2701
+        ],
+        [
+          "aitana_etxebarria",
+          0.2343
+        ],
+        [
+          "salma_hayek",
+          0.2286
+        ],
+        [
+          "hunter_schufer",
+          0.2283
+        ],
+        [
+          "zack_efron",
+          0.2203
+        ]
+      ],
+      "n_cross_fp": 9,
+      "pasa_far_01pct": false,
+      "pasa_far_1pct": false,
+      "pasa_far_5pct": true,
+      "pasa_far_10pct": true,
+      "nivel_impostor": false,
+      "sim_sin_filtro_calidad": 0.1311
+    },
+    {
+      "id": "hunter_schufer",
+      "label": "2021_shiseido",
+      "path": "data/pruebas_cambios/hunter_schufer/2021_shiseido.jpg",
+      "enrolled_year": 2024,
+      "probe_year": 2021,
+      "delta_years": -3,
+      "category": "transicion_genero",
+      "description": "Hunter Schafer en julio de 2021 (campaña Shiseido, iluminación cálida y pelo suelto)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Hunter_Schafer_-_Suru_Suru_video,_July_2021.png",
+      "width": 760,
+      "height": 1080,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 1,
+      "detector_score": 0.9345,
+      "bbox_px": [
+        247.8,
+        338.0
+      ],
+      "eye_dist_px": 114.48,
+      "yaw_ratio": 0.0736,
+      "verificar_publico": false,
+      "identificar_publico": null,
+      "identificacion_correcta": false,
+      "faceness_score": 17.3101,
+      "sim_id_real": 0.1309,
+      "margen_verif": -0.0864,
+      "margen_ident": -0.1538,
+      "rank_id_real": 8,
+      "top3": [
+        [
+          "arianna_grande",
+          0.2027
+        ],
+        [
+          "james_phelps",
+          0.1801
+        ],
+        [
+          "metrika",
+          0.1754
+        ]
+      ],
+      "top1_id": "arianna_grande",
+      "top1_sim": 0.2027,
+      "cross_fp": [],
+      "n_cross_fp": 0,
+      "pasa_far_01pct": false,
+      "pasa_far_1pct": false,
+      "pasa_far_5pct": true,
+      "pasa_far_10pct": true,
+      "nivel_impostor": false,
+      "sim_sin_filtro_calidad": 0.1309
+    },
+    {
+      "id": "hunter_schufer",
+      "label": "2024_berlinale",
+      "path": "data/pruebas_cambios/hunter_schufer/2024_berlinale.jpg",
+      "enrolled_year": 2024,
+      "probe_year": 2024,
+      "delta_years": 0,
+      "category": "transicion_genero",
+      "description": "Hunter Schafer en Berlinale feb 2024 (sonriendo, maquillaje de ojos rojo, pelo recogido)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Hunter_Schafer-64977_(cropped).jpg",
+      "width": 960,
+      "height": 1352,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 1,
+      "detector_score": 0.9014,
+      "bbox_px": [
+        373.4,
+        530.1
+      ],
+      "eye_dist_px": 184.98,
+      "yaw_ratio": 0.1442,
+      "verificar_publico": true,
+      "identificar_publico": null,
+      "identificacion_correcta": false,
+      "faceness_score": 26.4986,
+      "sim_id_real": 0.2265,
+      "margen_verif": 0.0093,
+      "margen_ident": -0.0582,
+      "rank_id_real": 1,
+      "top3": [
+        [
+          "hunter_schufer",
+          0.2265
+        ],
+        [
+          "falete",
+          0.1596
+        ],
+        [
+          "adele",
+          0.1529
+        ]
+      ],
+      "top1_id": "hunter_schufer",
+      "top1_sim": 0.2265,
+      "cross_fp": [],
+      "n_cross_fp": 0,
+      "pasa_far_01pct": true,
+      "pasa_far_1pct": true,
+      "pasa_far_5pct": true,
+      "pasa_far_10pct": true,
+      "nivel_impostor": false,
+      "sim_sin_filtro_calidad": 0.2265
+    },
+    {
+      "id": "hunter_schufer",
+      "label": "2024_berlinale2",
+      "path": "data/pruebas_cambios/hunter_schufer/2024_berlinale2.jpg",
+      "enrolled_year": 2024,
+      "probe_year": 2024,
+      "delta_years": 0,
+      "category": "transicion_genero",
+      "description": "Hunter Schafer en Berlinale feb 2024 (retrato serio frontal, otra sesión/estilismo)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Hunter_Schafer-64205.jpg",
+      "width": 960,
+      "height": 960,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 2,
+      "detector_score": 0.9443,
+      "bbox_px": [
+        211.0,
+        293.2
+      ],
+      "eye_dist_px": 91.24,
+      "yaw_ratio": 0.1342,
+      "verificar_publico": true,
+      "identificar_publico": "hunter_schufer",
+      "identificacion_correcta": true,
+      "faceness_score": 31.7209,
+      "sim_id_real": 0.5087,
+      "margen_verif": 0.2915,
+      "margen_ident": 0.224,
+      "rank_id_real": 1,
+      "top3": [
+        [
+          "hunter_schufer",
+          0.5087
+        ],
+        [
+          "arianna_grande",
+          0.3379
+        ],
+        [
+          "mary-kate_olsen",
+          0.2744
+        ]
+      ],
+      "top1_id": "hunter_schufer",
+      "top1_sim": 0.5087,
+      "cross_fp": [
+        [
+          "arianna_grande",
+          0.3379
+        ],
+        [
+          "mary-kate_olsen",
+          0.2744
+        ],
+        [
+          "metrika",
+          0.2523
+        ],
+        [
+          "anya_taylor_joy",
+          0.2343
+        ]
+      ],
+      "n_cross_fp": 4,
+      "pasa_far_01pct": true,
+      "pasa_far_1pct": true,
+      "pasa_far_5pct": true,
+      "pasa_far_10pct": true,
+      "nivel_impostor": false,
+      "sim_sin_filtro_calidad": 0.5087
+    },
+    {
+      "id": "elisabeth_ii",
+      "label": "1959_joven",
+      "path": "data/pruebas_cambios/elisabeth_ii/1959_joven.jpg",
+      "enrolled_year": 1945,
+      "probe_year": 1959,
+      "delta_years": 14,
+      "category": "envejecimiento",
+      "description": "Isabel II en abril de 1959 (retrato oficial con tiara, 33 años, +14 años desde 1945)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Queen_Elizabeth_II_1959_(cropped).jpg",
+      "width": 370,
+      "height": 462,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 1,
+      "detector_score": 0.9331,
+      "bbox_px": [
+        149.4,
+        200.7
+      ],
+      "eye_dist_px": 56.8,
+      "yaw_ratio": 0.3896,
+      "verificar_publico": false,
+      "identificar_publico": null,
+      "identificacion_correcta": false,
+      "faceness_score": 27.4654,
+      "sim_id_real": 0.0212,
+      "margen_verif": -0.196,
+      "margen_ident": -0.2635,
+      "rank_id_real": 37,
+      "top3": [
+        [
+          "arianna_grande",
+          0.1449
+        ],
+        [
+          "tilda_swinton",
+          0.1434
+        ],
+        [
+          "james_phelps",
+          0.1361
+        ]
+      ],
+      "top1_id": "arianna_grande",
+      "top1_sim": 0.1449,
+      "cross_fp": [],
+      "n_cross_fp": 0,
+      "pasa_far_01pct": false,
+      "pasa_far_1pct": false,
+      "pasa_far_5pct": false,
+      "pasa_far_10pct": false,
+      "nivel_impostor": true,
+      "sim_sin_filtro_calidad": 0.0212
+    },
+    {
+      "id": "elisabeth_ii",
+      "label": "1986_madura",
+      "path": "data/pruebas_cambios/elisabeth_ii/1986_madura.jpg",
+      "enrolled_year": 1945,
+      "probe_year": 1986,
+      "delta_years": 41,
+      "category": "envejecimiento",
+      "description": "Isabel II en Trooping the Colour 1986 (60 años, +41 años respecto a 1945)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:ElizabethIItroopingcolour_crop.jpg",
+      "width": 960,
+      "height": 661,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 1,
+      "detector_score": 0.907,
+      "bbox_px": [
+        62.1,
+        70.0
+      ],
+      "eye_dist_px": 24.0,
+      "yaw_ratio": 0.0947,
+      "verificar_publico": false,
+      "identificar_publico": null,
+      "identificacion_correcta": false,
+      "faceness_score": 9.1959,
+      "sim_id_real": -0.0374,
+      "margen_verif": -0.2546,
+      "margen_ident": -0.3221,
+      "rank_id_real": 35,
+      "top3": [
+        [
+          "zack_efron",
+          0.1933
+        ],
+        [
+          "rossy_de_palma",
+          0.1875
+        ],
+        [
+          "metrika",
+          0.1072
+        ]
+      ],
+      "top1_id": "zack_efron",
+      "top1_sim": 0.1933,
+      "cross_fp": [],
+      "n_cross_fp": 0,
+      "pasa_far_01pct": false,
+      "pasa_far_1pct": false,
+      "pasa_far_5pct": false,
+      "pasa_far_10pct": false,
+      "nivel_impostor": true,
+      "sim_sin_filtro_calidad": -0.0374
+    },
+    {
+      "id": "elisabeth_ii",
+      "label": "1992_madura",
+      "path": "data/pruebas_cambios/elisabeth_ii/1992_madura.jpg",
+      "enrolled_year": 1945,
+      "probe_year": 1992,
+      "delta_years": 47,
+      "category": "envejecimiento",
+      "description": "Isabel II en Ottawa 1992 (66 años, sombrero rosa, +47 años respecto a 1945)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:The_Queen_in_Ottawa_1992_(cropped).jpg",
+      "width": 488,
+      "height": 746,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 5,
+      "detector_score": 0.9269,
+      "bbox_px": [
+        188.5,
+        245.4
+      ],
+      "eye_dist_px": 92.3,
+      "yaw_ratio": 0.0113,
+      "verificar_publico": false,
+      "identificar_publico": null,
+      "identificacion_correcta": false,
+      "faceness_score": 21.0338,
+      "sim_id_real": 0.1036,
+      "margen_verif": -0.1136,
+      "margen_ident": -0.1811,
+      "rank_id_real": 4,
+      "top3": [
+        [
+          "metrika",
+          0.1317
+        ],
+        [
+          "michael_jackson",
+          0.1132
+        ],
+        [
+          "nicolas_maduro",
+          0.1114
+        ]
+      ],
+      "top1_id": "metrika",
+      "top1_sim": 0.1317,
+      "cross_fp": [],
+      "n_cross_fp": 0,
+      "pasa_far_01pct": false,
+      "pasa_far_1pct": false,
+      "pasa_far_5pct": false,
+      "pasa_far_10pct": true,
+      "nivel_impostor": false,
+      "sim_sin_filtro_calidad": 0.1036
+    },
+    {
+      "id": "elisabeth_ii",
+      "label": "2015_anciana",
+      "path": "data/pruebas_cambios/elisabeth_ii/2015_anciana.jpg",
+      "enrolled_year": 1945,
+      "probe_year": 2015,
+      "delta_years": 70,
+      "category": "envejecimiento",
+      "description": "Isabel II en marzo de 2015 (89 años, +70 años respecto a la foto de inscripción de 1945)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Queen_Elizabeth_II_March_2015.jpg",
+      "width": 960,
+      "height": 1266,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 1,
+      "detector_score": 0.8142,
+      "bbox_px": [
+        388.7,
+        484.3
+      ],
+      "eye_dist_px": 186.05,
+      "yaw_ratio": 0.0503,
+      "verificar_publico": false,
+      "identificar_publico": null,
+      "identificacion_correcta": false,
+      "faceness_score": 17.3773,
+      "sim_id_real": 0.1731,
+      "margen_verif": -0.0442,
+      "margen_ident": -0.1116,
+      "rank_id_real": 1,
+      "top3": [
+        [
+          "elisabeth_ii",
+          0.1731
+        ],
+        [
+          "forest_whitaker",
+          0.126
+        ],
+        [
+          "kim_jisoo",
+          0.1115
+        ]
+      ],
+      "top1_id": "elisabeth_ii",
+      "top1_sim": 0.1731,
+      "cross_fp": [],
+      "n_cross_fp": 0,
+      "pasa_far_01pct": false,
+      "pasa_far_1pct": true,
+      "pasa_far_5pct": true,
+      "pasa_far_10pct": true,
+      "nivel_impostor": false,
+      "sim_sin_filtro_calidad": 0.1731
+    },
+    {
+      "id": "jordi_hurtado",
+      "label": "2017_maduro",
+      "path": "data/pruebas_cambios/jordi_hurtado/2017_maduro.jpg",
+      "enrolled_year": 1985,
+      "probe_year": 2017,
+      "delta_years": 32,
+      "category": "envejecimiento",
+      "description": "Jordi Hurtado en 2017 (+32 años respecto a 1985, montura de gafas roja)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Jordi_Hurtado.jpg",
+      "width": 960,
+      "height": 1046,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 1,
+      "detector_score": 0.9373,
+      "bbox_px": [
+        173.4,
+        253.3
+      ],
+      "eye_dist_px": 85.05,
+      "yaw_ratio": 0.0063,
+      "verificar_publico": false,
+      "identificar_publico": null,
+      "identificacion_correcta": false,
+      "faceness_score": 19.4131,
+      "sim_id_real": 0.1715,
+      "margen_verif": -0.0458,
+      "margen_ident": -0.1132,
+      "rank_id_real": 2,
+      "top3": [
+        [
+          "eva_hache",
+          0.1888
+        ],
+        [
+          "jordi_hurtado",
+          0.1715
+        ],
+        [
+          "vinicius_junior",
+          0.1453
+        ]
+      ],
+      "top1_id": "eva_hache",
+      "top1_sim": 0.1888,
+      "cross_fp": [],
+      "n_cross_fp": 0,
+      "pasa_far_01pct": false,
+      "pasa_far_1pct": true,
+      "pasa_far_5pct": true,
+      "pasa_far_10pct": true,
+      "nivel_impostor": false,
+      "sim_sin_filtro_calidad": 0.1715
+    },
+    {
+      "id": "jordi_hurtado",
+      "label": "2025_rtve",
+      "path": "data/pruebas_cambios/jordi_hurtado/2025_rtve.jpg",
+      "enrolled_year": 1985,
+      "probe_year": 2025,
+      "delta_years": 40,
+      "category": "envejecimiento",
+      "description": "Jordi Hurtado en 2025, Premio Nacional de Televisión RTVE (+40 años respecto a 1985)",
+      "source_url": "https://img.rtve.es/i/?i=1751458833365.jpg",
+      "width": 3582,
+      "height": 2015,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 1,
+      "detector_score": 0.9333,
+      "bbox_px": [
+        356.4,
+        475.1
+      ],
+      "eye_dist_px": 160.39,
+      "yaw_ratio": 0.0696,
+      "verificar_publico": true,
+      "identificar_publico": "forest_whitaker",
+      "identificacion_correcta": false,
+      "faceness_score": 17.5627,
+      "sim_id_real": 0.2842,
+      "margen_verif": 0.0669,
+      "margen_ident": -0.0005,
+      "rank_id_real": 2,
+      "top3": [
+        [
+          "forest_whitaker",
+          0.3148
+        ],
+        [
+          "jordi_hurtado",
+          0.2842
+        ],
+        [
+          "vinicius_junior",
+          0.1746
+        ]
+      ],
+      "top1_id": "forest_whitaker",
+      "top1_sim": 0.3148,
+      "cross_fp": [
+        [
+          "forest_whitaker",
+          0.3148
+        ]
+      ],
+      "n_cross_fp": 1,
+      "pasa_far_01pct": true,
+      "pasa_far_1pct": true,
+      "pasa_far_5pct": true,
+      "pasa_far_10pct": true,
+      "nivel_impostor": false,
+      "sim_sin_filtro_calidad": 0.2842
+    },
+    {
+      "id": "leticia_sabater",
+      "label": "2024_logrono",
+      "path": "data/pruebas_cambios/leticia_sabater/2024_logrono.jpg",
+      "enrolled_year": 1996,
+      "probe_year": 2024,
+      "delta_years": 28,
+      "category": "envejecimiento",
+      "description": "Leticia Sabater en concierto Logroño 2024 (+28 años desde 1996 + múltiples cirugías estéticas)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Leticia_Sabater_en_Logro%C3%B1o.22.jpg",
+      "width": 960,
+      "height": 1280,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 1,
+      "detector_score": 0.8936,
+      "bbox_px": [
+        221.4,
+        356.9
+      ],
+      "eye_dist_px": 108.32,
+      "yaw_ratio": 0.0306,
+      "verificar_publico": false,
+      "identificar_publico": null,
+      "identificacion_correcta": false,
+      "faceness_score": 12.9855,
+      "sim_id_real": -0.0425,
+      "margen_verif": -0.2597,
+      "margen_ident": -0.3272,
+      "rank_id_real": 44,
+      "top3": [
+        [
+          "jackie_chan",
+          0.1516
+        ],
+        [
+          "adam_pearson",
+          0.1179
+        ],
+        [
+          "hunter_schufer",
+          0.1082
+        ]
+      ],
+      "top1_id": "jackie_chan",
+      "top1_sim": 0.1516,
+      "cross_fp": [],
+      "n_cross_fp": 0,
+      "pasa_far_01pct": false,
+      "pasa_far_1pct": false,
+      "pasa_far_5pct": false,
+      "pasa_far_10pct": false,
+      "nivel_impostor": true,
+      "sim_sin_filtro_calidad": -0.0425
+    },
+    {
+      "id": "leticia_sabater",
+      "label": "2025_pride",
+      "path": "data/pruebas_cambios/leticia_sabater/2025_pride.jpg",
+      "enrolled_year": 1996,
+      "probe_year": 2025,
+      "delta_years": 29,
+      "category": "envejecimiento",
+      "description": "Leticia Sabater en Madrid Pride 2025 (+29 años desde 1996 + cirugías estéticas y maquillaje)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Madrid_Pride_2025_-_Leticia_Sabater_-_250706_210624.jpg",
+      "width": 960,
+      "height": 640,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 1,
+      "detector_score": 0.9212,
+      "bbox_px": [
+        117.4,
+        149.3
+      ],
+      "eye_dist_px": 50.79,
+      "yaw_ratio": 0.2286,
+      "verificar_publico": false,
+      "identificar_publico": null,
+      "identificacion_correcta": false,
+      "faceness_score": 21.3848,
+      "sim_id_real": 0.0371,
+      "margen_verif": -0.1802,
+      "margen_ident": -0.2476,
+      "rank_id_real": 27,
+      "top3": [
+        [
+          "brays_efe",
+          0.1788
+        ],
+        [
+          "taylor_swift",
+          0.1601
+        ],
+        [
+          "serenna_williams",
+          0.1477
+        ]
+      ],
+      "top1_id": "brays_efe",
+      "top1_sim": 0.1788,
+      "cross_fp": [],
+      "n_cross_fp": 0,
+      "pasa_far_01pct": false,
+      "pasa_far_1pct": false,
+      "pasa_far_5pct": false,
+      "pasa_far_10pct": false,
+      "nivel_impostor": true,
+      "sim_sin_filtro_calidad": 0.0371
+    },
+    {
+      "id": "cynthia_erivo",
+      "label": "2018_pelo_sin_piercing",
+      "path": "data/pruebas_cambios/cynthia_erivo/2018_pelo_sin_piercing.jpg",
+      "enrolled_year": 2025,
+      "probe_year": 2018,
+      "delta_years": -7,
+      "category": "apariencia_estilismo",
+      "description": "Cynthia Erivo en 2018 (pelo corto rubio, gafas, cejas naturales, sin septum/ceja piercing)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Cynthia_Erivo_(82023).jpg",
+      "width": 960,
+      "height": 877,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 1,
+      "detector_score": 0.9188,
+      "bbox_px": [
+        190.9,
+        238.1
+      ],
+      "eye_dist_px": 80.34,
+      "yaw_ratio": 0.2481,
+      "verificar_publico": false,
+      "identificar_publico": "josie_totah",
+      "identificacion_correcta": false,
+      "faceness_score": 19.6719,
+      "sim_id_real": 0.1548,
+      "margen_verif": -0.0624,
+      "margen_ident": -0.1299,
+      "rank_id_real": 4,
+      "top3": [
+        [
+          "josie_totah",
+          0.2935
+        ],
+        [
+          "forest_whitaker",
+          0.2171
+        ],
+        [
+          "metrika",
+          0.1907
+        ]
+      ],
+      "top1_id": "josie_totah",
+      "top1_sim": 0.2935,
+      "cross_fp": [
+        [
+          "josie_totah",
+          0.2935
+        ]
+      ],
+      "n_cross_fp": 1,
+      "pasa_far_01pct": false,
+      "pasa_far_1pct": false,
+      "pasa_far_5pct": true,
+      "pasa_far_10pct": true,
+      "nivel_impostor": false,
+      "sim_sin_filtro_calidad": 0.1548
+    },
+    {
+      "id": "cynthia_erivo",
+      "label": "2025_wicked_frontal",
+      "path": "data/pruebas_cambios/cynthia_erivo/2025_wicked_frontal.jpg",
+      "enrolled_year": 2025,
+      "probe_year": 2025,
+      "delta_years": 0,
+      "category": "apariencia_estilismo",
+      "description": "Cynthia Erivo en febrero 2025 (calva, piercing nasal y en ceja, cejas decoloradas, sonrisa)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Cynthia_Erivo_-_Wicked-FYC-2_(cropped).jpg",
+      "width": 960,
+      "height": 1209,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 2,
+      "detector_score": 0.8975,
+      "bbox_px": [
+        278.8,
+        371.8
+      ],
+      "eye_dist_px": 104.11,
+      "yaw_ratio": 0.4456,
+      "verificar_publico": false,
+      "identificar_publico": null,
+      "identificacion_correcta": false,
+      "faceness_score": 24.9111,
+      "sim_id_real": 0.0409,
+      "margen_verif": -0.1763,
+      "margen_ident": -0.2438,
+      "rank_id_real": 32,
+      "top3": [
+        [
+          "taylor_swift",
+          0.2444
+        ],
+        [
+          "lady_gaga",
+          0.1859
+        ],
+        [
+          "etsy_quesada",
+          0.1778
+        ]
+      ],
+      "top1_id": "taylor_swift",
+      "top1_sim": 0.2444,
+      "cross_fp": [
+        [
+          "taylor_swift",
+          0.2444
+        ]
+      ],
+      "n_cross_fp": 1,
+      "pasa_far_01pct": false,
+      "pasa_far_1pct": false,
+      "pasa_far_5pct": false,
+      "pasa_far_10pct": false,
+      "nivel_impostor": true,
+      "sim_sin_filtro_calidad": 0.0409
+    },
+    {
+      "id": "cynthia_erivo",
+      "label": "2025_world_pride",
+      "path": "data/pruebas_cambios/cynthia_erivo/2025_world_pride.jpg",
+      "enrolled_year": 2025,
+      "probe_year": 2025,
+      "delta_years": 0,
+      "category": "apariencia_estilismo",
+      "description": "Cynthia Erivo actuando en World Pride DC 2025 (mirada hacia abajo/micrófono, prueba de captura)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Cynthia_Erivo_World_Pride_DC_01.jpg",
+      "width": 960,
+      "height": 959,
+      "detector_status": "NoFaceDetected",
+      "detector_reason": "No se detecto ninguna cara",
+      "n_faces": 0,
+      "detector_score": null,
+      "bbox_px": null,
+      "eye_dist_px": null,
+      "yaw_ratio": null,
+      "verificar_publico": null,
+      "identificar_publico": null,
+      "identificacion_correcta": false,
+      "faceness_score": null,
+      "sim_id_real": null,
+      "margen_verif": null,
+      "margen_ident": null,
+      "rank_id_real": null,
+      "top3": null,
+      "top1_id": null,
+      "top1_sim": null,
+      "cross_fp": [],
+      "n_cross_fp": 0,
+      "pasa_far_01pct": false,
+      "pasa_far_1pct": false,
+      "pasa_far_5pct": false,
+      "pasa_far_10pct": false,
+      "nivel_impostor": null,
+      "sim_sin_filtro_calidad": null,
+      "rank_sin_filtro_calidad": null,
+      "top1_sin_filtro_calidad": null
+    },
+    {
+      "id": "lady_gaga",
+      "label": "2010_maquillaje_extremo",
+      "path": "data/pruebas_cambios/lady_gaga/2010_maquillaje_extremo.jpg",
+      "enrolled_year": 2009,
+      "probe_year": 2010,
+      "delta_years": 1,
+      "category": "apariencia_estilismo",
+      "description": "Lady Gaga en Carnegie Hall 2010 (maquillaje artístico blanco/perlas, frente despejada)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Lady_Gaga_-_Carnegie_Hall1_2010_(cropped).jpg",
+      "width": 960,
+      "height": 1332,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 1,
+      "detector_score": 0.9028,
+      "bbox_px": [
+        220.6,
+        291.3
+      ],
+      "eye_dist_px": 74.61,
+      "yaw_ratio": 0.4036,
+      "verificar_publico": false,
+      "identificar_publico": null,
+      "identificacion_correcta": false,
+      "faceness_score": 7.5411,
+      "sim_id_real": 0.0027,
+      "margen_verif": -0.2146,
+      "margen_ident": -0.282,
+      "rank_id_real": 30,
+      "top3": [
+        [
+          "hasbulla_magomedov",
+          0.2391
+        ],
+        [
+          "metrika",
+          0.1268
+        ],
+        [
+          "james_phelps",
+          0.1056
+        ]
+      ],
+      "top1_id": "hasbulla_magomedov",
+      "top1_sim": 0.2391,
+      "cross_fp": [
+        [
+          "hasbulla_magomedov",
+          0.2391
+        ]
+      ],
+      "n_cross_fp": 1,
+      "pasa_far_01pct": false,
+      "pasa_far_1pct": false,
+      "pasa_far_5pct": false,
+      "pasa_far_10pct": false,
+      "nivel_impostor": true,
+      "sim_sin_filtro_calidad": 0.0027
+    },
+    {
+      "id": "lady_gaga",
+      "label": "2018_look_natural",
+      "path": "data/pruebas_cambios/lady_gaga/2018_look_natural.jpg",
+      "enrolled_year": 2009,
+      "probe_year": 2018,
+      "delta_years": 9,
+      "category": "apariencia_estilismo",
+      "description": "Lady Gaga en Londres 2018 (A Star is Born, look natural sin el flequillo de 2009)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Lady_Gaga_A_Star_is_Born_London_premiere_(cropped).jpg",
+      "width": 791,
+      "height": 1093,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 1,
+      "detector_score": 0.9305,
+      "bbox_px": [
+        276.6,
+        384.2
+      ],
+      "eye_dist_px": 112.79,
+      "yaw_ratio": 0.2517,
+      "verificar_publico": false,
+      "identificar_publico": null,
+      "identificacion_correcta": false,
+      "faceness_score": 15.4465,
+      "sim_id_real": 0.1009,
+      "margen_verif": -0.1164,
+      "margen_ident": -0.1838,
+      "rank_id_real": 14,
+      "top3": [
+        [
+          "salma_hayek",
+          0.2209
+        ],
+        [
+          "rossy_de_palma",
+          0.1915
+        ],
+        [
+          "adele",
+          0.1746
+        ]
+      ],
+      "top1_id": "salma_hayek",
+      "top1_sim": 0.2209,
+      "cross_fp": [
+        [
+          "salma_hayek",
+          0.2209
+        ]
+      ],
+      "n_cross_fp": 1,
+      "pasa_far_01pct": false,
+      "pasa_far_1pct": false,
+      "pasa_far_5pct": false,
+      "pasa_far_10pct": true,
+      "nivel_impostor": false,
+      "sim_sin_filtro_calidad": 0.1009
+    },
+    {
+      "id": "lady_gaga",
+      "label": "2019_sag",
+      "path": "data/pruebas_cambios/lady_gaga/2019_sag.jpg",
+      "enrolled_year": 2009,
+      "probe_year": 2019,
+      "delta_years": 10,
+      "category": "apariencia_estilismo",
+      "description": "Lady Gaga en SAG Awards 2019 (frente despejada, labios oscuros, iluminación frontal)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Lady_Gaga_at_2019_SAG_Awards.jpg",
+      "width": 949,
+      "height": 1376,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 3,
+      "detector_score": 0.7991,
+      "bbox_px": [
+        474.0,
+        607.3
+      ],
+      "eye_dist_px": 230.02,
+      "yaw_ratio": 0.0217,
+      "verificar_publico": false,
+      "identificar_publico": null,
+      "identificacion_correcta": false,
+      "faceness_score": 25.4719,
+      "sim_id_real": 0.0627,
+      "margen_verif": -0.1545,
+      "margen_ident": -0.222,
+      "rank_id_real": 25,
+      "top3": [
+        [
+          "winnie_harlow",
+          0.2467
+        ],
+        [
+          "taylor_swift",
+          0.2316
+        ],
+        [
+          "lara_raj",
+          0.2259
+        ]
+      ],
+      "top1_id": "winnie_harlow",
+      "top1_sim": 0.2467,
+      "cross_fp": [
+        [
+          "winnie_harlow",
+          0.2467
+        ],
+        [
+          "taylor_swift",
+          0.2316
+        ],
+        [
+          "lara_raj",
+          0.2259
+        ],
+        [
+          "aitana_etxebarria",
+          0.2218
+        ]
+      ],
+      "n_cross_fp": 4,
+      "pasa_far_01pct": false,
+      "pasa_far_1pct": false,
+      "pasa_far_5pct": false,
+      "pasa_far_10pct": false,
+      "nivel_impostor": true,
+      "sim_sin_filtro_calidad": 0.0627
+    },
+    {
+      "id": "lady_gaga",
+      "label": "2024_venecia",
+      "path": "data/pruebas_cambios/lady_gaga/2024_venecia.jpg",
+      "enrolled_year": 2009,
+      "probe_year": 2024,
+      "delta_years": 15,
+      "category": "apariencia_estilismo",
+      "description": "Lady Gaga en Venecia 2024 (tocado/velo de encaje cubriendo la parte superior del rostro)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Lady_Gaga-65188.jpg",
+      "width": 960,
+      "height": 1440,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 1,
+      "detector_score": 0.7654,
+      "bbox_px": [
+        271.5,
+        337.5
+      ],
+      "eye_dist_px": 125.74,
+      "yaw_ratio": 0.0652,
+      "verificar_publico": false,
+      "identificar_publico": null,
+      "identificacion_correcta": false,
+      "faceness_score": -0.8413,
+      "sim_id_real": 0.0243,
+      "margen_verif": -0.193,
+      "margen_ident": -0.2604,
+      "rank_id_real": 33,
+      "top3": [
+        [
+          "samuel_l_jackson",
+          0.2793
+        ],
+        [
+          "forest_whitaker",
+          0.1714
+        ],
+        [
+          "arianna_grande",
+          0.1527
+        ]
+      ],
+      "top1_id": "samuel_l_jackson",
+      "top1_sim": 0.2793,
+      "cross_fp": [
+        [
+          "samuel_l_jackson",
+          0.2793
+        ]
+      ],
+      "n_cross_fp": 1,
+      "pasa_far_01pct": false,
+      "pasa_far_1pct": false,
+      "pasa_far_5pct": false,
+      "pasa_far_10pct": false,
+      "nivel_impostor": true,
+      "sim_sin_filtro_calidad": 0.0243
+    },
+    {
+      "id": "arianna_grande",
+      "label": "2013_coleta",
+      "path": "data/pruebas_cambios/arianna_grande/2013_coleta.jpg",
+      "enrolled_year": 2010,
+      "probe_year": 2013,
+      "delta_years": 3,
+      "category": "apariencia_estilismo",
+      "description": "Ariana Grande en dic 2013 (coleta castaña, 3 años después de 2010)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:ArianaGrandeDecember2013_cropped.jpg",
+      "width": 476,
+      "height": 588,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 1,
+      "detector_score": 0.925,
+      "bbox_px": [
+        247.0,
+        317.8
+      ],
+      "eye_dist_px": 102.37,
+      "yaw_ratio": 0.2066,
+      "verificar_publico": false,
+      "identificar_publico": null,
+      "identificacion_correcta": false,
+      "faceness_score": 20.056,
+      "sim_id_real": 0.0388,
+      "margen_verif": -0.1785,
+      "margen_ident": -0.2459,
+      "rank_id_real": 14,
+      "top3": [
+        [
+          "cynthia_erivo",
+          0.1022
+        ],
+        [
+          "michael_jackson",
+          0.1022
+        ],
+        [
+          "hasbulla_magomedov",
+          0.0896
+        ]
+      ],
+      "top1_id": "cynthia_erivo",
+      "top1_sim": 0.1022,
+      "cross_fp": [],
+      "n_cross_fp": 0,
+      "pasa_far_01pct": false,
+      "pasa_far_1pct": false,
+      "pasa_far_5pct": false,
+      "pasa_far_10pct": false,
+      "nivel_impostor": true,
+      "sim_sin_filtro_calidad": 0.0388
+    },
+    {
+      "id": "arianna_grande",
+      "label": "2017_coleta_madura",
+      "path": "data/pruebas_cambios/arianna_grande/2017_coleta_madura.jpg",
+      "enrolled_year": 2010,
+      "probe_year": 2017,
+      "delta_years": 7,
+      "category": "apariencia_estilismo",
+      "description": "Ariana Grande en 2017 (en escenario, giro lateral pronunciado, prueba de yaw)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Ariana_Grande_(32426961944)_(cropped).jpg",
+      "width": 960,
+      "height": 1164,
+      "detector_status": "LowQualityFace",
+      "detector_reason": "Cara demasiado girada (yaw ratio 0.51)",
+      "n_faces": 1,
+      "detector_score": 0.8765,
+      "bbox_px": [
+        236.7,
+        298.0
+      ],
+      "eye_dist_px": 69.57,
+      "yaw_ratio": 0.5078,
+      "verificar_publico": null,
+      "identificar_publico": null,
+      "identificacion_correcta": false,
+      "faceness_score": null,
+      "sim_id_real": null,
+      "margen_verif": null,
+      "margen_ident": null,
+      "rank_id_real": null,
+      "top3": null,
+      "top1_id": null,
+      "top1_sim": null,
+      "cross_fp": [],
+      "n_cross_fp": 0,
+      "pasa_far_01pct": false,
+      "pasa_far_1pct": false,
+      "pasa_far_5pct": false,
+      "pasa_far_10pct": false,
+      "nivel_impostor": null,
+      "sim_sin_filtro_calidad": 0.1836,
+      "rank_sin_filtro_calidad": 1,
+      "top1_sin_filtro_calidad": [
+        "arianna_grande",
+        0.1836
+      ]
+    },
+    {
+      "id": "arianna_grande",
+      "label": "2024_wicked_rubia",
+      "path": "data/pruebas_cambios/arianna_grande/2024_wicked_rubia.jpg",
+      "enrolled_year": 2010,
+      "probe_year": 2024,
+      "delta_years": 14,
+      "category": "apariencia_estilismo",
+      "description": "Ariana Grande en nov 2024 (pelo y cejas rubias, pérdida de peso, +14 años desde 2010)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Ariana_Grande_Wicked_Interview_2024_03.jpg",
+      "width": 565,
+      "height": 684,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 1,
+      "detector_score": 0.9153,
+      "bbox_px": [
+        269.9,
+        355.4
+      ],
+      "eye_dist_px": 128.27,
+      "yaw_ratio": 0.0606,
+      "verificar_publico": false,
+      "identificar_publico": null,
+      "identificacion_correcta": false,
+      "faceness_score": 19.2416,
+      "sim_id_real": 0.1655,
+      "margen_verif": -0.0517,
+      "margen_ident": -0.1191,
+      "rank_id_real": 4,
+      "top3": [
+        [
+          "cynthia_erivo",
+          0.1861
+        ],
+        [
+          "tini",
+          0.1802
+        ],
+        [
+          "adele",
+          0.1698
+        ]
+      ],
+      "top1_id": "cynthia_erivo",
+      "top1_sim": 0.1861,
+      "cross_fp": [],
+      "n_cross_fp": 0,
+      "pasa_far_01pct": false,
+      "pasa_far_1pct": true,
+      "pasa_far_5pct": true,
+      "pasa_far_10pct": true,
+      "nivel_impostor": false,
+      "sim_sin_filtro_calidad": 0.1655
+    },
+    {
+      "id": "winnie_harlow",
+      "label": "2015_temprana",
+      "path": "data/pruebas_cambios/winnie_harlow/2015_temprana.jpg",
+      "enrolled_year": 2018,
+      "probe_year": 2015,
+      "delta_years": -3,
+      "category": "apariencia_estilismo",
+      "description": "Winnie Harlow en 2015 (patrón de vitíligo visible en barbilla/ojos, pelo suelto rizado)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Winnie_Harlow_2015.jpg",
+      "width": 591,
+      "height": 886,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 1,
+      "detector_score": 0.925,
+      "bbox_px": [
+        244.4,
+        379.6
+      ],
+      "eye_dist_px": 114.66,
+      "yaw_ratio": 0.1018,
+      "verificar_publico": false,
+      "identificar_publico": null,
+      "identificacion_correcta": false,
+      "faceness_score": 12.1874,
+      "sim_id_real": 0.1736,
+      "margen_verif": -0.0436,
+      "margen_ident": -0.1111,
+      "rank_id_real": 5,
+      "top3": [
+        [
+          "lara_raj",
+          0.2131
+        ],
+        [
+          "serenna_williams",
+          0.2035
+        ],
+        [
+          "salma_hayek",
+          0.1913
+        ]
+      ],
+      "top1_id": "lara_raj",
+      "top1_sim": 0.2131,
+      "cross_fp": [],
+      "n_cross_fp": 0,
+      "pasa_far_01pct": false,
+      "pasa_far_1pct": true,
+      "pasa_far_5pct": true,
+      "pasa_far_10pct": true,
+      "nivel_impostor": false,
+      "sim_sin_filtro_calidad": 0.1736
+    },
+    {
+      "id": "winnie_harlow",
+      "label": "2019_estilismo",
+      "path": "data/pruebas_cambios/winnie_harlow/2019_estilismo.jpg",
+      "enrolled_year": 2018,
+      "probe_year": 2019,
+      "delta_years": 1,
+      "category": "apariencia_estilismo",
+      "description": "Winnie Harlow en 2019 (iluminación rojiza de pasarela, maquillaje intenso y moño)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Winnie_Harlow_in_2019.jpg",
+      "width": 764,
+      "height": 843,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 1,
+      "detector_score": 0.8791,
+      "bbox_px": [
+        105.8,
+        143.9
+      ],
+      "eye_dist_px": 47.68,
+      "yaw_ratio": 0.0612,
+      "verificar_publico": false,
+      "identificar_publico": null,
+      "identificacion_correcta": false,
+      "faceness_score": -3.4435,
+      "sim_id_real": 0.0849,
+      "margen_verif": -0.1324,
+      "margen_ident": -0.1998,
+      "rank_id_real": 19,
+      "top3": [
+        [
+          "lara_raj",
+          0.1663
+        ],
+        [
+          "wiliem_dafoe",
+          0.1635
+        ],
+        [
+          "stevie_wonder",
+          0.1476
+        ]
+      ],
+      "top1_id": "lara_raj",
+      "top1_sim": 0.1663,
+      "cross_fp": [],
+      "n_cross_fp": 0,
+      "pasa_far_01pct": false,
+      "pasa_far_1pct": false,
+      "pasa_far_5pct": false,
+      "pasa_far_10pct": true,
+      "nivel_impostor": true,
+      "sim_sin_filtro_calidad": 0.0849
+    },
+    {
+      "id": "christian_bale",
+      "label": "2007_perilla",
+      "path": "data/pruebas_cambios/christian_bale/2007_perilla.jpg",
+      "enrolled_year": 2012,
+      "probe_year": 2007,
+      "delta_years": -5,
+      "category": "apariencia_estilismo",
+      "description": "Christian Bale en 2007 (con perilla/barba corta frente a foto limpia de 2012)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Christian_Bale_2007_(squared).jpg",
+      "width": 536,
+      "height": 647,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 1,
+      "detector_score": 0.9177,
+      "bbox_px": [
+        255.2,
+        374.7
+      ],
+      "eye_dist_px": 115.35,
+      "yaw_ratio": 0.091,
+      "verificar_publico": false,
+      "identificar_publico": null,
+      "identificacion_correcta": false,
+      "faceness_score": 21.2285,
+      "sim_id_real": 0.1093,
+      "margen_verif": -0.1079,
+      "margen_ident": -0.1754,
+      "rank_id_real": 6,
+      "top3": [
+        [
+          "jackie_chan",
+          0.218
+        ],
+        [
+          "salma_hayek",
+          0.2134
+        ],
+        [
+          "metrika",
+          0.1747
+        ]
+      ],
+      "top1_id": "jackie_chan",
+      "top1_sim": 0.218,
+      "cross_fp": [
+        [
+          "jackie_chan",
+          0.218
+        ]
+      ],
+      "n_cross_fp": 1,
+      "pasa_far_01pct": false,
+      "pasa_far_1pct": false,
+      "pasa_far_5pct": true,
+      "pasa_far_10pct": true,
+      "nivel_impostor": false,
+      "sim_sin_filtro_calidad": 0.1093
+    },
+    {
+      "id": "christian_bale",
+      "label": "2019_barba_peso",
+      "path": "data/pruebas_cambios/christian_bale/2019_barba_peso.jpg",
+      "enrolled_year": 2012,
+      "probe_year": 2019,
+      "delta_years": 7,
+      "category": "apariencia_estilismo",
+      "description": "Christian Bale en TIFF 2019 (barba completa y cambio de peso frente a 2012)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:TIFF_2019_christian_bale_(48711707823)_(cropped).jpg",
+      "width": 960,
+      "height": 1297,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 2,
+      "detector_score": 0.9127,
+      "bbox_px": [
+        318.1,
+        437.3
+      ],
+      "eye_dist_px": 141.07,
+      "yaw_ratio": 0.1654,
+      "verificar_publico": false,
+      "identificar_publico": null,
+      "identificacion_correcta": false,
+      "faceness_score": 21.407,
+      "sim_id_real": 0.0374,
+      "margen_verif": -0.1798,
+      "margen_ident": -0.2472,
+      "rank_id_real": 12,
+      "top3": [
+        [
+          "rossy_de_palma",
+          0.1002
+        ],
+        [
+          "adam_pearson",
+          0.0977
+        ],
+        [
+          "idris_elba",
+          0.0936
+        ]
+      ],
+      "top1_id": "rossy_de_palma",
+      "top1_sim": 0.1002,
+      "cross_fp": [],
+      "n_cross_fp": 0,
+      "pasa_far_01pct": false,
+      "pasa_far_1pct": false,
+      "pasa_far_5pct": false,
+      "pasa_far_10pct": false,
+      "nivel_impostor": true,
+      "sim_sin_filtro_calidad": 0.0374
+    },
+    {
+      "id": "christian_bale",
+      "label": "2022_barba_reciente",
+      "path": "data/pruebas_cambios/christian_bale/2022_barba_reciente.jpg",
+      "enrolled_year": 2012,
+      "probe_year": 2022,
+      "delta_years": 10,
+      "category": "apariencia_estilismo",
+      "description": "Christian Bale en 2022 (barba poblada, pelo largo y perfil marcado)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Christian_Bale_in_2022.jpg",
+      "width": 960,
+      "height": 1356,
+      "detector_status": "NoFaceDetected",
+      "detector_reason": "No se detecto ninguna cara",
+      "n_faces": 0,
+      "detector_score": null,
+      "bbox_px": null,
+      "eye_dist_px": null,
+      "yaw_ratio": null,
+      "verificar_publico": null,
+      "identificar_publico": null,
+      "identificacion_correcta": false,
+      "faceness_score": null,
+      "sim_id_real": null,
+      "margen_verif": null,
+      "margen_ident": null,
+      "rank_id_real": null,
+      "top3": null,
+      "top1_id": null,
+      "top1_sim": null,
+      "cross_fp": [],
+      "n_cross_fp": 0,
+      "pasa_far_01pct": false,
+      "pasa_far_1pct": false,
+      "pasa_far_5pct": false,
+      "pasa_far_10pct": false,
+      "nivel_impostor": null,
+      "sim_sin_filtro_calidad": null,
+      "rank_sin_filtro_calidad": null,
+      "top1_sin_filtro_calidad": null
+    },
+    {
+      "id": "keanu_reeves",
+      "label": "2009_barba_corta",
+      "path": "data/pruebas_cambios/keanu_reeves/2009_barba_corta.jpg",
+      "enrolled_year": 1999,
+      "probe_year": 2009,
+      "delta_years": 10,
+      "category": "apariencia_estilismo",
+      "description": "Keanu Reeves en Berlinale 2009 (barba incipiente frente a foto de Matrix 1999 inscrita como 2021)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Keanu_Reeves_(Berlin_Film_Festival_2009)_2.jpg",
+      "width": 960,
+      "height": 1049,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 1,
+      "detector_score": 0.9336,
+      "bbox_px": [
+        204.0,
+        315.8
+      ],
+      "eye_dist_px": 88.59,
+      "yaw_ratio": 0.2094,
+      "verificar_publico": false,
+      "identificar_publico": null,
+      "identificacion_correcta": false,
+      "faceness_score": 18.042,
+      "sim_id_real": 0.0148,
+      "margen_verif": -0.2024,
+      "margen_ident": -0.2699,
+      "rank_id_real": 27,
+      "top3": [
+        [
+          "michael_jackson",
+          0.2021
+        ],
+        [
+          "serenna_williams",
+          0.1733
+        ],
+        [
+          "brays_efe",
+          0.1674
+        ]
+      ],
+      "top1_id": "michael_jackson",
+      "top1_sim": 0.2021,
+      "cross_fp": [],
+      "n_cross_fp": 0,
+      "pasa_far_01pct": false,
+      "pasa_far_1pct": false,
+      "pasa_far_5pct": false,
+      "pasa_far_10pct": false,
+      "nivel_impostor": true,
+      "sim_sin_filtro_calidad": 0.0148
+    },
+    {
+      "id": "keanu_reeves",
+      "label": "2019_barba_larga",
+      "path": "data/pruebas_cambios/keanu_reeves/2019_barba_larga.jpg",
+      "enrolled_year": 1999,
+      "probe_year": 2019,
+      "delta_years": 20,
+      "category": "apariencia_estilismo",
+      "description": "Keanu Reeves en 2019 (barba poblada y melena, +20 años respecto a fotograma Matrix)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Keanu_Reeves_2019_(cropped).jpg",
+      "width": 952,
+      "height": 1222,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 1,
+      "detector_score": 0.8739,
+      "bbox_px": [
+        455.7,
+        564.6
+      ],
+      "eye_dist_px": 208.93,
+      "yaw_ratio": 0.0421,
+      "verificar_publico": true,
+      "identificar_publico": "keanu_reeves",
+      "identificacion_correcta": true,
+      "faceness_score": 24.8245,
+      "sim_id_real": 0.3254,
+      "margen_verif": 0.1082,
+      "margen_ident": 0.0408,
+      "rank_id_real": 1,
+      "top3": [
+        [
+          "keanu_reeves",
+          0.3254
+        ],
+        [
+          "brays_efe",
+          0.1588
+        ],
+        [
+          "winnie_harlow",
+          0.1328
+        ]
+      ],
+      "top1_id": "keanu_reeves",
+      "top1_sim": 0.3254,
+      "cross_fp": [],
+      "n_cross_fp": 0,
+      "pasa_far_01pct": true,
+      "pasa_far_1pct": true,
+      "pasa_far_5pct": true,
+      "pasa_far_10pct": true,
+      "nivel_impostor": false,
+      "sim_sin_filtro_calidad": 0.3254
+    },
+    {
+      "id": "keanu_reeves",
+      "label": "2024_barba_canosa",
+      "path": "data/pruebas_cambios/keanu_reeves/2024_barba_canosa.jpg",
+      "enrolled_year": 1999,
+      "probe_year": 2024,
+      "delta_years": 25,
+      "category": "apariencia_estilismo",
+      "description": "Keanu Reeves en SDCC 2024 (barba canosa larga y melena, +25 años respecto a Matrix)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Keanu_Reeves_SDCC_2024_12_(cropped).jpg",
+      "width": 654,
+      "height": 861,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 1,
+      "detector_score": 0.9422,
+      "bbox_px": [
+        171.7,
+        234.9
+      ],
+      "eye_dist_px": 80.18,
+      "yaw_ratio": 0.0492,
+      "verificar_publico": false,
+      "identificar_publico": null,
+      "identificacion_correcta": false,
+      "faceness_score": 23.5361,
+      "sim_id_real": 0.18,
+      "margen_verif": -0.0373,
+      "margen_ident": -0.1047,
+      "rank_id_real": 1,
+      "top3": [
+        [
+          "keanu_reeves",
+          0.18
+        ],
+        [
+          "joe_batalan",
+          0.1587
+        ],
+        [
+          "nicolas_maduro",
+          0.136
+        ]
+      ],
+      "top1_id": "keanu_reeves",
+      "top1_sim": 0.18,
+      "cross_fp": [],
+      "n_cross_fp": 0,
+      "pasa_far_01pct": false,
+      "pasa_far_1pct": true,
+      "pasa_far_5pct": true,
+      "pasa_far_10pct": true,
+      "nivel_impostor": false,
+      "sim_sin_filtro_calidad": 0.18
+    },
+    {
+      "id": "adele",
+      "label": "2009_joven",
+      "path": "data/pruebas_cambios/adele/2009_joven.jpg",
+      "enrolled_year": 2016,
+      "probe_year": 2009,
+      "delta_years": -7,
+      "category": "apariencia_estilismo",
+      "description": "Adele en concierto en 2009 (7 años antes de la foto de inscripción, blanco y negro)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Adele_-_Live_2009_(4).jpg",
+      "width": 960,
+      "height": 838,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 1,
+      "detector_score": 0.8846,
+      "bbox_px": [
+        263.5,
+        357.0
+      ],
+      "eye_dist_px": 97.61,
+      "yaw_ratio": 0.1742,
+      "verificar_publico": false,
+      "identificar_publico": null,
+      "identificacion_correcta": false,
+      "faceness_score": 21.7677,
+      "sim_id_real": 0.0192,
+      "margen_verif": -0.198,
+      "margen_ident": -0.2655,
+      "rank_id_real": 32,
+      "top3": [
+        [
+          "serenna_williams",
+          0.1866
+        ],
+        [
+          "salma_hayek",
+          0.1464
+        ],
+        [
+          "hunter_schufer",
+          0.1317
+        ]
+      ],
+      "top1_id": "serenna_williams",
+      "top1_sim": 0.1866,
+      "cross_fp": [],
+      "n_cross_fp": 0,
+      "pasa_far_01pct": false,
+      "pasa_far_1pct": false,
+      "pasa_far_5pct": false,
+      "pasa_far_10pct": false,
+      "nivel_impostor": true,
+      "sim_sin_filtro_calidad": 0.0192
+    },
+    {
+      "id": "adele",
+      "label": "2023_perdida_peso",
+      "path": "data/pruebas_cambios/adele/2023_perdida_peso.jpg",
+      "enrolled_year": 2016,
+      "probe_year": 2023,
+      "delta_years": 7,
+      "category": "apariencia_estilismo",
+      "description": "Adele en febrero de 2023 (tras pérdida notable de peso, rostro más anguloso)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Adele_Feb_24_23_(cropped).jpg",
+      "width": 960,
+      "height": 1166,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 1,
+      "detector_score": 0.9013,
+      "bbox_px": [
+        299.6,
+        370.1
+      ],
+      "eye_dist_px": 121.81,
+      "yaw_ratio": 0.0392,
+      "verificar_publico": true,
+      "identificar_publico": "adele",
+      "identificacion_correcta": true,
+      "faceness_score": 18.8902,
+      "sim_id_real": 0.3006,
+      "margen_verif": 0.0834,
+      "margen_ident": 0.0159,
+      "rank_id_real": 1,
+      "top3": [
+        [
+          "adele",
+          0.3006
+        ],
+        [
+          "mary-kate_olsen",
+          0.1738
+        ],
+        [
+          "aitana_etxebarria",
+          0.1624
+        ]
+      ],
+      "top1_id": "adele",
+      "top1_sim": 0.3006,
+      "cross_fp": [],
+      "n_cross_fp": 0,
+      "pasa_far_01pct": true,
+      "pasa_far_1pct": true,
+      "pasa_far_5pct": true,
+      "pasa_far_10pct": true,
+      "nivel_impostor": false,
+      "sim_sin_filtro_calidad": 0.3006
+    },
+    {
+      "id": "vinicius_junior",
+      "label": "2018_joven",
+      "path": "data/pruebas_cambios/vinicius_junior/2018_joven.jpg",
+      "enrolled_year": 2024,
+      "probe_year": 2018,
+      "delta_years": -6,
+      "category": "apariencia_estilismo",
+      "description": "Vinícius Júnior en agosto 2018 (18 años, pelo corto sin mechas, cuerpo lejano en campo)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Vinicius_Jr_2018_(cropped).jpg",
+      "width": 825,
+      "height": 998,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 1,
+      "detector_score": 0.9075,
+      "bbox_px": [
+        80.4,
+        107.8
+      ],
+      "eye_dist_px": 32.45,
+      "yaw_ratio": 0.2573,
+      "verificar_publico": true,
+      "identificar_publico": null,
+      "identificacion_correcta": false,
+      "faceness_score": 8.3199,
+      "sim_id_real": 0.2208,
+      "margen_verif": 0.0035,
+      "margen_ident": -0.0639,
+      "rank_id_real": 1,
+      "top3": [
+        [
+          "vinicius_junior",
+          0.2208
+        ],
+        [
+          "forest_whitaker",
+          0.1261
+        ],
+        [
+          "jorge_javier_vazquez",
+          0.0799
+        ]
+      ],
+      "top1_id": "vinicius_junior",
+      "top1_sim": 0.2208,
+      "cross_fp": [],
+      "n_cross_fp": 0,
+      "pasa_far_01pct": true,
+      "pasa_far_1pct": true,
+      "pasa_far_5pct": true,
+      "pasa_far_10pct": true,
+      "nivel_impostor": false,
+      "sim_sin_filtro_calidad": 0.2208
+    },
+    {
+      "id": "vinicius_junior",
+      "label": "2023_copa_rey",
+      "path": "data/pruebas_cambios/vinicius_junior/2023_copa_rey.jpg",
+      "enrolled_year": 2024,
+      "probe_year": 2023,
+      "delta_years": -1,
+      "category": "apariencia_estilismo",
+      "description": "Vinícius Júnior en final Copa del Rey mayo 2023 (celebración con medalla)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:2023_05_06_Final_de_la_Copa_del_Rey_-_52879242230_(cropped).jpg",
+      "width": 653,
+      "height": 838,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 1,
+      "detector_score": 0.9101,
+      "bbox_px": [
+        209.9,
+        283.9
+      ],
+      "eye_dist_px": 84.74,
+      "yaw_ratio": 0.3545,
+      "verificar_publico": true,
+      "identificar_publico": null,
+      "identificacion_correcta": false,
+      "faceness_score": 10.9034,
+      "sim_id_real": 0.2382,
+      "margen_verif": 0.0209,
+      "margen_ident": -0.0465,
+      "rank_id_real": 1,
+      "top3": [
+        [
+          "vinicius_junior",
+          0.2382
+        ],
+        [
+          "adam_pearson",
+          0.1966
+        ],
+        [
+          "temuera_morrison",
+          0.1732
+        ]
+      ],
+      "top1_id": "vinicius_junior",
+      "top1_sim": 0.2382,
+      "cross_fp": [],
+      "n_cross_fp": 0,
+      "pasa_far_01pct": true,
+      "pasa_far_1pct": true,
+      "pasa_far_5pct": true,
+      "pasa_far_10pct": true,
+      "nivel_impostor": false,
+      "sim_sin_filtro_calidad": 0.2382
+    },
+    {
+      "id": "vinicius_junior",
+      "label": "2025_reciente",
+      "path": "data/pruebas_cambios/vinicius_junior/2025_reciente.jpg",
+      "enrolled_year": 2024,
+      "probe_year": 2025,
+      "delta_years": 1,
+      "category": "apariencia_estilismo",
+      "description": "Vinícius Júnior en octubre 2025 (peinado con trenzas/rastas distinto a las 5 fotos inscritas)",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Vinicius_Junior_(2025).jpg",
+      "width": 960,
+      "height": 1397,
+      "detector_status": "OK",
+      "detector_reason": null,
+      "n_faces": 1,
+      "detector_score": 0.9352,
+      "bbox_px": [
+        244.1,
+        335.7
+      ],
+      "eye_dist_px": 118.19,
+      "yaw_ratio": 0.0337,
+      "verificar_publico": true,
+      "identificar_publico": "vinicius_junior",
+      "identificacion_correcta": true,
+      "faceness_score": 24.5816,
+      "sim_id_real": 0.4142,
+      "margen_verif": 0.197,
+      "margen_ident": 0.1296,
+      "rank_id_real": 1,
+      "top3": [
+        [
+          "vinicius_junior",
+          0.4142
+        ],
+        [
+          "adam_pearson",
+          0.2186
+        ],
+        [
+          "forest_whitaker",
+          0.1547
+        ]
+      ],
+      "top1_id": "vinicius_junior",
+      "top1_sim": 0.4142,
+      "cross_fp": [
+        [
+          "adam_pearson",
+          0.2186
+        ]
+      ],
+      "n_cross_fp": 1,
+      "pasa_far_01pct": true,
+      "pasa_far_1pct": true,
+      "pasa_far_5pct": true,
+      "pasa_far_10pct": true,
+      "nivel_impostor": false,
+      "sim_sin_filtro_calidad": 0.4142
+    }
+  ]
+}

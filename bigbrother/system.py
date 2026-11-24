@@ -65,11 +65,26 @@ class BigBrother:
         return self._detector
 
     # ------------------------------------------------------------------ utilidades
-    def recortar(self, foto):
+    def recortar(self, foto, strict=True):
         """Detecta, controla calidad y alinea. Devuelve el recorte BGR (128x128) que
-        esperan los metodos *_sd."""
+        esperan los metodos *_sd.
+
+        Cuando YuNet devuelve varias detecciones, descarta con faceness los falsos positivos
+        (p. ej. objetos grandes del fondo) antes de seleccionar la cara principal.
+        """
         img = as_bgr(foto)
-        face = self.detector.detect(img)
+        faces = self.detector.detect_all(img)
+        if len(faces) > 1:
+            crops = {}
+
+            def _is_face(face):
+                crop = align(img, face.landmarks)
+                crops[id(face)] = crop
+                return self.faceness.score(self.extraer_sd(crop)) >= self.faceness.threshold
+
+            face = self.detector.select(faces, strict=strict, is_face=_is_face)
+            return crops[id(face)]
+        face = self.detector.select(faces, strict=strict)
         return align(img, face.landmarks)
 
     def extraer_sd(self, cara):

@@ -14,7 +14,6 @@ from bigbrother import config  # noqa: E402
 from bigbrother.dataset import enrollment_photos  # noqa: E402
 from bigbrother.errors import BigBrotherError  # noqa: E402
 from bigbrother.imageio import load_image  # noqa: E402
-from bigbrother.preprocess import align  # noqa: E402
 
 
 def build(db_path, keys_dir, fotos_dir=None, force=False, verbose=True):
@@ -35,8 +34,7 @@ def build(db_path, keys_dir, fotos_dir=None, force=False, verbose=True):
         except BigBrotherError as e:
             # Inscripcion supervisada: el operador acepta la cara principal aunque no pase
             # el control estricto (se registra el aviso).
-            face = bb.detector.detect(img, strict=False)
-            crop = align(img, face.landmarks)
+            crop = bb.recortar(img, strict=False)
             warnings.append(f"{path.name}: {e} -> usada la cara mas grande")
         items.append((id_, bb.extraer_sd(crop)))
     bb._inscribir_admin(items)

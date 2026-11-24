@@ -3,12 +3,19 @@
 Práctica de Sistemas Biométricos (UMA) — grupo **EVE**: Eduardo Jiliberto Cañizal, Alberto Bravo
 Ramírez, Jorge Manuel Gutiérrez Melgar, Nacho Ferrer Tellez, Pablo Cervantes Pardo.
 
-- Aproximación asignada: **Multiscale Local Binary Patterns (MLBP)**.
+- Aproximación asignada: **Multiscale Local Binary Patterns (MLBP)** — explicación paso a paso en
+  **[docs/MLBP.md](docs/MLBP.md)** y guía visual interactiva en
+  **[docs/mlbp_interactivo.html](docs/mlbp_interactivo.html)**.
 - Famoso elegido (persona 50 del dataset): **Vinícius José Paixão de Oliveira Júnior** → id `vinicius_junior`.
 - Informe de vulnerabilidades y fortalezas: **[docs/INFORME.md](docs/INFORME.md)**.
 - Ataques conocidos de la literatura, mapeados al sistema: **[docs/ATAQUES_LITERATURA.md](docs/ATAQUES_LITERATURA.md)**.
 - Los mismos ataques, ejecutados y medidos: **[docs/ATAQUES_EMPIRICOS.md](docs/ATAQUES_EMPIRICOS.md)**
   (`python scripts/ataques_literatura.py` → `docs/resultados/ataques_literatura.json`).
+- Evaluaciones adicionales y contexto científico:
+  **[docs/EVAL_INTEROCULAR.md](docs/EVAL_INTEROCULAR.md)** (distancia interocular / ISO 19794-5),
+  **[docs/EVAL_FAR.md](docs/EVAL_FAR.md)** (barrido multi-umbral FAR/FPIR),
+  **[docs/EVAL_CAMBIOS_APARIENCIA.md](docs/EVAL_CAMBIOS_APARIENCIA.md)** (cambios longitudinales y de apariencia) y
+  **[docs/LIMITACIONES_LITERATURA.md](docs/LIMITACIONES_LITERATURA.md)** (techo MLBP en la literatura).
 
 ```
 foto ─► YuNet (cara + 5 puntos + control de calidad) ─► alineado 128×128 ─► Tan-Triggs
@@ -120,11 +127,15 @@ bigbrother/   system.py (API), detector.py, preprocess.py, mlbp.py, matcher.py,
 scripts/      build_db.py, prepare_lfw.py, train_projection.py, train_faceness.py,
               calibrate_identification.py, evaluate.py, ataque_gemela.py,
               ataques_literatura.py (ataques H1-H5 de la literatura, medidos),
-              graficas_ataques.py (figuras ilustrativas de los ataques)
+              graficas_ataques.py (figuras ilustrativas de los ataques),
+              graficas_ejemplos.py (mosaicos con fotos reales de evals y reportes),
+              eval_interocular.py, eval_far_levels.py, eval_cambios_apariencia.py
 models/       YuNet (.onnx), proyección MLBP→LDA, filtro de cara, calibración de umbrales
 data/fotos/   dataset/ (49 fotos del docente) + vinicius_junior/ (5 fotos nuestras, persona 50)
 data/ataques/ gemela_paula/ (2 fotos de la gemela de Aitana, solo para evaluar; no se inscriben)
-docs/         INFORME.md (vulnerabilidades/fortalezas) + ATAQUES_LITERATURA.md (mapeo de ataques
-de              la literatura al sistema) + ATAQUES_EMPIRICOS.md (esos ataques, ejecutados y
-medidos) + resultados/
+data/pruebas_cambios/ 45 fotos reales longitudinales / cambios de apariencia + manifest.json
+docs/         MLBP.md + mlbp_interactivo.html (explicación y laboratorio visual de MLBP) +
+              INFORME.md + ATAQUES_LITERATURA.md + ATAQUES_EMPIRICOS.md +
+              EVAL_INTEROCULAR.md + EVAL_FAR.md + EVAL_CAMBIOS_APARIENCIA.md +
+              LIMITACIONES_LITERATURA.md + resultados/
 ```
