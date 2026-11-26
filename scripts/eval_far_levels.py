@@ -345,13 +345,13 @@ def main():
     tmp_dir = Path(tempfile.mkdtemp(prefix="bb_far_"))
     try:
         bb = build(tmp_dir / "db.csv", tmp_dir / "keys", verbose=False)
-        cal = json.loads(config.CALIBRATION_PATH.read_text())
+        cal = json.loads(config.CALIBRATION_PATH.read_text(encoding="utf-8"))
 
         z = np.load(cache_path)
         crops, names = z["crops"], z["names"]
         X_all = load_or_extract_features(cache_path, crops)
 
-        split = json.loads((config.MODELS_DIR / "lfw_split.json").read_text())
+        split = json.loads((config.MODELS_DIR / "lfw_split.json").read_text(encoding="utf-8"))
         train_ids = set(split["train_ids"])
         reserved_ids = set(split["reserved"])
         train_mask = np.array([n in train_ids for n in names])

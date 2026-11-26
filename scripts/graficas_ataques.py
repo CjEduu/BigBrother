@@ -193,7 +193,7 @@ def _fresh():
 
 
 def fig_a2():
-    res = json.loads(RESULTS.read_text())
+    res = json.loads(RESULTS.read_text(encoding="utf-8"))
     a2 = res["a2_hillclimb_binario"]
     alphas, tpl_scores = _curva_mezcla_templates()
 
@@ -251,7 +251,7 @@ def fig_a2():
 
 # ============================================================ F4: A3 morphing
 def fig_a3():
-    res = json.loads(RESULTS.read_text())
+    res = json.loads(RESULTS.read_text(encoding="utf-8"))
     rows = sorted(res["a3_morphing_inscripcion"], key=lambda r: r["alpha"])
     a = np.array([r["alpha"] for r in rows])
     sv = np.array([r["score_morph_victima"] for r in rows])

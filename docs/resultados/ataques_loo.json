@@ -1,0 +1,402 @@
+{
+  "victima": "vinicius_junior",
+  "atacante": "paula_01 (morph) / paula_02 (cara pura)",
+  "umbral_verificacion": 0.21724116802215576,
+  "por_foto_publica": {
+    "vini_01.jpg": {
+      "score_foto_publica_vs_galeria": 0.3302,
+      "A2": {
+        "consultas_totales": 4033,
+        "alpha_frontera_uniforme": 0.4202,
+        "alpha_medio_final": 0.6072,
+        "sim_template_atacante": 0.6086,
+        "score_white_box_final": 0.2181,
+        "identificar_t": null
+      },
+      "A3": [
+        {
+          "alpha": 0.0,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": true,
+          "atacante_puro_verifica_como_victima": false
+        },
+        {
+          "alpha": 0.1,
+          "morph_foto_verifica_como_victima": true,
+          "poisoning_aceptado": true,
+          "atacante_puro_verifica_como_victima": false
+        },
+        {
+          "alpha": 0.2,
+          "morph_foto_verifica_como_victima": true,
+          "poisoning_aceptado": true,
+          "atacante_puro_verifica_como_victima": false
+        },
+        {
+          "alpha": 0.3,
+          "morph_foto_verifica_como_victima": true,
+          "poisoning_aceptado": true,
+          "atacante_puro_verifica_como_victima": false
+        },
+        {
+          "alpha": 0.4,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": false,
+          "motivo": "EnrollmentRejected"
+        },
+        {
+          "alpha": 0.5,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": false,
+          "motivo": "EnrollmentRejected"
+        },
+        {
+          "alpha": 0.6,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": false,
+          "motivo": "EnrollmentRejected"
+        },
+        {
+          "alpha": 0.7,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": false,
+          "motivo": "EnrollmentRejected"
+        },
+        {
+          "alpha": 0.8,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": false,
+          "motivo": "EnrollmentRejected"
+        },
+        {
+          "alpha": 0.9,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": false,
+          "motivo": "EnrollmentRejected"
+        },
+        {
+          "alpha": 1.0,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": false,
+          "motivo": "EnrollmentRejected"
+        }
+      ]
+    },
+    "vini_02.jpg": {
+      "score_foto_publica_vs_galeria": 0.3564,
+      "A2": {
+        "consultas_totales": 4039,
+        "alpha_frontera_uniforme": 0.5454,
+        "alpha_medio_final": 0.7046,
+        "sim_template_atacante": 0.7802,
+        "score_white_box_final": 0.2173,
+        "identificar_t": null
+      },
+      "A3": [
+        {
+          "alpha": 0.0,
+          "morph_foto_verifica_como_victima": true,
+          "poisoning_aceptado": true,
+          "atacante_puro_verifica_como_victima": false
+        },
+        {
+          "alpha": 0.1,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": true,
+          "atacante_puro_verifica_como_victima": false
+        },
+        {
+          "alpha": 0.2,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": true,
+          "atacante_puro_verifica_como_victima": false
+        },
+        {
+          "alpha": 0.3,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": false,
+          "motivo": "EnrollmentRejected"
+        },
+        {
+          "alpha": 0.4,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": false,
+          "motivo": "EnrollmentRejected"
+        },
+        {
+          "alpha": 0.5,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": false,
+          "motivo": "EnrollmentRejected"
+        },
+        {
+          "alpha": 0.6,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": false,
+          "motivo": "EnrollmentRejected"
+        },
+        {
+          "alpha": 0.7,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": false,
+          "motivo": "EnrollmentRejected"
+        },
+        {
+          "alpha": 0.8,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": false,
+          "motivo": "EnrollmentRejected"
+        },
+        {
+          "alpha": 0.9,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": false,
+          "motivo": "EnrollmentRejected"
+        },
+        {
+          "alpha": 1.0,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": false,
+          "motivo": "EnrollmentRejected"
+        }
+      ]
+    },
+    "vini_04.jpg": {
+      "score_foto_publica_vs_galeria": 0.2815,
+      "A2": {
+        "consultas_totales": 4034,
+        "alpha_frontera_uniforme": 0.4424,
+        "alpha_medio_final": 0.6217,
+        "sim_template_atacante": 0.6862,
+        "score_white_box_final": 0.2174,
+        "identificar_t": null
+      },
+      "A3": [
+        {
+          "alpha": 0.0,
+          "morph_foto_verifica_como_victima": true,
+          "poisoning_aceptado": true,
+          "atacante_puro_verifica_como_victima": false
+        },
+        {
+          "alpha": 0.1,
+          "morph_foto_verifica_como_victima": true,
+          "poisoning_aceptado": true,
+          "atacante_puro_verifica_como_victima": false
+        },
+        {
+          "alpha": 0.2,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": true,
+          "atacante_puro_verifica_como_victima": false
+        },
+        {
+          "alpha": 0.3,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": true,
+          "atacante_puro_verifica_como_victima": false
+        },
+        {
+          "alpha": 0.4,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": false,
+          "motivo": "EnrollmentRejected"
+        },
+        {
+          "alpha": 0.5,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": false,
+          "motivo": "EnrollmentRejected"
+        },
+        {
+          "alpha": 0.6,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": false,
+          "motivo": "EnrollmentRejected"
+        },
+        {
+          "alpha": 0.7,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": false,
+          "motivo": "EnrollmentRejected"
+        },
+        {
+          "alpha": 0.8,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": false,
+          "motivo": "EnrollmentRejected"
+        },
+        {
+          "alpha": 0.9,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": false,
+          "motivo": "EnrollmentRejected"
+        },
+        {
+          "alpha": 1.0,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": false,
+          "motivo": "EnrollmentRejected"
+        }
+      ]
+    },
+    "vini_05.jpg": {
+      "score_foto_publica_vs_galeria": 0.3564,
+      "A2": {
+        "consultas_totales": 4048,
+        "alpha_frontera_uniforme": 0.7334,
+        "alpha_medio_final": 0.8701,
+        "sim_template_atacante": 0.9145,
+        "score_white_box_final": 0.2173,
+        "identificar_t": "aitana_etxebarria"
+      },
+      "A3": [
+        {
+          "alpha": 0.0,
+          "morph_foto_verifica_como_victima": true,
+          "poisoning_aceptado": true,
+          "atacante_puro_verifica_como_victima": false
+        },
+        {
+          "alpha": 0.1,
+          "morph_foto_verifica_como_victima": true,
+          "poisoning_aceptado": true,
+          "atacante_puro_verifica_como_victima": false
+        },
+        {
+          "alpha": 0.2,
+          "morph_foto_verifica_como_victima": true,
+          "poisoning_aceptado": true,
+          "atacante_puro_verifica_como_victima": false
+        },
+        {
+          "alpha": 0.3,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": true,
+          "atacante_puro_verifica_como_victima": false
+        },
+        {
+          "alpha": 0.4,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": true,
+          "atacante_puro_verifica_como_victima": false
+        },
+        {
+          "alpha": 0.5,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": true,
+          "atacante_puro_verifica_como_victima": false
+        },
+        {
+          "alpha": 0.6,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": false,
+          "motivo": "EnrollmentRejected"
+        },
+        {
+          "alpha": 0.7,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": false,
+          "motivo": "EnrollmentRejected"
+        },
+        {
+          "alpha": 0.8,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": false,
+          "motivo": "EnrollmentRejected"
+        },
+        {
+          "alpha": 0.9,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": false,
+          "motivo": "EnrollmentRejected"
+        },
+        {
+          "alpha": 1.0,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": false,
+          "motivo": "EnrollmentRejected"
+        }
+      ]
+    },
+    "vini_06.jpg": {
+      "score_foto_publica_vs_galeria": 0.3302,
+      "A2": {
+        "consultas_totales": 4044,
+        "alpha_frontera_uniforme": 0.6276,
+        "alpha_medio_final": 0.7642,
+        "sim_template_atacante": 0.8278,
+        "score_white_box_final": 0.2173,
+        "identificar_t": null
+      },
+      "A3": [
+        {
+          "alpha": 0.0,
+          "morph_foto_verifica_como_victima": true,
+          "poisoning_aceptado": true,
+          "atacante_puro_verifica_como_victima": false
+        },
+        {
+          "alpha": 0.1,
+          "morph_foto_verifica_como_victima": true,
+          "poisoning_aceptado": true,
+          "atacante_puro_verifica_como_victima": false
+        },
+        {
+          "alpha": 0.2,
+          "morph_foto_verifica_como_victima": true,
+          "poisoning_aceptado": true,
+          "atacante_puro_verifica_como_victima": false
+        },
+        {
+          "alpha": 0.3,
+          "morph_foto_verifica_como_victima": true,
+          "poisoning_aceptado": true,
+          "atacante_puro_verifica_como_victima": false
+        },
+        {
+          "alpha": 0.4,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": true,
+          "atacante_puro_verifica_como_victima": false
+        },
+        {
+          "alpha": 0.5,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": false,
+          "motivo": "EnrollmentRejected"
+        },
+        {
+          "alpha": 0.6,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": false,
+          "motivo": "EnrollmentRejected"
+        },
+        {
+          "alpha": 0.7,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": false,
+          "motivo": "EnrollmentRejected"
+        },
+        {
+          "alpha": 0.8,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": false,
+          "motivo": "EnrollmentRejected"
+        },
+        {
+          "alpha": 0.9,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": false,
+          "motivo": "EnrollmentRejected"
+        },
+        {
+          "alpha": 1.0,
+          "morph_foto_verifica_como_victima": false,
+          "poisoning_aceptado": false,
+          "motivo": "EnrollmentRejected"
+        }
+      ]
+    }
+  }
+}

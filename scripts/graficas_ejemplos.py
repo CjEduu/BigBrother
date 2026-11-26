@@ -815,11 +815,11 @@ def fig_ataques_morph_dodging(bb: BigBrother, atk: dict):
 
 def main():
     bb = BigBrother()
-    cam = json.loads((OUT / "eval_cambios_apariencia.json").read_text())
-    res = json.loads((OUT / "resultados.json").read_text())
-    gemela = json.loads((OUT / "gemela_paula.json").read_text())
-    far = json.loads((OUT / "eval_far_levels.json").read_text())
-    atk = json.loads((OUT / "ataques_literatura.json").read_text())
+    cam = json.loads((OUT / "eval_cambios_apariencia.json").read_text(encoding="utf-8"))
+    res = json.loads((OUT / "resultados.json").read_text(encoding="utf-8"))
+    gemela = json.loads((OUT / "gemela_paula.json").read_text(encoding="utf-8"))
+    far = json.loads((OUT / "eval_far_levels.json").read_text(encoding="utf-8"))
+    atk = json.loads((OUT / "ataques_literatura.json").read_text(encoding="utf-8"))
 
     fig_cambios_mj_envejecimiento(bb, cam)
     fig_cambios_transicion_estilo(bb, cam)

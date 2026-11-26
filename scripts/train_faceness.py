@@ -92,7 +92,7 @@ def main():
     rng = np.random.default_rng(0)
     z = np.load(CACHE)
     crops, names = z["crops"], z["names"]
-    split = json.loads((config.MODELS_DIR / "lfw_split.json").read_text())
+    split = json.loads((config.MODELS_DIR / "lfw_split.json").read_text(encoding="utf-8"))
     train = np.array([n in set(split["train_ids"]) for n in names])
     test = ~train & ~np.isin(names, split["reserved"])
     paths = sorted(LFW_DIR.glob("*/*.jpg"))
@@ -132,7 +132,7 @@ def main():
            "far_no_caras": float((sn >= thr).mean()),
            "n_pos_test": int(len(sp)), "n_neg_test": int(len(sn))}
     np.savez_compressed(config.MODELS_DIR / "faceness.npz", w=w, b=np.float32(b), threshold=np.float32(thr))
-    (config.MODELS_DIR / "faceness.json").write_text(json.dumps(res, indent=2))
+    (config.MODELS_DIR / "faceness.json").write_text(json.dumps(res, indent=2), encoding="utf-8")
     print(json.dumps(res, indent=2))
 
 

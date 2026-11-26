@@ -40,6 +40,9 @@ RESERVED_MAP = {"Christian_Bale": "christian_bale", "Jackie_Chan": "jackie_chan"
                 "James_Phelps": "james_phelps", "Keanu_Reeves": "keanu_reeves",
                 "Mary-Kate_Olsen": "mary-kate_olsen", "Michael_Jackson": "michael_jackson",
                 "Salma_Hayek": "salma_hayek"}
+# Inscritas cuyo nombre en LFW no coincide con el id (train_projection.LFW_ALIASES). Solo se usan
+# como sondas genuinas si el split las tiene reservadas, es decir, si NO entrenaron la LDA.
+RESERVED_MAP.update({v: k for k, v in tp.LFW_ALIASES.items()})
 TWINS = {"Ashley_Olsen": "mary-kate_olsen", "Oliver_Phelps": "james_phelps"}
 
 R = {}  # resultados
@@ -65,9 +68,10 @@ class Ctx:
         self.crops, self.names = z["crops"], z["names"]
         self.X = tp.features(CACHE, self.crops, config.LBP_RADII, config.GRID,
                              config.LBP_METHOD, config.PHOTOMETRIC, False)
-        split = json.loads((config.MODELS_DIR / "lfw_split.json").read_text())
+        split = json.loads((config.MODELS_DIR / "lfw_split.json").read_text(encoding="utf-8"))
         train = set(split["train_ids"])
         reserved = set(split["reserved"])
+        self.reserved = reserved
         self.test_mask = np.array([(n not in train) and (n not in reserved) for n in self.names])
 
     def proj(self, T):
@@ -180,7 +184,7 @@ def eval_reserved(c):
     out, scores = {}, []
     for lfw_name, id_ in RESERVED_MAP.items():
         m = c.names == lfw_name
-        if not m.any():
+        if not m.any() or lfw_name not in c.reserved:
             continue
         S = c.proj(np.asarray(c.X[m])) @ M.T
         best = c.best_per_id(ids, S)
@@ -334,6 +338,8 @@ def eval_robustness(c):
     # y las fotos LFW de inscritos (se reconstruye la imagen original de LFW)
     lfw_dir = CACHE.parent / "lfw_home" / "lfw"
     for lfw_name, id_ in RESERVED_MAP.items():
+        if lfw_name not in c.reserved:
+            continue
         for p in sorted((lfw_dir / lfw_name).glob("*.jpg"))[:4]:
             lfw_probes.append((id_, p))
     del enrollment_photos
@@ -625,7 +631,7 @@ def eval_db_and_enrollment(c):
             (keys / n).write_bytes(b)
 
     def tamper(kind):
-        txt = db.read_text().splitlines()
+        txt = db.read_text(encoding="utf-8").splitlines()
         if kind == "copiar fila de idris como vinicius":
             row = next(r for r in txt if r.startswith("idris_elba,"))
             txt.append(row.replace("idris_elba", VINI, 1))
@@ -640,7 +646,7 @@ def eval_db_and_enrollment(c):
         elif kind == "borrar la BD":
             db.unlink()
             return
-        db.write_text("\n".join(txt) + "\n")
+        db.write_text("\n".join(txt) + "\n", encoding="utf-8")
 
     for kind in ("copiar fila de idris como vinicius", "borrar filas de vinicius", "modificar un byte del cifrado",
                  "intercambiar ids de dos filas", "borrar la BD"):
@@ -652,9 +658,12 @@ def eval_db_and_enrollment(c):
             out[f"BD: {kind}"] = f"detectado ({type(e).__name__})"
         restore()
     # BD + clave de otro despliegue
+    # mismo db.state, pero con una clave maestra distinta (la del atacante)
+    import base64
+    import secrets
     other = c.tmp / "otra"
     shutil.copytree(keys, other)
-    (other / "master.key").unlink()
+    (other / "master.key").write_bytes(base64.b64encode(secrets.token_bytes(32)))
     try:
         BigBrother(db_path=db, keys_dir=other)
         out["BD con otra clave"] = "NO DETECTADO"
@@ -672,7 +681,7 @@ def eval_db_and_enrollment(c):
             cal, face, proj = mdir / "calibration.json", mdir / "faceness.npz", mdir / "mlbp_projection.npz"
             backup = {f: f.read_bytes() for f in (cal, face, proj)}
             if kind.startswith("bajar"):
-                cal.write_text(cal.read_text().replace('"threshold": 0.', '"threshold": -0.'))
+                cal.write_text(cal.read_text(encoding="utf-8").replace('"threshold": 0.', '"threshold": -0.'))
             elif kind.startswith("borrar"):
                 face.unlink()
             else:
@@ -745,7 +754,7 @@ def main():
     c = Ctx()
     R["umbral"] = c.thr
     R["umbral_identificacion"] = c.bb.ident_threshold
-    R["calibracion"] = json.loads(config.CALIBRATION_PATH.read_text())
+    R["calibracion"] = json.loads(config.CALIBRATION_PATH.read_text(encoding="utf-8"))
     gen, imp = eval_lfw(c)
     _, loo = eval_vinicius(c)
     reserved = eval_reserved(c)
@@ -759,7 +768,7 @@ def main():
     eval_detector(c)
     eval_timing(c)
     eval_db_and_enrollment(c)
-    (OUT / "resultados.json").write_text(json.dumps(R, indent=2, ensure_ascii=False, default=str))
+    (OUT / "resultados.json").write_text(json.dumps(R, indent=2, ensure_ascii=False, default=str), encoding="utf-8")
     log("OK ->", OUT / "resultados.json")
 
 

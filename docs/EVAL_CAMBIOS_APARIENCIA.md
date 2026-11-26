@@ -42,7 +42,7 @@ Cuatro conclusiones dominan el experimento:
 Se recopilaron **45 imágenes JPG reales y verificadas visualmente** mediante hojas de contacto a partir de Wikimedia Commons, RTVE, TMDB y Fandom, cubriendo **15 identidades** de la BD real repartidas en 4 categorías (mínimo 2 fotos por persona):
 
 1. **Pigmentación / cirugía / décadas (`pigmentacion_cirugia`, 6 fotos):** `michael_jackson` (inscrito con `1982`, época *Thriller*): 1974, 1977, 1988, 1992, 1997, 2005.
-2. **Transición de género (`transicion_genero`, 8 fotos):** `ellen_page` (2006 → control 2015 + Elliot Page 2021 y 2023), `josie_totah` (2017 pre-transición → 2023 y 2025 post-transición), `hunter_schufer` (2024 → campaña 2021 y otros ángulos/maquillaje 2024).
+2. **Transición de género (`transicion_genero`, 8 fotos):** `ellen_page` (2006 → control 2015 + Elliot Page 2021 y 2023), `josie_totah` (2017 pre-transición → 2023 y 2025 post-transición), `hunter_schufer` (2024 → campaña 2021 y otros ángulos/maquillaje 2024). **Nota:** las tres fotos de Hunter Schafer son posteriores a su transición, así que dentro de esta categoría funcionan como control de estilismo/maquillaje, no como prueba de transición; además, las dos de 2024 son del mismo año que la foto inscrita.
 3. **Envejecimiento extremo (`envejecimiento`, 8 fotos):** `elisabeth_ii` (1945 → 1959, 1986, 1992, 2015), `jordi_hurtado` (1985 → 2017 y 2025), `leticia_sabater` (1996 → 2024 y 2025).
 4. **Piercings, maquillaje extremo, vello facial y peso/estilismo (`apariencia_estilismo`, 23 fotos):** `cynthia_erivo` (3), `lady_gaga` (4), `arianna_grande` (3), `winnie_harlow` (2), `christian_bale` (3), `keanu_reeves` (3), `adele` (2) y `vinicius_junior` (3).
 

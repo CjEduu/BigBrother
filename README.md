@@ -40,7 +40,8 @@ bb inscribir pepe /pruebas/pepe.jpg
 
 Pon tus fotos en una carpeta `pruebas/` del directorio actual. En Windows PowerShell usa
 `${PWD}` en lugar de `$PWD`. La imagen ya trae la BD construida con todas las identidades
-y **su propia clave** (se genera en el `docker build`).
+y **su propia clave** (se genera en el `docker build`). Es cómodo para la demo, pero la clave queda dentro
+de la imagen: no la compartáis fuera del grupo (ver V18 en el informe).
 
 Los 9 métodos de la API están en la CLI:
 
@@ -93,7 +94,7 @@ Excepciones (todas heredan de `BigBrotherError`): `NoFaceDetected`, `AmbiguousFa
 
 - La API **no devuelve puntuaciones**, solo la decisión (`bool` / id / `None`).
 - Umbrales de similitud coseno (`models/calibration.json`): verificación con **FAR = 0,1 %** en
-  LFW (identidades no vistas en el entrenamiento); identificación más estricta (FPIR 1 % contra toda la galería).
+  LFW (identidades no vistas en el entrenamiento); identificación más estricta (calibrada para FPIR 1 % contra toda la galería; con el pipeline actual se mide 1,38 %).
 - Recortes (`_sd`) y templates (`_t`) que no parecen una cara → `NoFaceDetected`.
 - `inscribir` sobre un id existente → rechazado. Con `actualizar=True` solo se acepta si la
   nueva foto **ya verifica** contra ese id.
@@ -126,7 +127,9 @@ bigbrother/   system.py (API), detector.py, preprocess.py, mlbp.py, matcher.py,
               security.py (cifrado + integridad), database.py (CSV), __main__.py (CLI)
 scripts/      build_db.py, prepare_lfw.py, train_projection.py, train_faceness.py,
               calibrate_identification.py, evaluate.py, ataque_gemela.py,
-              ataques_literatura.py (ataques H1-H5 de la literatura, medidos),
+              ataques_literatura.py (ataques H1-H4 + dodging de la literatura, medidos),
+              ataques_loo.py (A2/A3 sin que la foto de la víctima esté inscrita),
+              eval_galeria.py (FAR real entre las personas inscritas),
               graficas_ataques.py (figuras ilustrativas de los ataques),
               graficas_ejemplos.py (mosaicos con fotos reales de evals y reportes),
               eval_interocular.py, eval_far_levels.py, eval_cambios_apariencia.py

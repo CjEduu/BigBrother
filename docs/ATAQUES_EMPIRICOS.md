@@ -159,6 +159,18 @@ caja blanca" porque la API no expone puntuaciones. La literatura decision-based 
 | `verificar_t` con el template obtenido | **`true`** |
 | `identificar_t` con el template obtenido | `null` (0,2172 < umbral de identificación 0,2847) |
 
+> **Sesgo del montaje y repetición sin él.** La "foto pública" de partida es `vini_01.jpg`,
+> que **también está inscrita**: el atacante parte de una copia exacta de un template de la
+> BD (similitud 1,0), y eso infla las cifras de esta tabla. Con
+> [`scripts/ataques_loo.py`](../scripts/ataques_loo.py) →
+> [`resultados/ataques_loo.json`](resultados/ataques_loo.json) se repitió el ataque 5 veces,
+> cada una con una foto de Vinícius **sacada de la galería** como foto pública (el caso
+> realista, puntuación de partida 0,28–0,36). El ataque **sigue funcionando** (~4.040
+> consultas, `verificar_t = true` en los 5 casos), pero con menos margen: frontera
+> **α\* = 0,42–0,73** (no 0,913) y template final **0,61–0,91** similar al atacante (no
+> 0,948). En uno de los 5 casos el template final se parece tanto a Paula que
+> `identificar_t` lo asigna a su gemela `aitana_etxebarria`.
+
 ![Fases del hill-climbing binario y mezcla en el espacio de templates frente a morphing de píxeles](resultados/a2_hillclimb.png)
 
 **Lectura.** La hipótesis se confirma: **la API de decisión única no da inmunidad, solo
@@ -171,7 +183,9 @@ Dos hallazgos añadidos que el mapeo no preveía:
 
 - **La mezcla en el espacio de templates es mucho más peligrosa que el morphing de
   imágenes.** Comparar: una mezcla *uniforme al 91 %* de atacante en la retícula todavía
-  verifica (α\*=0,913), mientras que en A3 el 90 % en *píxeles* puntúa 0,106. Los
+  verifica (α\*=0,913; 42–73 % si la foto de partida no está inscrita), mientras que en A3
+  el 90 % en *píxeles* puntúa 0,106 (y sin la foto inscrita el morph de píxeles deja de
+  verificar a partir de α = 0,1–0,4). Los
   histogramas promedian "con gracia" (siguen siendo caras válidas para el filtro y la
   retícula) y la proyección es lineal; los píxeles mezclados producen fantasmas que destruyen
   la textura. El canal `_t` es por tanto la superficie más débil del sistema, y la
@@ -235,6 +249,15 @@ Además: la **foto del morph pasada por el sensor completo** (detector incluido)
 como la víctima para todo α ≤ 0,5 — sin necesidad de poisoning (re-medida de V3, consistente
 con el 24/25 con cómplice parecido y 7/25 con cómplice aleatorio del INFORME).
 
+> **Sesgo del montaje y repetición sin él.** El morph se fabrica con `vini_01.jpg`, que
+> **está inscrita** (de ahí s(m,víct) = 1,000 con α = 0): las columnas de víctima y el
+> *poisoning* de esta tabla están inflados. Repitiendo con cada foto de Vinícius fuera de la
+> galería ([`scripts/ataques_loo.py`](../scripts/ataques_loo.py) →
+> [`resultados/ataques_loo.json`](resultados/ataques_loo.json)), la foto del morph solo
+> verifica como la víctima con **α ≤ 0,0–0,3** (el 50/50 no verifica en ningún caso) y el
+> *poisoning* se acepta con **α ≤ 0,2–0,5** (mediana 0,3). La cara pura del atacante sigue sin
+> verificar en ningún caso. Las conclusiones cualitativas se mantienen; los márgenes son menores.
+
 ![Barrido de α del morphing: umbrales, zona bloqueada por dedup y zona de poisoning](resultados/a3_morphing.png)
 
 ![Ejemplos visuales reales de morphing (A3 α=0,0…1,0 y V3 50/50 con Shawn Kemp) y dodging físico con parche sobre ojos frente a control en la frente (A5)](resultados/ejemplos_ataques_morph_dodging.png)
@@ -251,7 +274,7 @@ con el 24/25 con cómplice parecido y 7/25 con cómplice aleatorio del INFORME).
    ambos padres**.
 2. **El poisoning (V16) se confirma de punta a punta, y con un agujero de política**: el
    camino `actualizar=True` **no aplica la deduplicación**, así que el morph se cuela en la
-   galería de la víctima para todo **α ≤ 0,5** (antes llegaba hasta α = 0,6 con 0,223; tras
+   galería de la víctima para todo **α ≤ 0,5** (α ≤ 0,2–0,5 si la foto de partida no está inscrita; antes llegaba hasta α = 0,6 con 0,223; tras
    el *anti-aliasing* α = 0,6 cae a 0,206 < 0,2172 y queda bloqueado). El atacante queda con
    una **imagen imprimible** que verifica como Vinícius por el canal completo y además queda
    **persistida** en la BD como plantilla dormida, 0,54 similar a su cara.
@@ -341,8 +364,8 @@ coherente con V7.
 | Ataque | Modelo de amenaza (una línea) | Mapeo | Resultado empírico | Mitigación existente | Mitigación propuesta (validada) |
 |---|---|---|---|---|---|
 | A1 Troyano de software | interno con **escritura en el código** (V18) | H1 · Ratha 3/5/8 | **Éxito total**, arranque indetectado | ninguna para código | **digest del paquete en `db.state`** (paso 5 de A1 lo detecta); imagen firmada/readonly |
-| A2 Hill-climb binario | externo de **caja negra** a la API, intentos ilimitados (V8) | H3 · Dong 2019 | **Éxito**: 4.058 consultas bool → template 0,95 similar al atacante que verifica como la víctima | sin puntuaciones (solo encarece: ~3× las consultas de caja blanca) | **limitar intentos** (V8); el umbral de identificación ya lo corta para `identificar_t` |
-| A3 Magic passport + poisoning | externo con acceso a la **inscripción abierta** (V15) | H2 · Ferrara 2014 | **Parcial**: dedup bloquea el id nuevo; poisoning entra sin dedup (α ≤ 0,5) y persiste; sin escalada a cara natural con el generador débil | dedup ✔ (ids nuevos) | aplicar dedup también en `actualizar=True`; MAD fuera de alcance |
+| A2 Hill-climb binario | externo de **caja negra** a la API, intentos ilimitados (V8) | H3 · Dong 2019 | **Éxito**: 4.058 consultas bool → template 0,95 similar al atacante (0,61–0,91 si la foto de partida no está inscrita) que verifica como la víctima | sin puntuaciones (solo encarece: ~3× las consultas de caja blanca) | **limitar intentos** (V8); el umbral de identificación ya lo corta para `identificar_t` |
+| A3 Magic passport + poisoning | externo con acceso a la **inscripción abierta** (V15) | H2 · Ferrara 2014 | **Parcial**: dedup bloquea el id nuevo; poisoning entra sin dedup (α ≤ 0,5; 0,2–0,5 sin la foto inscrita) y persiste; sin escalada a cara natural con el generador débil | dedup ✔ (ids nuevos) | aplicar dedup también en `actualizar=True`; MAD fuera de alcance |
 | A4 Rotación ≠ revocación | **post-compromiso** (tras V1 o A2) | H4 · ISO 24745 | **Confirmado**: el template robado verifica tras `--force` | ninguna (de diseño) | declarar en el modelo de amenaza; muestras nuevas al re-inscribir; biometría cancelable |
 | A5 Dodging con parche | genuino con **acceso físico**, sin conocimiento | Yang 2019 | **Éxito trivial** (`NoFaceDetected`) | ninguna | aceptable (daña al propio dodger, V7) |
 
@@ -359,4 +382,4 @@ medición confirma:
 físicas — solo simulación digital, como V2/V3), morphs con *warping* de landmarks (nuestro
 generador es el más débil de la taxonomía: límite inferior), deepfakes, hill-climbing por
 el canal de imagen completa (exigiría invertir el template a imagen, V1), y sesgo demográfico
-cuantitativo del filtro de caras (documentado cualitativamente en INFORME §6.4).
+cuantitativo del filtro de caras (documentado cualitativamente en [`ATAQUES_LITERATURA.md`](ATAQUES_LITERATURA.md) §4.4).
