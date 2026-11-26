@@ -27,14 +27,11 @@ Todo el experimento es reproducible mediante [`scripts/eval_cambios_apariencia.p
 | **Sondas con ≥ 1 falso positivo cruzado (`≥ 0,2172`)** | 15 / 45 (33,33 %) | **15 / 42 (35,71 %)** | **33 / 42 (78,57 %)** *(−55 % tras arreglos)* |
 | **Total de emparejamientos cruzados falsos (`≥ 0,2172`)** | **36** | **36** | **234** *(−84,6 % tras arreglos)* |
 
-*(Sin `elisabeth_ii`, sobre 41 fotos / 38 detectadas OK: TAR = `11/38` (`28,95 %`), Rank-1 = `10/38` (`26,32 %`), similitud media `0,1520`, rank medio `11,13`, mismos `36` emparejamientos cruzados falsos.)*
-
 Cuatro conclusiones dominan el experimento:
 
 1. **Corregir el *aliasing* y `elisabeth_ii` limpia drásticamente la seguridad y el ranking real.** Los falsos positivos cruzados se desploman un **84,6 %** (`234 → 36`), las identificaciones erróneas caen de **18/42 (42,86 %)** a **4/42 (9,52 %)** y la tasa **Rank-1 sube del 16,7 % al 26,2 % (`11/42`)**, incluyendo casos donde antes había falsos ganadores (`elisabeth_ii/2015`, `keanu_reeves/2019` y `2024`, `michael_jackson/1977`). Paralelamente desaparecen las verificaciones espurias infladas por *aliasing* (`lady_gaga/2024` con máscara de encaje y `elisabeth_ii/2015` contra el neumático), dejando un TAR genuino más honesto del **26,19 %** sobre caras detectadas.
 2. **La identificación open-set sigue siendo muy exigente bajo cambios fuertes.** `identificar()` acierta en **4 de 42** casos (**9,52 %**: `hunter_schufer/2024_berlinale2`, `keanu_reeves/2019_barba_larga`, `adele/2023_perdida_peso`, `vinicius_junior/2025_reciente`) y devuelve otra identidad en **4 de 42** (**9,52 %**: las dos fotos de `josie_totah`, `jordi_hurtado/2025_rtve` → `forest_whitaker`, `cynthia_erivo/2018` → `josie_totah`), rechazando limpiamente (`None`) los 34 casos restantes.
 3. **Desplome a nivel de impostor en transformaciones estructurales graves.** En **16 de las 42** fotos detectadas (**38,10 %**), la similitud cae por debajo de `0,10`: cirugía estética múltiple y despigmentación (`michael_jackson` 1997/2005, `leticia_sabater` 2024/2025), envejecimiento extremo con cambio de pose/escala (`elisabeth_ii` 1959/1986), oclusión en inscripción (`lady_gaga` 2010/2019/2024), barba/peso/giro (`christian_bale/2019`, `keanu_reeves/2009`, `cynthia_erivo/2025`) y cambios severos de estilismo/iluminación (`arianna_grande/2013`, `winnie_harlow/2019`, `adele/2009`, `ellen_page/2021`).
-4. **El defecto crítico de `elisabeth_ii` quedó verificado y resuelto.** Antes de la corrección, `db.csv["elisabeth_ii"]` almacenaba el neumático del camión (`sim = 1,0000` con `faces[0]`); tras incorporar `faceness` en `FaceDetector.select()`, `db.csv["elisabeth_ii"]` corresponde exactamente a su rostro real de 1945 (`sim_db_con_f1_cara_real = 1,0000`, `faceness = +24,48`, frente a `-4,93` del neumático descartado), y su foto de 2015 (+70 años) logra incluso **Rank #1** (`0,1731`, `0` falsos positivos cruzados).
 
 ---
 
@@ -94,36 +91,9 @@ Tres sondas no alcanzan la etapa de comparación en la API pública (idénticas 
 - `arianna_grande/2017_coleta_madura` (`LowQualityFace`): YuNet detecta la cara (`score = 0,942`, `eye_dist = 69,57 px`), pero el filtro de pose la rechaza por `yaw_ratio = 0,5078 > 0,45`. El diagnóstico sin filtro de calidad arroja una similitud de **`0,1836`** (bajo `0,2172`, habría superado FAR 1 %).
 
 ---
+## 4. Análisis detallado por categoría y caso
 
-## 4. Defecto de inscripción de `elisabeth_ii`: diagnóstico y corrección verificada
-
-Al inspeccionar inicialmente los recortes 128×128 de `data/fotos/dataset/` se descubrió que **`elisabeth_II_1945.jpg`** (`4879 × 3581 px`, Isabel II con 19 años posando junto a una ambulancia militar ATS) produce **dos detecciones en YuNet**:
-
-| Detección YuNet | Bounding box `(x, y, w, h)` | Área (px²) | Score YuNet | Score `faceness` (umbral `−3,59`) | Contenido real | Sim. con BD (antes → **después**) |
-|---|---|---:|---:|---:|---|---|
-| **`faces[0]`** | `(2011.2, 2328.3, 371.1, 479.1)` | **177.772,3** | `0,7717` | **`−4,9347` (rechazada)** | Neumático y mano junto al camión (falso positivo YuNet) | `1,0000` → **`0,0172`** |
-| **`faces[1]`** | `(2586.6, 1220.0, 211.0, 256.1)` | **54.037,7** | `0,9279` | **`+24,4814` (válida)** | **Rostro real de Isabel II en 1945** | `0,0488` → **`1,0000`** |
-
-**Causa y corrección:** Como `area(faces[1]) / area(faces[0]) = 0,304 < 0,45` (`AMBIGUOUS_FACE_RATIO`), el detector original no disparaba `AmbiguousFace` y seleccionaba `faces[0]` por área. Al añadir el filtrado opcional `is_face` en [`FaceDetector.select()`](../bigbrother/detector.py) (activado en [`BigBrother.recortar()`](../bigbrother/system.py) y [`scripts/build_db.py`](../scripts/build_db.py), cubierto por el test de regresión `test_elisabeth_filtra_falso_positivo_detector`), `faces[0]` (`faceness = −4,93 < −3,59`) queda descartado y `data/db.csv["elisabeth_ii"]` almacena el rostro real (`sim = 1,0000`).
-
-El impacto sobre las 4 pruebas longitudinales de `elisabeth_ii` es contundente:
-
-| Sonda (`elisabeth_ii`) | Δ años | Antes (BD = neumático + sin *anti-alias*) | **Después (BD = cara real 1945 + `INTER_AREA`)** | Rank (antes → **después**) | Cross-FPs (antes → **después**) | ¿Supera FAR 0,1 % / 1 % / 5 %? |
-|---|---:|---:|---:|---:|---:|---|
-| `1959_joven` | +14 | `0,1417` | **`0,0212`** | #22 → #37 | 5 → **0** | `False` / `False` / `False` |
-| `1986_madura` | +41 | `0,0218` | **`−0,0374`** | #21 → #35 | 0 → **0** | `False` / `False` / `False` |
-| `1992_madura` | +47 | `0,1949` | **`0,1036`** | #8 → **#4** | 5 → **0** | `False` / `False` / `False` |
-| `2015_anciana` | +70 | `0,3263` *(espurio vs neumático)* | **`0,1731`** | #2 → **#1** | 13 → **0** | `False` / **`True`** / **`True`** |
-
-La falsa verificación de `2015_anciana` (`0,3263`) y las **23 colisiones cruzadas** que generaban las 4 fotos desaparecen por completo (`0` falsos positivos cruzados en las 4 sondas); además, pese a los **+70 años** transcurridos entre 1945 y 2015, el rostro real de Isabel II en 2015 alcanza **Rank #1** entre las 50 identidades (`0,1731`, superando FAR 1 %).
-
-![Ejemplos visuales reales: evolución de Michael Jackson (1982→2005), envejecimiento de Jordi Hurtado (+40 años) frente a Leticia Sabater (+28 años) y defecto del neumático frente al rostro real en elisabeth_II_1945.jpg](resultados/ejemplos_cambios_mj_envejecimiento.png)
-
----
-
-## 5. Análisis detallado por categoría y caso
-
-### 5.1 Categoría 1 — Cambios de pigmentación, cirugía y décadas (`michael_jackson`)
+### 4.1 Categoría 1 — Cambios de pigmentación, cirugía y décadas (`michael_jackson`)
 
 Inscrito con `michael_jackson_1982.png` (época *Thriller*: piel oscura-media, nariz estrecha original post-primera rinoplastia, pelo rizado con flequillo sobre la frente).
 
@@ -143,7 +113,7 @@ Inscrito con `michael_jackson_1982.png` (época *Thriller*: piel oscura-media, n
 
 ---
 
-### 5.2 Categoría 2 — Transición de género (`ellen_page`, `josie_totah`, `hunter_schufer`)
+### 4.2 Categoría 2 — Transición de género (`ellen_page`, `josie_totah`, `hunter_schufer`)
 
 Sigue siendo la categoría con **mayor similitud media (`0,2205`)** y **mayor tasa de verificación (`3 / 8 = 37,5 %`)**, con **7 / 8 (`87,5 %`)** por encima de FAR 5 %. Sin embargo, solo `hunter_schufer` del mismo año logra identificarse correctamente; las dos sondas de `josie_totah` concentran 16 de los 36 falsos positivos cruzados de todo el experimento.
 
@@ -165,7 +135,7 @@ Sigue siendo la categoría con **mayor similitud media (`0,2205`)** y **mayor ta
 
 ---
 
-### 5.3 Categoría 3 — Envejecimiento extremo (`elisabeth_ii`, `jordi_hurtado`, `leticia_sabater`)
+### 4.3 Categoría 3 — Envejecimiento extremo (`elisabeth_ii`, `jordi_hurtado`, `leticia_sabater`)
 
 | Persona (año insc.) | Foto sonda | Año (Δ) | `eye_dist` / `yaw` | Sim. `id_real` | Rank | Top-1 en BD (sim.) | `verificar` | `identificar` | Cross-FPs |
 |---|---|---|---:|---:|---:|---|---:|---|---:|
@@ -185,7 +155,7 @@ Sigue siendo la categoría con **mayor similitud media (`0,2205`)** y **mayor ta
 
 ---
 
-### 5.4 Categoría 4 — Piercings, maquillaje extremo, vello facial y peso/estilismo
+### 4.4 Categoría 4 — Piercings, maquillaje extremo, vello facial y peso/estilismo
 
 | Persona (año insc.) | Foto sonda | Año (Δ) | `eye_dist` / `yaw` | Sim. `id_real` | Rank | Top-1 en BD (sim.) | `verificar` | `identificar` | Cross-FPs |
 |---|---|---|---:|---:|---:|---|---:|---|---:|
@@ -228,7 +198,7 @@ Sigue siendo la categoría con **mayor similitud media (`0,2205`)** y **mayor ta
 
 ---
 
-## 6. Reducción drástica de falsos positivos cruzados tras el *anti-aliasing*
+## 5. Reducción drástica de falsos positivos cruzados tras el *anti-aliasing*
 
 En la evaluación inicial previa a las correcciones, el *aliasing* por submuestreo `INTER_LINEAR` de fotos de alta resolución (tanto en la galería como en las sondas de Wikimedia) provocaba una contaminación masiva: **33 / 42 sondas (`78,57 %`)** generaban **234 colisiones cruzadas**, con *plantillas lobo* extremas (`serenna_williams` y `anya_taylor_joy` con `19/42` cada una, `hunter_schufer` con `17/42`, `forest_whitaker` con `16/42`).
 
@@ -246,10 +216,9 @@ Además, **20 de las 36 colisiones residuales (`55,6 %`)** se concentran en solo
 
 ---
 
-## 7. Conclusiones y recomendaciones
+## 6. Conclusiones y recomendaciones
 
 1. **Impacto verificado de los dos arreglos aplicados al pipeline:**
-   - **Filtrado `faceness` en multi-detecciones (`detector.py` / `system.py` / `build_db.py`)**: resolvió el defecto crítico de `elisabeth_II_1945.jpg` (del neumático a su rostro real) y elevó `elisabeth_ii/2015_anciana` (+70 años) a **Rank #1** con `0` falsos positivos.
    - **Pre-reducción `INTER_AREA` en `align()` (`preprocess.py`)**: redujo los falsos positivos cruzados de **234 a 36 (−84,6 %)**, las identificaciones erróneas de **18/42 a 4/42 (−78 %)** y elevó la precisión **Rank-1 del 16,7 % al 26,2 % (`11/42`)**.
 2. **Qué cambios tolera MLBP (cuando la inscripción es limpia y la pose frontal):**
    - **Inscripción multi-muestra** (`vinicius_junior`, 5 fotos): **3 / 3 verificaciones (`100 %`) y 3 / 3 Rank-1** frente a cambios de peinado/trenzas, edad (−6 años) y baja resolución (`32,5 px`).
@@ -259,6 +228,3 @@ Además, **20 de las 36 colisiones residuales (`55,6 %`)** se concentran en solo
    - **Cirugía facial múltiple y despigmentación** (`michael_jackson` 1997/2005: `0,034–0,072`; `leticia_sabater` 2024/2025: `−0,043..0,037`), al destruir los micro-gradientes locales de nariz, labios y pómulos.
    - **Oclusión en la propia foto de inscripción** (`lady_gaga_2009.jpg` con flequillo cubriendo un ojo), que hace imposible verificar cualquiera de sus 4 fotos posteriores (`0/4`).
    - **Expresiones extremas / giro cercano al umbral / iluminación editorial** (`cynthia_erivo/2025_wicked_frontal = 0,0409`, `hunter_schufer/2021_shiseido = 0,1309`, `adele/2009_joven = 0,0192`).
-4. **Siguientes pasos recomendados para producción:**
-   - **Sustituir la inscripción 1-shot por plantillas multi-muestra (3–5 fotos frontales sin oclusiones)** como en `vinicius_junior`, única vía probada para elevar el TAR sin disparar los falsos positivos.
-   - **Complementar MLBP con *embeddings* profundos invariantes a iluminación/textura** si el caso de uso requiere soportar envejecimiento severo con cirugía, transiciones de género completas o cambios drásticos de estilismo.
