@@ -60,7 +60,7 @@ otra muestra (20.000 genuinos sin tope por identidad). La conclusión no cambia:
 | V2 | **Foto/pantalla de Vinícius** (presentación) | **Sí** | No hay detección de vida. Simulaciones de foto en pantalla e impresa: 5/5 aceptadas. Cualquier foto pública de Vinícius sirve |
 | V3 | **Morphing** 50/50 Vinícius + cómplice | Parcial | La **foto** morphed verifica como Vinícius (*leave-one-out*) **24/25** con uno de los 5 desconocidos de LFW más parecidos a él y **7/25** con uno aleatorio (bajó de 12/25 tras eliminar el *aliasing*). Esto mide solo el lado de la víctima: equivale a presentar una foto degradada de Vinícius. El ataque canónico (*magic passport*: inscribir el morph y que **ambos** padres verifiquen contra él) se midió en A3 de [`ATAQUES_EMPIRICOS.md`](ATAQUES_EMPIRICOS.md) y **no se logra**: la deduplicación bloquea los morphs que aún casan con la víctima. Lo que sí funciona es colarlo por `actualizar=True` (V16) |
 | V4 | **Parecidos (sesgo demográfico)** | Parcial | FAR contra Vinícius **0,64 %** (29/4.499), 6,4 veces el nominal. Los 4 desconocidos de LFW más parecidos (`Shawn_Kemp` 0,330, `Ruben_Sierra` 0,322, `Felix_Doh` 0,308, `Ted_Washington` 0,284) son hombres negros, con puntuaciones **del nivel de las genuinas de Vinícius (0,28–0,36)**. LFW está sesgado a hombres blancos, así que las parejas del mismo grupo demográfico son mucho más peligrosas |
-| V20 | **FAR real en fotos de alta resolución** | Sí | El umbral se calibró en LFW (caras pequeñas, distancia entre ojos mediana 44 px) para FAR 0,1 %, pero la galería son fotos web de alta resolución (mediana 104 px). Entre las 50 identidades inscritas, **31 de 1.225 parejas de personas distintas** superan el umbral: FAR **2,5 %** (IC95 % 1,8–3,6 %), unas 25 veces la nominal ([`scripts/eval_galeria.py`](../scripts/eval_galeria.py) → [`resultados/galeria_impostores.json`](resultados/galeria_impostores.json); coherente con las 36 coincidencias cruzadas de [`EVAL_CAMBIOS_APARIENCIA.md`](EVAL_CAMBIOS_APARIENCIA.md) y el 1,5–2,1 % de [`EVAL_INTEROCULAR.md`](EVAL_INTEROCULAR.md)). Además, **4 parejas superan el umbral de deduplicación** (`forest_whitaker`/`santiago_segura` 0,331, `arianna_grande`/`mary-kate_olsen` 0,324, `aitana_etxebarria`/`taylor_swift` 0,298, `ellen_page`/`salma_hayek` 0,283): inscribiéndolas por la API `inscribir`, la segunda de cada pareja se habría rechazado como duplicado. La identificación, con su umbral más estricto, se queda en 0,24 % (3/1.225) |
+| V20 | **FAR real en fotos de alta resolución** | Sí | El umbral se calibró en LFW (caras pequeñas, distancia entre ojos mediana 44 px) para FAR 0,1 %, pero la galería son fotos web de alta resolución (mediana 104 px). Entre las 50 identidades inscritas, **31 de 1.225 parejas de personas distintas** superan el umbral: FAR **2,5 %** (IC95 % 1,8–3,6 %), unas 25 veces la nominal ([`scripts/eval_galeria.py`](../scripts/eval_galeria.py) → [`resultados/galeria_impostores.json`](resultados/galeria_impostores.json); coherente con las 36 coincidencias cruzadas de [`EVAL_CAMBIOS_APARIENCIA.md`](EVAL_CAMBIOS_APARIENCIA.md) y el 1,5–2,1 % de [`EVAL_INTEROCULAR.md`](EVAL_INTEROCULAR.md)). Además, **4 parejas superan el umbral de deduplicación** (`forest_whitaker`/`santiago_segura` 0,331, `arianna_grande`/`mary-kate_olsen` 0,324, `aitana_etxebarria`/`taylor_swift` 0,298, `ellen_page`/`salma_hayek` 0,283): inscribiéndolas por la API `inscribir`, la segunda de cada pareja se habría rechazado como duplicado. La identificación, con su umbral más estricto, se queda en 0,24 % (3/1.225). Por qué no se recalibra: §6 |
 | V5 | **Gemelos** | **Sí** | **Paula Etxeberria entra como `aitana_etxebarria`: 2/2 fotos verificadas e identificadas** (similitud **0,293 y 0,458**; umbral verif. 0,217, ident. 0,285): en las dos `identificar` devuelve `aitana_etxebarria` y Aitana es el rango #1 de la BD. Los gemelos de LFW (Ashley Olsen → mary-kate_olsen 0,181; Oliver Phelps → james_phelps 0,132) se rechazaron, pero **las fotos genuinas de Mary-Kate y James puntúan lo mismo** (0,174 y 0,158). La evidencia es limitada: con solo 2 fotos de Paula, y una de ellas (`paula_02`, retrato retocado) verifica como 8 identidades (la segunda, `kim_jisoo`, con 0,406 frente a 0,458 de Aitana), no se puede separar cuánto se debe a ser gemela y cuánto a que la foto se comporte como *wolf*. Lo que sí muestran los datos es que una gemela entra con fotos públicas y que las puntuaciones de gemelos caen en el mismo rango que las genuinas; la literatura (NIST) indica que tampoco los sistemas modernos separan bien a gemelos idénticos |
 | V19 | **Retrato retocado que verifica como muchas personas** | Sí | La segunda foto de Paula (retrato frontal con filtro de belleza) verifica contra **8 de las mujeres inscritas** (`aitana_etxebarria` 0,458, `kim_jisoo` 0,406, `zoe_saldana` 0,355, `taylor_swift` 0,344…; bajó de 10/50 a 8/50 tras el *anti-aliasing*), y `paula_01` verifica contra 2 (`aitana_etxebarria` y `adele`). En LFW, el peor desconocido (`Gina_Gershon`) verifica como **7 identidades** distintas (bajó de 8). Un atacante puede elegir una foto así y probar ids hasta entrar (V8). Probamos exigir que el id reclamado sea además el más parecido de la BD: la FAR por intento baja ligeramente, pero los genuinos cruzados aceptados caen a la mitad, así que lo descartamos |
 | V6 | **FRR alta en los 49 del docente** | Sí (disponibilidad) | Con una sola foto de inscripción y fotos de otra época o pose, TAR del 14,5 % (8/55): Jackie Chan 0/13, Michael Jackson 0/12 (la foto inscrita es de 1982), Keanu 3/12, Mary-Kate 1/3, Salma 4/13. Vinícius funciona porque tiene 5 fotos |
@@ -112,3 +112,44 @@ otra muestra (20.000 genuinos sin tope por identidad). La conclusión no cambia:
 - **Atacante con acceso a `keys/` o al código** (por ejemplo, `docker exec`): el sistema cae (V1, A1). En
   un despliegue real la clave iría en un KMS/HSM y la huella de la BD en un almacenamiento de solo-anexado.
 - El umbral prioriza la seguridad (FAR 0,1 %) a costa de una FRR alta (V6). Es intencionado.
+
+## 6. Por qué la FAR es la que es y por qué no la recalibramos
+
+**De dónde sale el 0,1 %.** No fijamos la FAR directamente, sino un *objetivo* de FAR. A
+partir de él, `scripts/train_projection.py` calcula el umbral: compara ~980.000 pares de
+personas distintas del test de LFW y elige el valor de similitud que solo supera el 0,1 % de
+ellos, que es **0,2172**. El sistema solo usa ese umbral. La FAR que produce depende de con qué
+fotos se compare: el 0,1 % es una propiedad de los pares *tipo LFW*, no del sistema en general.
+
+**Por qué en nuestra galería sale 2,5 %.** Con el mismo umbral, entre las 50 personas inscritas
+lo superan 31 de 1.225 parejas (V20). En nuestras fotos, toda la distribución de impostores está
+desplazada hacia arriba: la similitud media entre personas distintas es 0,001 en LFW y 0,044 en
+la galería. Las causas son el cambio de dominio respecto al de entrenamiento y calibración:
+
+- **Resolución:** la distancia entre ojos mediana es de 44 px en LFW y de 104 px en la galería.
+  El arreglo de *aliasing* quitó parte del efecto, no todo.
+- **Tipo de foto:** LFW son fotos de prensa espontáneas; la galería, retratos posados,
+  maquillados y a veces retocados. Las pieles suavizadas se parecen más entre sí (es el mismo
+  efecto que hace que `paula_02` verifique como 8 personas).
+- **Población:** LFW es ~77 % hombres y ~83 % personas blancas. La galería tiene muchas más
+  mujeres y más diversidad, y la LDA aprendió a separar caras "tipo LFW". Casi todas las parejas
+  que más se confunden son de mujeres.
+
+**Por qué no la recalibramos con nuestro dataset.**
+
+1. **No hay pares suficientes para medir un 0,1 %.** Con 50 personas hay 1.225 parejas
+   distintas, y un 0,1 % equivale a ~1 pareja. Aunque ninguna superase el umbral, con 1.225 pares
+   solo se podría afirmar una FAR ≤ 0,24 % (regla del 3: 3/1.225). Para poder garantizar un
+   0,1 % harían falta al menos ~3.000 pares sin ningún error (≈ 78 personas), y para *estimarlo*
+   con cierta precisión, del orden de 10 veces más (≈ 250 personas en alta resolución).
+2. **Sería calibrar y medir con los mismos datos.** Un umbral ajustado a estas 50 personas
+   quedaría hecho a medida de ellas: la FAR que "mediríamos" después sería la del ajuste, no la
+   real frente a personas nuevas.
+3. **Subir el umbral a mano destroza la usabilidad.** Para que ninguna pareja de la galería lo
+   supere haría falta un umbral de ~0,331. En LFW eso deja el TAR entre el 11 % y el 21 %, frente
+   al 34,8 % actual, y Vinícius, que hoy entra con 5/5 fotos, pasaría a entrar con 2/5.
+
+Por eso mantenemos el umbral calibrado en LFW y documentamos que, en nuestro dominio, la FAR
+real ronda el 2,5 %. Corregirlo de verdad requiere más datos del dominio real (cientos de
+personas en fotos de alta resolución) o técnicas que no dependan de calibrar con ellos, como
+la normalización de puntuaciones por cohorte (Z-norm/T-norm).
