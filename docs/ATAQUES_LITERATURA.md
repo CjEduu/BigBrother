@@ -115,10 +115,11 @@ porque la extracción de rasgos promedia razonablemente la mezcla.
 **Mapeo en BigBrother.** Dos vías:
 
 - **Vía verificación (medida, INFORME V3):** foto morphed presentada a
-  `verificar("vinicius_junior", ...)` — aceptada 23/25 con cómplice parecido, 12/25
-  con cómplice aleatorio. Consistente con la literatura: nuestro MLBP+LDA con umbral
-  FAR 0,1 % es *algo* más duro que el FRS medio, pero cae igual.
-- **Vía inscripción (no medida, hueco H2):** el morphing canónico de la literatura
+  `verificar("vinicius_junior", ...)` — aceptada 24/25 con cómplice parecido, 7/25
+  con cómplice aleatorio. Solo mide el lado de la víctima (el morph como foto
+  degradada de Vinícius), no que el cómplice también verifique.
+- **Vía inscripción (hueco H2, medida después en A3 de
+  [`ATAQUES_EMPIRICOS.md`](ATAQUES_EMPIRICOS.md)):** el morphing canónico de la literatura
   ataca a la **inscripción**, y en BigBrother esa vía es más peligrosa por el
   encadenamiento V16: si un morph de (atacante, víctima) se inscribe como id nuevo,
   ambos verifican contra él; y si el atacante ya verificó **una vez** por cualquier
@@ -177,8 +178,9 @@ miles de consultas. La condición para que el ataque sea práctico es un **orác
 intentos ilimitados**, exactamente lo que NIST SP 800-63B prohíbe para biometría sin
 supervisión.
 
-**Mapeo en BigBrother.** No lo hemos medido (hueco H3), pero el análisis dice que es
-**plausible**: el objetivo es lineal (coseno sobre proyección LDA), la superficie es
+**Mapeo en BigBrother.** Hueco H3 (medido después en A2 de
+[`ATAQUES_EMPIRICOS.md`](ATAQUES_EMPIRICOS.md): converge con ~4.000 consultas). El análisis
+previo ya decía que era **plausible**: el objetivo es lineal (coseno sobre proyección LDA), la superficie es
 suave, y no hay límite de intentos (V8). Cada consulta por `verificar_t` está además
 restringida a la retícula de histogramas válidos (la ventaja: el espacio de búsqueda
 es discreto y más pequeño; la desventaja: los pasos son también más toscos). La
@@ -240,7 +242,7 @@ logística lineal sobre √template; el 0,5 % de las no-caras de test lo pasan p
 diseño (umbral deliberadamente permisivo para no rechazar caras reales). Y es un
 ejemplo **vivido** del sesgo de entrenamiento que la literatura predice: la primera
 versión (entrenada con LFW solo) rechazaba las caras reales de Adam Pearson, Forest
-Whitaker y Samuel L. Jackson (INFORME §6.4); se reentrenó con aumentos fotométricos.
+Whitaker y Samuel L. Jackson; se reentrenó con aumentos fotométricos.
 Tras el filtro queda siempre el umbral de similitud, así que evadir faceness **no
 suficiente**: solo ahorra un paso del hill-climbing de 4.2.
 
@@ -436,12 +438,12 @@ disponibilidad cuando el atacante ya tiene escritura en la BD.
 | Familia (literatura) | Referencias clave | Punto Ratha | Vía en BigBrother | ¿Aplica? | Contramedida existente | En INFORME |
 |---|---|---|---|---|---|---|
 | Presentación (foto/pantalla/máscara/deepfake) | ISO 30107; Ramachandra & Busch 2017; Matineh et al. 2024 | 1 | `verificar` con foto física | **Sí, total** | ninguna (sin PAD) — por alcance | V2 |
-| Morphing | Ferrara et al. 2014; Scherhag et al. 2017; Venkatesh et al. 2020; Ramachandra et al. 2023 | 1 (en inscripción) | `verificar` (medido); inscripción encadenada con `actualizar` | **Sí** (verif.); plausible (inscr.) | dedup + "actualizar solo si verifica" | V3, V16 |
+| Morphing | Ferrara et al. 2014; Scherhag et al. 2017; Venkatesh et al. 2020; Ramachandra et al. 2023 | 1 (en inscripción) | `verificar` (medido); inscripción encadenada con `actualizar` (A3) | Parcial: la foto morphed verifica; *magic passport* no logrado; *poisoning* sí | dedup + "actualizar solo si verifica" | V3, V16 |
 | Hill-climbing con puntuaciones | Adler 2003; Galbally et al. 2010; Gomez-Barrero et al. 2012; Martinez-Diaz et al. 2006 | 4 | `verificar` vía código (`_score_id`) | Caja blanca: sí | API sin puntuaciones (BioAPI al extremo) | V9 |
-| Hill-climbing con decisión binaria | Dong et al. CVPR 2019; NIST SP 800-63B (límite) | 4 | `verificar_t` repetido | Plausible, sin medir | retícula + faceness elevan el coste; **sin límite de intentos** | (H3, V8) |
+| Hill-climbing con decisión binaria | Dong et al. CVPR 2019; NIST SP 800-63B (límite) | 4 | `verificar_t` repetido | **Sí, medido (A2)** | retícula + faceness elevan el coste; **sin límite de intentos** | (H3, V8) |
 | Adversariales digitales/físicos | Sharif et al. CCS 2016; Deb et al. 2019; Yang et al. 2019 (detector) | 1+4 | perturbaciones en imagen; parches vs YuNet | Parcial (pipeline no diferenciable + caja blanca trivial) | igual que hill-climbing | V7 (dodging), V9 |
 | Menagerie (lobos/corderos) | Doddington et al. 1998; Yager & Dunstone TPAMI 2009 | — (estadístico) | elección de atacante/parecido | **Sí, estructural** | umbral estricto reduce frecuencia, no estructura | V4, V19 |
-| Sesgo demográfico | Buolamwini & Gebru 2018; NISTIR 8280 (FRVT-3) 2019 | — | FAR/FRR desiguales; faceness sesgable | **Sí** (medido en faceness) | reentrenamiento con aumentos; umbral permisivo | V4, V14, §6.4 |
+| Sesgo demográfico | Buolamwini & Gebru 2018; NISTIR 8280 (FRVT-3) 2019 | — | FAR/FRR desiguales; faceness sesgable | **Sí** (medido en faceness) | reentrenamiento con aumentos; umbral permisivo | V4, V14, §4.4 |
 | Gemelos | NISTIR 8439 (FRVT 9a) 2022; Phillips et al. FG 2011 | 1 | `verificar` de la gemela | **Sí, intrínseco** | ninguna posible con MLBP solo | V5 |
 | Fabricación de templates (punto 4) | Ratha 2001; espacio de soluciones de Adler | 4 | `verificar_t` con vector sintético | Sí (limitado) | **validación de retícula** + faceness | fortalezas del INFORME |
 | Inversión de templates | Adler 2003/05; Zhmoginov & Sandler 2016; Mai et al. TPAMI 2019; Gomez-Barrero & Galbally 2020 | 6 (con clave) | clave+BD → template válido por gradiente | **Sí, medido** | cifrado (vale hasta robo de clave); falta irreversibilidad | V1, V18 |
@@ -475,7 +477,7 @@ Resumen de lo nuevo que aporta cruzar con la literatura, por prioridad.
    (con la deduplicación activada, medir cuántos morphs de víctima+desconocido
    sobreviven a `dedup_threshold`).
    → **medido (A3): el dedup bloquea el id nuevo; el camino `actualizar=True` no aplica
-   dedup y el morph se cuela (α ≤ 0,6); el magic passport con fotos hold-out no se logra
+   dedup y el morph se cuela (α ≤ 0,5; 0,2–0,5 si la foto de la víctima no está inscrita); el magic passport con fotos hold-out no se logra
    con el generador débil (blending lineal, límite inferior).**
 3. **H3 — Hill-climbing binario de caja negra:** el INFORME tilda V9 de "solo caja
    blanca"; la literatura (Dong et al.) dice que el feedback de decisión basta con
@@ -483,7 +485,7 @@ Resumen de lo nuevo que aporta cruzar con la literatura, por prioridad.
    sobre la retícula de histogramas usando solo el `bool` de `verificar_t`, contando
    consultas. Predicción: converge más lento que el de caja blanca (~900–1.600) pero
    converge.
-   → **medido (A2): converge — 4.058 consultas bool y un template 0,95 similar al atacante
+   → **medido (A2): converge — 4.058 consultas bool y un template 0,95 similar al atacante (0,61–0,91 si la foto de partida no está inscrita)
    que verifica como la víctima (predicción cumplida, mismo orden de magnitud que la caja
    blanca).**
 4. **H4 — Revocabilidad (ISO 24745):** tras un compromiso (V1) la renovación es
@@ -494,7 +496,7 @@ Resumen de lo nuevo que aporta cruzar con la literatura, por prioridad.
    → **medido (A4): confirmado — el template robado verifica tras la rotación de clave
    (templates bit-idénticos, ciphertexts distintos).**
 5. **H5 — Faceness como superficie demográfica:** la regresión logística ya mostró
-   sesgo de entrenamiento (INFORME §6.4); por la literatura de sesgo (NISTIR 8280),
+   sesgo de entrenamiento (§4.4); por la literatura de sesgo (NISTIR 8280),
    cualquier umbral único de faceness reparte el error desigualmente por fenotipo.
    Ya mitigado con umbral permisivo + red de seguridad (umbral de similitud), pero es
    estructura permanente del sistema.

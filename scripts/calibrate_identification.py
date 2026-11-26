@@ -31,18 +31,18 @@ def main():
     z = np.load(cache)
     X = tp.features(cache, z["crops"], config.LBP_RADII, config.GRID, config.LBP_METHOD,
                     config.PHOTOMETRIC, False)
-    split = json.loads((config.MODELS_DIR / "lfw_split.json").read_text())
+    split = json.loads((config.MODELS_DIR / "lfw_split.json").read_text(encoding="utf-8"))
     tr = np.isin(z["names"], split["train_ids"])
     te = ~tr & ~np.isin(z["names"], split["reserved"])
     M = np.stack([r for _, r in bb.db.all()])
     best_tr = (bb.projection(np.asarray(X[tr])) @ M.T).max(1)
     best_te = (bb.projection(np.asarray(X[te])) @ M.T).max(1)
     thr = float(np.quantile(best_tr, 1 - FPIR))
-    cal = json.loads(config.CALIBRATION_PATH.read_text())
+    cal = json.loads(config.CALIBRATION_PATH.read_text(encoding="utf-8"))
     cal.update(ident_threshold=thr, ident_target_fpir=FPIR,
                ident_fpir_train=float((best_tr >= thr).mean()),
                ident_fpir_test=float((best_te >= thr).mean()))
-    config.CALIBRATION_PATH.write_text(json.dumps(cal, indent=2))
+    config.CALIBRATION_PATH.write_text(json.dumps(cal, indent=2), encoding="utf-8")
     print({k: cal[k] for k in ("ident_threshold", "ident_fpir_train", "ident_fpir_test")})
 
 

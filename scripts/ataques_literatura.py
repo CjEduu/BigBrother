@@ -182,7 +182,7 @@ def a2_hillclimb_bb(bb, t_v, t_a):
 
 # --------------------------------------------------------------------------- A3
 def a3_morphing(bb, t_v, t_a):
-    """Magic passport: morph alfa*victima + (1-alfa)*atacante. Para cada alfa:
+    """Magic passport: morph (1-alfa)*victima + alfa*atacante (alfa=0 victima pura). Para cada alfa:
     (1) inscripcion del morph como id nuevo (tropieza con la deduplicacion?),
     (2) verifican ambos padres contra el id del morph,
     (3) poisoning: actualizar=True mete el morph en la galeria de la VICTIMA (sin dedup)
@@ -252,12 +252,12 @@ def a4_revocacion(t_star):
     from build_db import build
     old_bb = open_bb(*fresh_db_copy("a4_old"))
     y_old = old_bb.db.get(VICTIM)
-    raw_old = (config.DB_PATH).read_text().splitlines()
+    raw_old = (config.DB_PATH).read_text(encoding="utf-8").splitlines()
     d4 = SBX / "a4_new"
     build(d4 / "db.csv", d4 / "keys", force=True)   # clave nueva, mismos ficheros de fotos
     new_bb = open_bb(d4 / "db.csv", d4 / "keys")
     y_new = new_bb.db.get(VICTIM)
-    raw_new = (d4 / "db.csv").read_text().splitlines()
+    raw_new = (d4 / "db.csv").read_text(encoding="utf-8").splitlines()
     return {
         "template_robado_verifica_tras_rotacion": bool(new_bb.verificar_t(VICTIM, t_star)),
         "templates_identicos": bool(all(np.allclose(a, b) for a, b in zip(y_old, y_new))),
@@ -291,9 +291,9 @@ def a5_dodging(bb):
 
 # --------------------------------------------------------------------------- A1
 def _patch(path, old, new):
-    src = Path(path).read_text()
+    src = Path(path).read_text(encoding="utf-8")
     assert old in src, f"ancla no encontrada en {path}"
-    Path(path).write_text(src.replace(old, new, 1))
+    Path(path).write_text(src.replace(old, new, 1), encoding="utf-8")
 
 
 def _cli(tree, *args):
@@ -318,7 +318,7 @@ def a1_troyanos(t_v):
     sec = P / "security.py"
     cal = T1 / "models" / "calibration.json"
     cal_bytes = cal.read_bytes()
-    sys_bytes = sysp.read_text()
+    sys_bytes = sysp.read_text(encoding="utf-8")
     np.save(T1 / "t_vini.npy", t_v)
     r = {}
 
@@ -335,7 +335,7 @@ def a1_troyanos(t_v):
         "verificar": _cli(T1, "verificar", VICTIM, str(PAULA_01)),
         "arranque_sin_deteccion": _cli(T1, "listar"),
     }
-    sysp.write_text(sys_bytes)
+    sysp.write_text(sys_bytes, encoding="utf-8")
 
     # punto 3 (Ratha): Troyano extractor que fabrica los rasgos de la victima
     _patch(sysp, "        return self.extractor.extract(normalize_face(as_bgr(cara)))",
@@ -344,12 +344,12 @@ def a1_troyanos(t_v):
         "verificar": _cli(T1, "verificar", VICTIM, str(PAULA_01)),
         "arranque_sin_deteccion": _cli(T1, "listar"),
     }
-    sysp.write_text(sys_bytes)
+    sysp.write_text(sys_bytes, encoding="utf-8")
 
     # control: manipular models/ SI se detecta
     c = json.loads(cal_bytes)
     c["threshold"] = 0.02
-    cal.write_text(json.dumps(c))
+    cal.write_text(json.dumps(c), encoding="utf-8")
     r["3_control_modelos"] = {
         "nota": "editar models/calibration.json (bajar el umbral) SI invalida la huella",
         "arranque": _cli(T1, "listar"),
@@ -368,7 +368,7 @@ def a1_troyanos(t_v):
     _patch(sysp, "        return self._score_id(id, y) >= self.threshold",
            "        return True  # TROYANO")
     r["5_troyano_con_mitigacion"] = {"arranque": _cli(T1, "listar")}
-    sysp.write_text(sys_bytes)
+    sysp.write_text(sys_bytes, encoding="utf-8")
     return r
 
 
@@ -410,7 +410,7 @@ def main():
         "a5_dodging_detector": a5,
         "segundos": round(time.time() - t_start, 1),
     }
-    OUT.write_text(json.dumps(results, indent=2, ensure_ascii=False))
+    OUT.write_text(json.dumps(results, indent=2, ensure_ascii=False), encoding="utf-8")
     log(f"-> {OUT} ({results['segundos']} s)")
 
 

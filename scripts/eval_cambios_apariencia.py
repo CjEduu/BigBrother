@@ -457,7 +457,7 @@ def main():
     }
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    OUT_JSON.write_text(json.dumps(out, indent=2, ensure_ascii=False))
+    OUT_JSON.write_text(json.dumps(out, indent=2, ensure_ascii=False), encoding="utf-8")
     make_figure(records, by_cat)
     print("\nRESUMEN GLOBAL:", json.dumps(summary_all, indent=2, ensure_ascii=False))
     print("Guardado:", OUT_JSON, "y", OUT_PNG)

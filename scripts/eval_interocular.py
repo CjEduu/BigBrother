@@ -360,7 +360,7 @@ def eval_subset_metrics(results, names, mask):
 
 def run_experiment_a_and_c(lfw_dir, workers):
     print("[Exp A & C] Cargando split LFW test...", flush=True)
-    split = json.loads((config.MODELS_DIR / "lfw_split.json").read_text())
+    split = json.loads((config.MODELS_DIR / "lfw_split.json").read_text(encoding="utf-8"))
     train_ids, reserved = set(split["train_ids"]), set(split["reserved"])
     all_paths = sorted(Path(lfw_dir).glob("*/*.jpg"))
     test_paths = [
@@ -1066,7 +1066,7 @@ def main():
     }
 
     out_json = OUT_DIR / "eval_interocular.json"
-    out_json.write_text(json.dumps(payload, indent=2, ensure_ascii=False))
+    out_json.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
     print(f"OK -> {out_json} & {out_png} ({time.time() - t_start:.1f}s)", flush=True)
 
 

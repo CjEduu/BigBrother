@@ -1,0 +1,139 @@
+{
+  "far_nominal_lfw": 0.001,
+  "pares_de_templates": {
+    "n_pares": 1421,
+    "media": 0.037,
+    "verificacion": {
+      "umbral": 0.2172,
+      "pares_por_encima": 31,
+      "tasa": 0.0218,
+      "ic95": [
+        0.0154,
+        0.0308
+      ]
+    },
+    "identificacion": {
+      "umbral": 0.2847,
+      "pares_por_encima": 3,
+      "tasa": 0.0021,
+      "ic95": [
+        0.0007,
+        0.0062
+      ]
+    },
+    "deduplicacion": {
+      "umbral": 0.2782,
+      "pares_por_encima": 4,
+      "tasa": 0.0028,
+      "ic95": [
+        0.0011,
+        0.0072
+      ]
+    }
+  },
+  "pares_de_identidades": {
+    "n_pares": 1225,
+    "media": 0.0443,
+    "verificacion": {
+      "umbral": 0.2172,
+      "pares_por_encima": 31,
+      "tasa": 0.0253,
+      "ic95": [
+        0.0179,
+        0.0357
+      ]
+    },
+    "identificacion": {
+      "umbral": 0.2847,
+      "pares_por_encima": 3,
+      "tasa": 0.0024,
+      "ic95": [
+        0.0008,
+        0.0072
+      ]
+    },
+    "deduplicacion": {
+      "umbral": 0.2782,
+      "pares_por_encima": 4,
+      "tasa": 0.0033,
+      "ic95": [
+        0.0013,
+        0.0084
+      ]
+    }
+  },
+  "parejas_sobre_dedup": [
+    [
+      "forest_whitaker",
+      "santiago_segura",
+      0.3305
+    ],
+    [
+      "arianna_grande",
+      "mary-kate_olsen",
+      0.324
+    ],
+    [
+      "aitana_etxebarria",
+      "taylor_swift",
+      0.2976
+    ],
+    [
+      "ellen_page",
+      "salma_hayek",
+      0.283
+    ]
+  ],
+  "top10_parejas": [
+    [
+      "forest_whitaker",
+      "santiago_segura",
+      0.3305
+    ],
+    [
+      "arianna_grande",
+      "mary-kate_olsen",
+      0.324
+    ],
+    [
+      "aitana_etxebarria",
+      "taylor_swift",
+      0.2976
+    ],
+    [
+      "ellen_page",
+      "salma_hayek",
+      0.283
+    ],
+    [
+      "ellen_page",
+      "rossy_de_palma",
+      0.2712
+    ],
+    [
+      "ellen_page",
+      "taylor_swift",
+      0.2654
+    ],
+    [
+      "aitana_etxebarria",
+      "zoe_saldana",
+      0.2639
+    ],
+    [
+      "salma_hayek",
+      "zoe_saldana",
+      0.2614
+    ],
+    [
+      "hunter_schufer",
+      "lara_raj",
+      0.259
+    ],
+    [
+      "lara_raj",
+      "metrika",
+      0.2516
+    ]
+  ]
+}

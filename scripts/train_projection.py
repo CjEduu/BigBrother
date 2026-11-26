@@ -4,6 +4,9 @@ calibra los umbrales.
 - Identidades de LFW que estan en nuestro dataset (y sus gemelos: Ashley Olsen, Oliver
   Phelps) se EXCLUYEN del entrenamiento y se reservan para la evaluacion de ataques.
 - El resto se divide por identidad: 70% entrenamiento / 30% test (calibracion de umbrales).
+  Si ya existe models/lfw_split.json se reutiliza (--new-split para sortear otro).
+- Nota: el umbral de verificacion se fija con los impostores del mismo test en el que se
+  reportan TAR/FAR, asi que la FAR del 0,1 % en test es por construccion.
 
 Uso:
     python scripts/prepare_lfw.py              # una vez
@@ -28,11 +31,16 @@ from bigbrother.mlbp import MLBPExtractor  # noqa: E402
 from bigbrother.preprocess import photometric  # noqa: E402
 
 TWINS = {"Ashley_Olsen", "Oliver_Phelps"}  # gemelos de identidades del dataset
+# Ids del dataset cuyo nombre de fichero no coincide con el de LFW (erratas del docente o
+# nombre distinto). Sin esto, esas personas inscritas acababan en el entrenamiento de la LDA.
+LFW_ALIASES = {"serenna_williams": "Serena_Williams", "elisabeth_ii": "Queen_Elizabeth_II"}
 
 
 def reserved_lfw_names(names):
     ids = set(dataset_ids())
-    return {n for n in set(names) if n.lower() in ids} | (TWINS & set(names))
+    aliases = {LFW_ALIASES[i] for i in ids if i in LFW_ALIASES}
+    return ({n for n in set(names) if n.lower() in ids or n in aliases}
+            | (TWINS & set(names)))
 
 
 def _feat_chunk(crops, radii, grid, method, phot, flip):
@@ -144,6 +152,8 @@ def main():
     ap.add_argument("--baseline", action="store_true", help="evaluar tambien chi2 sin entrenar")
     ap.add_argument("--save", action="store_true", help="guardar modelo y calibracion en models/")
     ap.add_argument("--far", type=float, default=1e-3, help="FAR objetivo para el umbral")
+    ap.add_argument("--new-split", action="store_true",
+                    help="sortear un split nuevo en vez de reutilizar models/lfw_split.json")
     a = ap.parse_args()
     radii = tuple(int(r) for r in a.radii.split(","))
     grid = (a.grid, a.grid)
@@ -151,10 +161,17 @@ def main():
     z = np.load(a.cache)
     crops, names = z["crops"], z["names"]
     reserved = reserved_lfw_names(names)
-    rng = np.random.default_rng(0)
-    pool = sorted(set(names) - reserved)
-    rng.shuffle(pool)
-    train_ids = set(pool[: int(0.7 * len(pool))])
+    split_path = config.MODELS_DIR / "lfw_split.json"
+    if split_path.exists() and not a.new_split:
+        # Split versionado: el test no cambia entre reentrenamientos (cifras comparables).
+        # Solo se quitan del train las identidades que ahora estan reservadas.
+        old = json.loads(split_path.read_text(encoding="utf-8"))
+        train_ids = set(old["train_ids"]) - reserved
+    else:
+        rng = np.random.default_rng(0)
+        pool = sorted(set(names) - reserved)
+        rng.shuffle(pool)
+        train_ids = set(pool[: int(0.7 * len(pool))])
     tr = np.array([n in train_ids for n in names])
     te = np.array([(n not in train_ids) and (n not in reserved) for n in names])
     print(f"LFW: {len(names)} caras | train {tr.sum()} ({len(train_ids)} ids) | "
@@ -213,9 +230,9 @@ def main():
         }
         if a.baseline:
             cal["baseline_chi2"] = res["baseline_chi2"]
-        Path(config.CALIBRATION_PATH).write_text(json.dumps(cal, indent=2))
+        Path(config.CALIBRATION_PATH).write_text(json.dumps(cal, indent=2), encoding="utf-8")
         split = {"train_ids": sorted(train_ids), "reserved": sorted(reserved)}
-        (config.MODELS_DIR / "lfw_split.json").write_text(json.dumps(split))
+        (config.MODELS_DIR / "lfw_split.json").write_text(json.dumps(split), encoding="utf-8")
         print("guardado:", config.PROJECTION_PATH, json.dumps(cal, indent=1))
     return res
 

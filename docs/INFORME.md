@@ -19,13 +19,15 @@ Este informe recoge lo que **medimos nosotros**.
 | Extracción (**template**) | MLBP: LBP u2 (P=8, 59 bins) con radios 1…6, rejilla 8×8 → 22.656 floats |
 | Filtro "¿es una cara?" | Regresión logística sobre el template (protege `_sd`, `_t` y multi-detecciones en `recortar`) |
 | Comparación | √histograma → PCA blanqueado (1000) → LDA (300) entrenadas en LFW → coseno (variante MLBP+LDA de Chan et al., 2007) |
-| Decisión | Verificación: umbral 0,217 (**FAR 0,1 %**). Identificación: umbral 0,285 (**FPIR ~1 %** contra la galería) |
+| Decisión | Verificación: umbral 0,217 (**FAR 0,1 %**). Identificación: umbral 0,285 (calibrado para **FPIR 1 %** contra la galería; medido con el pipeline actual: 1,38 %) |
 | BD (`data/db.csv`) | `id, nonce, template` con el template **proyectado** y **cifrado** (AES-256-GCM, id como AAD). Huella SHA-256 de la BD **y de los modelos/umbrales**, firmada con HMAC, en `keys/` |
 
 Entrenamiento y calibración: LFW (13.233 caras), con identidades **disjuntas** de las de test. Las
 personas del dataset que están en LFW (Keanu Reeves, Salma Hayek, Jackie Chan, Michael Jackson,
 Christian Bale, Mary-Kate Olsen, James Phelps) y los **gemelos** Ashley Olsen y Oliver Phelps se
-excluyeron del entrenamiento y se usaron para atacar. La gemela de Aitana Etxebarria, **Paula
+excluyeron del entrenamiento y se usaron para atacar. Dos inscritas se colaron en el entrenamiento
+porque su id no coincide con el nombre en LFW (`serenna_williams` → Serena_Williams, 52 fotos;
+`elisabeth_ii` → Queen_Elizabeth_II, 13 fotos). La gemela de Aitana Etxebarria, **Paula
 Etxeberria**, se atacó con 2 fotos públicas suyas (`data/ataques/gemela_paula/`, `python scripts/ataque_gemela.py`
 → [`resultados/gemela_paula.json`](resultados/gemela_paula.json)).
 
@@ -34,12 +36,19 @@ Etxeberria**, se atacó con 2 fotos públicas suyas (`data/ataques/gemela_paula/
 | Prueba | Resultado |
 |---|---|
 | LFW test, MLBP+LDA (nuestro) | **EER 15,6 %** · TAR 54,1 % @FAR 1 % · TAR 34,8 % @FAR 0,1 % |
-| LFW test, MLBP+χ² clásico (Ahonen) | EER 36,4 % · TAR 7,3 % @FAR 0,1 % |
+| LFW test, MLBP+χ² clásico (Ahonen) | EER 36,4 % · TAR 7,3 % @FAR 0,1 % (¹) |
 | Vinícius, *leave-one-out* (5 fotos) | **5/5 aceptadas**, rank-1 5/5 (sim. 0,28–0,36; identificadas 4/5) |
 | Inscritos con 1 foto del docente vs. sus fotos en LFW | **8/55 aceptadas (TAR 14,5 %)** |
 | Desconocidos (4.499 de LFW) → `identificar` | FPIR **1,38 %** (con el umbral de verificación sería 8,0 %) |
 | Desconocidos → `verificar(vinicius_junior)` | FAR **0,64 %** (29/4.499) |
+| Inscritos entre sí (galería real, fotos web de alta resolución) → `verificar` | FAR **2,5 %** (31/1.225 parejas de personas distintas, IC95 % 1,8–3,6 %), ~25× la nominal; con el umbral de identificación, 0,24 % (3/1.225). Ver V20 |
 | Tiempo por verificación (CPU) | ~38 ms (incl. pre-escalado *anti-aliasing* en alta resolución) |
+
+(¹) La cifra de χ² depende de qué pares se muestreen. Aquí se usan todos los pares genuinos con
+máx. 10 fotos por identidad y ~60.000 impostores (`evaluate.py`), así que a FAR 0,1 % solo ~60
+impostores fijan el umbral. Con los mismos 980.849 impostores que MLBP+LDA sale EER 36,2 % y
+TAR 6,8 % ([`EVAL_FAR.md`](EVAL_FAR.md)). El 33,6 % / 4,2 % de `models/calibration.json` usa
+otra muestra (20.000 genuinos sin tope por identidad). La conclusión no cambia: LDA es ~5× mejor.
 
 ![ROC](resultados/roc_lfw.png)
 
@@ -49,9 +58,10 @@ Etxeberria**, se atacó con 2 fotos públicas suyas (`data/ataques/gemela_paula/
 |---|---|---|---|
 | V1 | **Clave + BD robadas** (acceso al contenedor: `keys/master.key`) | **Sí** | Con la clave se descifra la BD y se **invierte** el template de Vinícius por gradiente (3,9 s en CPU / 3 s en GPU, sim. 0,992): `verificar_t` lo acepta e `identificar_t` devuelve `vinicius_junior`. En la demo la clave está en el mismo contenedor que la BD: quien tenga *shell* en él lo controla todo |
 | V2 | **Foto/pantalla de Vinícius** (presentación) | **Sí** | No hay detección de vida. Simulaciones de foto en pantalla e impresa: 5/5 aceptadas. Cualquier foto pública de Vinícius sirve |
-| V3 | **Morphing** 50/50 Vinícius + cómplice | **Sí** | Aceptado como Vinícius **24/25** con un cómplice parecido y **7/25** con uno aleatorio (bajó de 12/25 tras eliminar el *aliasing* en alta resolución) |
+| V3 | **Morphing** 50/50 Vinícius + cómplice | Parcial | La **foto** morphed verifica como Vinícius (*leave-one-out*) **24/25** con uno de los 5 desconocidos de LFW más parecidos a él y **7/25** con uno aleatorio (bajó de 12/25 tras eliminar el *aliasing*). Esto mide solo el lado de la víctima: equivale a presentar una foto degradada de Vinícius. El ataque canónico (*magic passport*: inscribir el morph y que **ambos** padres verifiquen contra él) se midió en A3 de [`ATAQUES_EMPIRICOS.md`](ATAQUES_EMPIRICOS.md) y **no se logra**: la deduplicación bloquea los morphs que aún casan con la víctima. Lo que sí funciona es colarlo por `actualizar=True` (V16) |
 | V4 | **Parecidos (sesgo demográfico)** | Parcial | FAR contra Vinícius **0,64 %** (29/4.499), 6,4 veces el nominal. Los 4 desconocidos de LFW más parecidos (`Shawn_Kemp` 0,330, `Ruben_Sierra` 0,322, `Felix_Doh` 0,308, `Ted_Washington` 0,284) son hombres negros, con puntuaciones **del nivel de las genuinas de Vinícius (0,28–0,36)**. LFW está sesgado a hombres blancos, así que las parejas del mismo grupo demográfico son mucho más peligrosas |
-| V5 | **Gemelos** | **Sí** | **Paula Etxeberria entra como `aitana_etxebarria`: 2/2 fotos verificadas e identificadas** (similitud **0,293 y 0,458**; umbral verif. 0,217, ident. 0,285): en las dos `identificar` devuelve `aitana_etxebarria` y Aitana es el rango #1 de la BD. Los gemelos de LFW (Ashley Olsen → mary-kate_olsen 0,181; Oliver Phelps → james_phelps 0,132) se rechazaron, pero **las fotos genuinas de Mary-Kate y James puntúan lo mismo** (0,174 y 0,158). MLBP no distingue gemelos idénticos: el resultado solo depende de lo parecida que sea la foto a la de inscripción. No hay defensa posible con este rasgo |
+| V20 | **FAR real en fotos de alta resolución** | Sí | El umbral se calibró en LFW (caras pequeñas, distancia entre ojos mediana 44 px) para FAR 0,1 %, pero la galería son fotos web de alta resolución (mediana 104 px). Entre las 50 identidades inscritas, **31 de 1.225 parejas de personas distintas** superan el umbral: FAR **2,5 %** (IC95 % 1,8–3,6 %), unas 25 veces la nominal ([`scripts/eval_galeria.py`](../scripts/eval_galeria.py) → [`resultados/galeria_impostores.json`](resultados/galeria_impostores.json); coherente con las 36 coincidencias cruzadas de [`EVAL_CAMBIOS_APARIENCIA.md`](EVAL_CAMBIOS_APARIENCIA.md) y el 1,5–2,1 % de [`EVAL_INTEROCULAR.md`](EVAL_INTEROCULAR.md)). Además, **4 parejas superan el umbral de deduplicación** (`forest_whitaker`/`santiago_segura` 0,331, `arianna_grande`/`mary-kate_olsen` 0,324, `aitana_etxebarria`/`taylor_swift` 0,298, `ellen_page`/`salma_hayek` 0,283): inscribiéndolas por la API `inscribir`, la segunda de cada pareja se habría rechazado como duplicado. La identificación, con su umbral más estricto, se queda en 0,24 % (3/1.225) |
+| V5 | **Gemelos** | **Sí** | **Paula Etxeberria entra como `aitana_etxebarria`: 2/2 fotos verificadas e identificadas** (similitud **0,293 y 0,458**; umbral verif. 0,217, ident. 0,285): en las dos `identificar` devuelve `aitana_etxebarria` y Aitana es el rango #1 de la BD. Los gemelos de LFW (Ashley Olsen → mary-kate_olsen 0,181; Oliver Phelps → james_phelps 0,132) se rechazaron, pero **las fotos genuinas de Mary-Kate y James puntúan lo mismo** (0,174 y 0,158). La evidencia es limitada: con solo 2 fotos de Paula, y una de ellas (`paula_02`, retrato retocado) verifica como 8 identidades (la segunda, `kim_jisoo`, con 0,406 frente a 0,458 de Aitana), no se puede separar cuánto se debe a ser gemela y cuánto a que la foto se comporte como *wolf*. Lo que sí muestran los datos es que una gemela entra con fotos públicas y que las puntuaciones de gemelos caen en el mismo rango que las genuinas; la literatura (NIST) indica que tampoco los sistemas modernos separan bien a gemelos idénticos |
 | V19 | **Retrato retocado que verifica como muchas personas** | Sí | La segunda foto de Paula (retrato frontal con filtro de belleza) verifica contra **8 de las mujeres inscritas** (`aitana_etxebarria` 0,458, `kim_jisoo` 0,406, `zoe_saldana` 0,355, `taylor_swift` 0,344…; bajó de 10/50 a 8/50 tras el *anti-aliasing*), y `paula_01` verifica contra 2 (`aitana_etxebarria` y `adele`). En LFW, el peor desconocido (`Gina_Gershon`) verifica como **7 identidades** distintas (bajó de 8). Un atacante puede elegir una foto así y probar ids hasta entrar (V8). Probamos exigir que el id reclamado sea además el más parecido de la BD: la FAR por intento baja ligeramente, pero los genuinos cruzados aceptados caen a la mitad, así que lo descartamos |
 | V6 | **FRR alta en los 49 del docente** | Sí (disponibilidad) | Con una sola foto de inscripción y fotos de otra época o pose, TAR del 14,5 % (8/55): Jackie Chan 0/13, Michael Jackson 0/12 (la foto inscrita es de 1982), Keanu 3/12, Mary-Kate 1/3, Salma 4/13. Vinícius funciona porque tiene 5 fotos |
 | V7 | **Oclusiones** | Sí (FRR) | Gafas de sol: 0/5 aceptadas. Mascarilla: 2/5. Desenfoque s=4, JPEG q=10 y ruido s=20: 4/5 (desenfoque s=2 y baja resolución x0,25: 5/5). No abren la puerta a nadie, solo rechazan al genuino |
@@ -64,8 +74,8 @@ Etxeberria**, se atacó con 2 fotos públicas suyas (`data/ataques/gemela_paula/
 | V14 | **Filtro "¿es una cara?" adversarial** | Posible | Es lineal: un atacante de caja blanca puede fabricar una no-cara que lo pase (0,5 % de las no-caras de prueba ya lo pasan). Después aún tiene que superar el umbral de similitud |
 | V15 | **Inscripción sin autenticar** | Sí | Cualquiera puede inscribir ids nuevos. No puede tocar los existentes (ver fortalezas) |
 | V16 | **Persistencia con `actualizar=True`** | Encadenado | Si un impostor consigue verificar **una vez** (parecido, foto, morph), puede añadir su propia muestra a `vinicius_junior` con `inscribir(..., actualizar=True)` (sin deduplicación en esa vía) y dejar la plantilla persistida (*template poisoning*, validado en A3) |
-| V17 | **Variables de entorno de rutas** | Solo con control del entorno | `BIGBROTHER_DB`, `BIGBROTHER_KEYS` y `BIGBROTHER_DATA` permiten apuntar a otra BD con su propia clave: equivale a montar un sistema paralelo. Los **umbrales ya no** se pueden cambiar por entorno |
-| V18 | **Contenedor como root** | Sí | La imagen ejecuta como root y la clave está dentro: cualquier `docker exec` llega a V1 |
+| V17 | **Variables de entorno de rutas y de clave** | Solo con control del entorno | `BIGBROTHER_DB`, `BIGBROTHER_KEYS` y `BIGBROTHER_DATA` permiten apuntar a otra BD con su propia clave: equivale a montar un sistema paralelo. `BIGBROTHER_KEY` (clave en base64) tiene prioridad sobre `keys/master.key`. Los **umbrales ya no** se pueden cambiar por entorno |
+| V18 | **Contenedor como root y clave dentro de la imagen** | Sí | La imagen ejecuta como root y la clave está dentro: cualquier `docker exec` llega a V1. Además, la clave se genera en el `docker build` (`RUN ... build_db.py`), así que queda guardada en una capa de la imagen: quien tenga la imagen (`docker save`, un registro o una copia) extrae `keys/master.key` sin necesidad de ejecutarla. En un despliegue real la clave se generaría al arrancar en un volumen aparte, o vendría de un KMS/secreto, nunca dentro de la imagen |
 
 ![Ejemplos visuales reales de V4 (parecidos de Vinícius en LFW), V5 (gemelas Paula/Aitana y Olsen), V19 (super-wolf paula_02 y Gina Gershon) y V6 (1-shot vs LFW)](resultados/ejemplos_gemelos_parecidos.png)
 
@@ -102,28 +112,3 @@ Etxeberria**, se atacó con 2 fotos públicas suyas (`data/ataques/gemela_paula/
 - **Atacante con acceso a `keys/` o al código** (por ejemplo, `docker exec`): el sistema cae (V1, A1). En
   un despliegue real la clave iría en un KMS/HSM y la huella de la BD en un almacenamiento de solo-anexado.
 - El umbral prioriza la seguridad (FAR 0,1 %) a costa de una FRR alta (V6). Es intencionado.
-
-## 6. Problemas encontrados durante el desarrollo
-
-1. `cv2.imread` no abre `aitana_etxebarria_(twin_melody)_2024.jpg`, que en realidad es AVIF. Ahora se carga con Pillow como respaldo.
-2. Tan-Triggs empeoraba el EER (19,7 % frente a 15,6 % con ecualización). LBP ya es invariante a cambios monótonos de iluminación.
-3. **Ruido aleatorio por `identificar_sd` se identificaba como `salma_hayek`.** Solución: filtro "¿es una cara?".
-4. La primera versión de ese filtro (entrenada solo con LFW) **rechazaba caras reales de Adam Pearson,
-   Forest Whitaker y Samuel L. Jackson**, y dejaba en el límite a Stevie Wonder y una foto de Vinícius.
-   Es un sesgo demográfico del entrenamiento. Se reentrenó con aumentos fotométricos (caras oscuras y de bajo contraste) y un umbral más permisivo.
-5. Identificar con el umbral de verificación daba un 6,6–8,0 % de falsas identificaciones de desconocidos. Se calibró un umbral propio (~1 %).
-6. Revisión final de código (en modo atacante), con cuatro problemas corregidos, cada uno con su test:
-   - Editar `models/calibration.json` o la variable `BIGBROTHER_THRESHOLD` permitía **bajar el umbral y aceptar a cualquiera**.
-   - Borrar `models/faceness.npz` **desactivaba el filtro de caras** sin avisar.
-   - Sin la clave pero con la BD presente, se generaba en silencio una clave nueva.
-   - Las imágenes gigantes se detectaban a resolución completa (segundos por foto).
-7. Auditoría empírica de alta resolución y cambios longitudinales (`docs/EVAL_INTEROCULAR.md` y `docs/EVAL_CAMBIOS_APARIENCIA.md`), que destapó y permitió corregir dos defectos reales del pipeline:
-   - **Aliasing en `align()` (`preprocess.py`)**: reducir caras de alta resolución ($\text{IOD} > 48{,}6\text{ px}$, el 90,7 % de la galería) con `cv2.warpAffine(..., INTER_LINEAR)` sin filtro paso bajo inflaba los scores impostores (FAR en galería hasta 6,9 % y 234 colisiones cruzadas en pruebas de apariencia, además de hacer que el ruido blanco coincidiera con `forest_whitaker` sin `faceness`). Solución: pre-reducción de la ROI con `cv2.INTER_AREA` antes de la afín.
-   - **Falso positivo en `elisabeth_II_1945.jpg`**: YuNet detectaba un neumático de camión con mayor área (`score = 0,77`) que la cara real de Isabel II (`score = 0,93`), y `recortar()` elegía por área sin pasar `faceness` antes de seleccionar. Solución: filtrar multi-detecciones mediante `faceness` antes de aplicar la selección por área y la comprobación de ambigüedad (`elisabeth_ii` pasó de inscribir el neumático a su rostro real; los 2/20 *wolf templates* aleatorios que caían en `elisabeth_ii` pasaron a **0/20**).
-
-## 7. Limitaciones de la evaluación
-
-- Solo 5 fotos de Vinícius (LOO): con tan pocas muestras, la estimación de su FRR es muy imprecisa.
-- Ataques de presentación y morphing **simulados** digitalmente, no capturados con cámara.
-- Gemelos: solo 1 foto de cada gemelo de LFW y 2 de Paula Etxeberria.
-- Identidades: 49 fotos del docente + Vinícius (la persona 50 del dataset) = 50 identidades inscritas.
