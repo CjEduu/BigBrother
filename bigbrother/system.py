@@ -1,7 +1,7 @@
 """BigBrother: sistema de reconocimiento facial basado en Multiscale LBP.
 
 Pipeline:  foto -> YuNet (deteccion + 5 landmarks + calidad) -> alineado 128x128
-           -> Tan-Triggs -> MLBP (radios 1-4, rejilla 8x8, 59 bins) = TEMPLATE
+           -> ecualizacion de histograma -> MLBP (radios 1-6, rejilla 8x8, 59 bins) = TEMPLATE
            -> proyeccion sqrt/PCA-blanqueado/LDA (entrenada en LFW) -> coseno -> umbral
 
 Contrato de la API (todas las fotos: ruta o array BGR de OpenCV):
@@ -11,7 +11,7 @@ Contrato de la API (todas las fotos: ruta o array BGR de OpenCV):
     *_sd: igual pero la foto es YA un recorte de cara (usar recortar() para obtenerlo)
     *_t : igual pero recibe el template (vector MLBP, usar extraer()/extraer_sd())
 
-Decisiones de seguridad (ver docs/INFORME_SEGURIDAD.md):
+Decisiones de seguridad (ver docs/INFORME.md):
     - La API publica NO devuelve puntuaciones (evita ataques hill-climbing).
     - Un id ya inscrito no se puede sobrescribir/ampliar salvo con actualizar=True y una
       muestra que YA verifique contra esa identidad.

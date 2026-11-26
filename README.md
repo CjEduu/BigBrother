@@ -18,8 +18,8 @@ Ramírez, Jorge Manuel Gutiérrez Melgar, Nacho Ferrer Tellez, Pablo Cervantes P
   **[docs/LIMITACIONES_LITERATURA.md](docs/LIMITACIONES_LITERATURA.md)** (techo MLBP en la literatura).
 
 ```
-foto ─► YuNet (cara + 5 puntos + control de calidad) ─► alineado 128×128 ─► Tan-Triggs
-     ─► MLBP: LBP u2 (P=8) radios 1,2,3,4 × rejilla 8×8 × 59 bins = TEMPLATE (15.104 floats)
+foto ─► YuNet (cara + 5 puntos + control de calidad) ─► alineado 128×128 ─► ecualización de histograma
+     ─► MLBP: LBP u2 (P=8) radios 1,2,3,4,5,6 × rejilla 8×8 × 59 bins = TEMPLATE (22.656 floats)
      ─► √ ─► PCA blanqueado ─► LDA (entrenadas en LFW) ─► coseno ─► umbral
 BD: data/db.csv  (id, nonce, template proyectado cifrado con AES-256-GCM)
 ```

@@ -1,7 +1,7 @@
 """Configuracion global de BigBrother.
 
 Las rutas sensibles (clave maestra y estado de la BD) se pueden mover con variables
-de entorno para separarlas fisicamente de la BD (ver docs/INFORME_SEGURIDAD.md).
+de entorno para separarlas fisicamente de la BD (ver docs/INFORME.md).
 """
 import json
 import os
